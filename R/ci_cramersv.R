@@ -11,8 +11,7 @@
 #' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param adjust Smithson's adjustment (default is \code{TRUE}).
-#' @param lower_tol Values of the lower confidence limit below \code{lower_tol} are considered 0.
+#' @param adjust By default, the confidence limits of the non-centrality parameter ncp of the chi-squared distribution are shifted upwards by the degrees of freedom, reflecting the fact that a chi-squared distribution has expectation df + ncp.
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
@@ -29,7 +28,7 @@
 #' ir$PL <- ir$Petal.Width > 1
 #' ci_cramersv(ir[, c("Species", "PL")])
 #' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
-#' ci_cramersv(chisq, probs = c(0.05, 1))
+#' ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
 #' @references
 #' Smithson, Michael (2003). Confidence Intervals. Series: Quantitative Applications in the Social Sciences. SAGE Publications.
 #' @seealso \code{\link{ci_chisq_ncp}}.
@@ -45,14 +44,14 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap
 
   # Calculate CI
   if (type == "chisq") {
-    cint <- ci_chisq_ncp(x, probs = probs, lower_tol = lower_tol)[["conf.int"]]
+    ncp <- ci_chisq_ncp(x, probs = probs)[["conf.int"]]
 
     # Scale to Cramer's V
     chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
     n <- sum(chisq[["observed"]])
     k <- min(dim(chisq[["observed"]]))
     df <- chisq[["parameter"]]
-    cint <- sqrt((cint + if (adjust) df else 0) / (n * (k - 1)))
+    cint <- sqrt((ncp + adjust * df) / (n * (k - 1)))
   } else if (type == "bootstrap") {
     S <- bootstrap(x, statistic = cramersv, R = R, seed = seed)
     cint <- ci_boot(S, boot_type, probs, ...)

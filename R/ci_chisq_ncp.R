@@ -2,12 +2,11 @@
 #'
 #' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on test inversion.
 #'
-#' Note that no correction is applied for 2x2 tables.
+#' Note that no correction is applied for 2x2 tables. Further note that lower limits below 0.0001 are set to 0.
 #' @importFrom stats chisq.test pchisq optimize
-#' @param The chi-squared test statistic or a \code{data.frame} with exactly two columns.
+#' @param x The chi-squared test statistic or a \code{data.frame} with exactly two columns.
 #' @param df The degrees of freedom. Only used if \code{x} is a test statistic.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @param search_range Range to be searched for confidence limits. If the lower limit is smaller than twice the minimum, it will be set to 0.
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
 #'   \item \code{conf.int}: The confidence interval.
@@ -24,7 +23,7 @@
 #' ci_chisq_ncp(ir[, c("Species", "PL")])
 #' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
 #' @seealso \code{\link{ci_cramersv}}.
-ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975), search_range = c(0.00001, 1000)) {
+ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_input(probs)
   dname <- deparse1(substitute(x))
@@ -35,8 +34,8 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975), search_range = c
   if (is.data.frame(x)) {
     stopifnot(ncol(x) == 2L)
     chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
-    stat <- x[["statistic"]]
-    df <- x[["parameter"]]
+    stat <- chisq[["statistic"]]
+    df <- chisq[["parameter"]]
   } else {
     stopifnot(length(x) == 1L, !is.null(df))
     stat <- x
@@ -47,8 +46,8 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975), search_range = c
     lci <- 0
   } else {
     lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
-                    interval = search_range)[["minimum"]]
-    if (lci < 2 * search_range[1]) {
+                    interval = c(0.00005, stat))[["minimum"]]
+    if (lci < 0.0001) {
       lci <- 0
     }
   }
@@ -58,7 +57,7 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975), search_range = c
     uci <- Inf
   } else {
     uci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[2])^2,
-                    interval = search_range)[["minimum"]]
+                    interval = c(stat - df, 4 * stat))[["minimum"]]
   }
 
   # Organize output

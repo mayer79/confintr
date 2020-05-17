@@ -53,15 +53,17 @@ if (!dir.exists(file.path(pkg, "R"))) {
 file.copy(list.files("R", full.names = TRUE), file.path(pkg, "R"), overwrite = TRUE)
 devtools::document(pkg)
 
-# Copy vignette
-# use_vignette(name = "cis", title = "cis")
-dir.create(file.path(pkg, "vignettes"))
-dir.create(file.path(pkg, "doc"))
-dir.create(file.path(pkg, "Meta"))
-file.copy(list.files("vignettes", full.names = TRUE),
-          file.path(pkg, "vignettes"), overwrite = TRUE)
+if (FALSE) {
+  # Copy vignette
+  # use_vignette(name = "cis", title = "cis")
+  dir.create(file.path(pkg, "vignettes"))
+  dir.create(file.path(pkg, "doc"))
+  dir.create(file.path(pkg, "Meta"))
+  file.copy(list.files("vignettes", full.names = TRUE),
+            file.path(pkg, "vignettes"), overwrite = TRUE)
 
-devtools::build_vignettes(pkg)
+  devtools::build_vignettes(pkg)
+}
 
 # Check
 check(pkg, manual = TRUE)

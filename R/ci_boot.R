@@ -1,7 +1,7 @@
 #' Apply Bootstrap Confidence Interval
 #'
 #' Internal function to calculate a specific type of bootstrap confidence interval from the result of the bootstrap.
-#' @importFrom resample CI.bootstrapT CI.percentile CI.t CI.bca
+#' @importFrom resample CI.bootstrapT CI.percentile CI.t CI.bca jackknife
 #' @param S The result of \code{resample::bootstrap}.
 #' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca").
 #' @param probs Error probabilities.

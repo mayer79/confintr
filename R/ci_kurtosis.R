@@ -11,7 +11,6 @@
 #' @param boot_type Type of bootstrap confidence interval ("percentile", "t", or "bca").
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
-#' @param parameter_range Range of parameter of interest (relevant for the one-sided case).
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
@@ -29,7 +28,7 @@
 #' Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>.
 ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("percentile", "t", "bca"),
-                        R = 10000, seed = NULL, parameter_range = c(-Inf, Inf), ...) {
+                        R = 10000, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -42,7 +41,7 @@ ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
   cint <- ci_boot(S, boot_type, probs, ...)
 
   # Organize output
-  cint <- check_output(cint, probs, parameter_range)
+  cint <- check_output(cint, probs, c(-Inf, Inf))
   prepare_output(cint, estimate = kurtosis(x), probs = probs, type = type,
                  boot_type = boot_type, data_name = dname, estimate_name = "kurtosis")
 }

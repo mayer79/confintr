@@ -4,7 +4,7 @@
 #'
 #' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
 #' @importFrom stats var qchisq
-#' @importFrom resample bootstrap jackknife
+#' @importFrom resample bootstrap
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "normal" or "bootstrap".
@@ -60,4 +60,3 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
   prepare_output(cint, estimate = estimate, probs = probs, type = type,
                  boot_type = boot_type, data_name = dname, estimate_name = "variance")
 }
-

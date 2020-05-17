@@ -1,6 +1,6 @@
-#' Confidence Interval for the Population Variance
+#' Confidence Interval for the Population Standard Deviation
 #'
-#' This function calculates confidence intervals for the population variance. The classic approach for normally distributed random samples is based on the chi-squared distribution. This is the default. Alternatively, bootstrap confidence intervals are supported by the package "resample". Their default Bootstrap type is "BootstrapT". It uses the standard error for the variance given in Wilks (see references).
+#' This function calculates confidence intervals for the population standard deviation. They are derived by calculating confidence intervals for the variance and then taking the square-root. The classic approach for normally distributed random samples is based on the chi-squared distribution. This is the default. Alternatively, bootstrap confidence intervals are supported by the package "resample".
 #'
 #' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
 #' @importFrom stats var qchisq
@@ -22,18 +22,13 @@
 #' @export
 #' @examples
 #' x <- 1:100
-#' ci_var(x)
-#' ci_var(x, type = "bootstrap", R = 1000)
-#' ci_var(x, type = "bootstrap", boot_type = "bca", R = 1000)
-#' @references
-#' \enumerate{
-#'   \item S.S. Wilks, Mathematical Statistics, Wiley & Sons, page 199, (8.2.9).
-#'   \item Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>.
-#' }
-#' @seealso \code{\link{ci_sd}}.
-ci_var <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
-                   boot_type = c("bootstrapT", "percentile", "t", "bca"),
-                   R = 10000, seed = NULL, ...) {
+#' ci_sd(x)
+#' sqrt(ci_var(x)$conf.int)
+#' ci_sd(x, type = "bootstrap", R = 1000)
+#' @seealso \code{\link{ci_var}}.
+ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
+                    boot_type = c("bootstrapT", "percentile", "t", "bca"),
+                    R = 10000, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -42,21 +37,21 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
 
   # Remove NAs and calculate estimate
   x <- x[!is.na(x)]
-  estimate <- var(x)
+  estimate <- sd(x)
   n <- length(x)
 
   # Calculate CI
   if (type == "chisq") {
-    cint <- estimate * (n - 1) / qchisq(1 - probs, df = n - 1)
+    cint <- estimate * sqrt((n - 1) / qchisq(1 - probs, df = n - 1))
   } else if (type == "bootstrap") {
     if (boot_type == "bootstrapT") {
       S <- bootstrap(x, statistic = c(var = var(x), sderr = stderr_var(x)), R = R, seed = seed)
     } else {
       S <- bootstrap(x, statistic = var, R = R, seed = seed)
     }
-    cint <- ci_boot(S, boot_type, probs, ...)
+    cint <- sqrt(ci_boot(S, boot_type, probs, ...))
   }
   cint <- check_output(cint, probs, c(0, Inf))
   prepare_output(cint, estimate = estimate, probs = probs, type = type,
-                 boot_type = boot_type, data_name = dname, estimate_name = "variance")
+                 boot_type = boot_type, data_name = dname, estimate_name = "standard deviation")
 }

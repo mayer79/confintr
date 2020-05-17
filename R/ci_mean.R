@@ -7,11 +7,10 @@
 #' @importFrom resample bootstrap
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @param type Type of confidence interval. One of "t", "Wald", or "bootstrap".
+#' @param type Type of confidence interval. One of "t" (default), "Wald", or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param parameter_range Range of parameter of interest (relevant for the one-sided case).
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
@@ -30,7 +29,7 @@
 #' Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>
 ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap"),
                     boot_type = c("bootstrapT", "percentile", "t", "bca"),
-                    R = 10000, seed = NULL, parameter_range = c(-Inf, Inf), ...) {
+                    R = 10000, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -53,7 +52,7 @@ ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap
     }
     cint <- ci_boot(S, boot_type, probs, ...)
   }
-  cint <- check_output(cint, probs, parameter_range)
+  cint <- check_output(cint, probs, c(-Inf, Inf))
   prepare_output(cint, estimate = estimate, probs = probs, type = type,
                  boot_type = boot_type, data_name = dname, estimate_name = "mean")
 }

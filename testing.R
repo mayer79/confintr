@@ -25,7 +25,6 @@ confintCramersV <- function(x, alternative = c("two.sided", "less", "greater"), 
                                 df = df,
                                 alpha.lower = alpha.lower,
                                 alpha.upper = alpha.upper)
-  print(Delta)
   Delta <- unlist(Delta[c("Lower.Limit", "Upper.Limit")])
   out <- sqrt(c(Cramers.V = chi, Delta) / (n * k))
   out[is.na(out)] <- 0
@@ -61,3 +60,28 @@ confintR2 <- function(x, alternative = c("two.sided", "less", "greater"), conf.l
   out[is.na(out)] <- 0
   out
 }
+
+set.seed(100)
+x <- rnorm(100)
+y <- x + rnorm(100)
+(cor.test(~x+y)$conf.int)^2
+fit <- lm(y~x)
+ci_rsquared(fit)
+confintR2(fit)
+unlist(ci.R2(0.5726243, 1, 98, Random.Predictors = FALSE)[c(1, 3)])
+
+
+
+# CRAMERS V
+chisq <- chisq.test(iris$Species, iris$Petal.Width > 1)
+cramersv(chisq)
+ci_cramersv(chisq)
+confintCramersV(chisq)
+ci_cramersv(chisq, probs = c(0.2, 0.8))
+confintCramersV(chisq, conf.level = 0.6)
+
+ir <- iris
+ir$PL <- ir$Petal.Width > 1
+cramersv(ir[, c("Species", "PL")])
+ci_cramersv(ir[, c("Species", "PL")])
+ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)

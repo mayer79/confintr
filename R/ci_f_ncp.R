@@ -1,6 +1,6 @@
 #' Confidence Interval for the Non-Centrality Parameter of the F Distribution
 #'
-#' This function calculates confidence intervals for the non-centrality parameter of the F distribution based on inversion of a two-sided F test.
+#' This function calculates confidence intervals for the non-centrality parameter of the F distribution based on test.
 #' @importFrom stats lm pf optimize
 #' @param x The result of \code{lm} or the F test statistic.
 #' @param df1 The first degrees of freedom. Only used if \code{x} is a test statistic.
@@ -10,7 +10,7 @@
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
 #'   \item \code{conf.int}: The confidence interval.
-#'   \item \code{estimate}: The observed test statistic.
+#'   \item \code{estimate}: NA.
 #'   \item \code{method}: A character string describing the applied method.
 #'   \item \code{data.name}: A character string with the name(s) of the data.
 #' }
@@ -62,7 +62,7 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_t
 
   # Organize output
   cint <- check_output(c(lci, uci), probs, c(0, Inf))
-  prepare_output(cint, estimate = stat, probs = probs, type = "F",
+  prepare_output(cint, estimate = NA, probs = probs, type = "F",
                  boot_type = NA, data_name = dname,
                  estimate_name = "F non-centrality parameter")
 }

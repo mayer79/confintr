@@ -5,12 +5,13 @@
 #' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
 #' @importFrom stats chisq.test complete.cases
 #' @importFrom resample bootstrap
-#' @param The result of \code{chisq.test} or a \code{data.frame} with exactly two columns. Type "bootstrap" requires a \code{data.frame}.
+#' @param x A \code{data.frame} with exactly two columns.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "chisq" (default) or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
+#' @param adjust Smithson's adjustment (default is \code{TRUE}).
 #' @param lower_tol Values of the lower confidence limit below \code{lower_tol} are considered 0.
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
 #' @return A list with class \code{htest} containing these components:
@@ -30,40 +31,28 @@
 #' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
 #' ci_cramersv(chisq, probs = c(0.05, 1))
 #' @references
-#' Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>
+#' Smithson, Michael (2003). Confidence Intervals. Series: Quantitative Applications in the Social Sciences. SAGE Publications.
 #' @seealso \code{\link{ci_chisq_ncp}}.
 ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
-                        boot_type = c("percentile", "t", "bca"),
-                        R = 10000, seed = NULL, lower_tol = 0.0001, ...) {
+                        boot_type = c("percentile", "t", "bca"), R = 10000,
+                        seed = NULL, adjust = TRUE, lower_tol = 0.0001, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
   check_input(probs)
   dname <- deparse1(substitute(x))
-
-  # Distinguish different cases
-  if (inherits(x, "htest")) {
-    if (type != "chisq") {
-      stop("If x is result of chi-squared test, only chi-squared based confidence intervals are available.")
-    }
-  } else if (is.data.frame(x)) {
-    stopifnot(ncol(x) == 2L)
-    x <- x[complete.cases(x), , drop = FALSE]
-    if (type =="chisq") {
-      x <- chisq.test(x[, 1], x[, 2])
-    }
-  } else {
-    stop("Wrong input.")
-  }
+  stopifnot(is.data.frame(x), ncol(x) == 2L)
 
   # Calculate CI
   if (type == "chisq") {
     cint <- ci_chisq_ncp(x, probs = probs, lower_tol = lower_tol)[["conf.int"]]
 
     # Scale to Cramer's V
-    n <- sum(x[["observed"]])
-    k <- min(dim(x[["observed"]])) - 1
-    cint <- sqrt(cint / (n * k))
+    chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
+    n <- sum(chisq[["observed"]])
+    k <- min(dim(chisq[["observed"]]))
+    df <- chisq[["parameter"]]
+    cint <- sqrt((cint + if (adjust) df else 0) / (n * (k - 1)))
   } else if (type == "bootstrap") {
     S <- bootstrap(x, statistic = cramersv, R = R, seed = seed)
     cint <- ci_boot(S, boot_type, probs, ...)

@@ -1,0 +1,58 @@
+---
+title: "Using the 'cis' Package"
+author: "Michael Mayer"
+date: "`r Sys.Date()`"
+bibliography: "biblio.bib"
+link-citations: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{outForest}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+## Introduction
+
+The aim of this vignette is to introduce the R package `cis` for calculating confidence intervals.
+
+- `ci_mean`
+
+- `ci_var`
+
+- `ci_sd`
+
+- `ci_cramersv`
+
+- `ci_rsquared`
+
+## Installation
+
+From CRAN:
+```
+install.packages("cis")
+```
+
+Latest version from github:
+```
+library(devtools)
+install_github("mayer79/cis")
+```
+
+## Examples
+
+``` {r}
+library(cis)
+
+```
+
+## References
+

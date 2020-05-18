@@ -1,6 +1,6 @@
 #' Confidence Interval for the Population Variance
 #'
-#' This function calculates confidence intervals for the population variance. The classic approach for normally distributed random samples is based on the chi-squared distribution. This is the default. Alternatively, bootstrap confidence intervals are supported by the package "resample". Their default Bootstrap type is "BootstrapT". It uses the standard error for the variance given in Wilks (see references).
+#' This function calculates confidence intervals for the population variance. The classic approach for normally distributed random samples is based on the chi-squared distribution. Alternatively, bootstrap confidence intervals are supported by the package "resample". The default Bootstrap type is "BootstrapT", utilizing the standard error for the variance given in Wilks, namely the root of (mu4 - (n-3)/(n-1)var^2)/n, where n is the sample size, var the sample variance and mu4 the fouth central moment of the sample. This formula does not assume normality.
 #'
 #' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
 #' @importFrom stats var qchisq
@@ -27,10 +27,11 @@
 #' ci_var(x, type = "bootstrap", boot_type = "bca", R = 1000)
 #' @references
 #' \enumerate{
-#'   \item S.S. Wilks, Mathematical Statistics, Wiley & Sons, page 199, (8.2.9).
-#'   \item Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>.
+#'   \item K. Knight (2000), Mathematical Statistics, Chapman and Hall, New York.
+#'   \item S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons, page 199, (8.2.9).
+#'   \item T. Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>.
 #' }
-#' @seealso \code{\link{ci_sd}}.
+#' @seealso \code{\link{ci_sd}} and \code{\link{stderr_var}}.
 ci_var <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
                    boot_type = c("bootstrapT", "percentile", "t", "bca"),
                    R = 10000, seed = NULL, ...) {

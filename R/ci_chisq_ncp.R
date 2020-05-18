@@ -22,6 +22,11 @@
 #' ci_chisq_ncp(chisq$statistic, df = chisq$parameter)
 #' ci_chisq_ncp(ir[, c("Species", "PL")])
 #' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
+#' @references
+#' \enumerate{
+#'   \item Kelley, K. (2007). Constructing confidence intervals for standardized effect sizes: Theory, application, and implementation. Journal of Statistical Software, 20 (8), 1–24.
+#'   \item Smithson, M. (2003). Confidence intervals. New York, NY: Sage Publications.
+#' }
 #' @seealso \code{\link{ci_cramersv}}.
 ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization

@@ -1,12 +1,13 @@
 #' Confidence Interval for the Non-Centrality Parameter of the F Distribution
 #'
-#' This function calculates confidence intervals for the non-centrality parameter of the F distribution based on test.
+#' This function calculates confidence intervals for the non-centrality parameter of the F distribution based on test inversion. It is based on the function \code{pf}, which - according to \code{?pf} - is not meant to be used with large non-centrality values. Thus, very large F values might lead to problematic results. This function is used mainly to calculate confidence intervals for the population R-squared.
+#'
+#' Note that for numeric reasons, lower limits below 0.0001 are set to 0.
 #' @importFrom stats lm pf optimize
 #' @param x The result of \code{lm} or the F test statistic.
-#' @param df1 The first degrees of freedom. Only used if \code{x} is a test statistic.
-#' @param df2 The second degrees of freedom. Only used if \code{x} is a test statistic.
+#' @param df1 The numerator degree of freedom. Only used if \code{x} is a test statistic.
+#' @param df2 The denominator degree of freedom. Only used if \code{x} is a test statistic.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @param lower_tol Values of the lower confidence limit below \code{lower_tol} are considered 0.
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
 #'   \item \code{conf.int}: The confidence interval.
@@ -18,15 +19,20 @@
 #' @examples
 #' fit <- lm(Sepal.Length ~ ., data = iris)
 #' ci_f_ncp(fit)
-#' ci_f_ncp(188.251, 5, 144)
-#' @seealso \code{\link{ci_chisq_ncp}}.
-ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_tol = 0.0001) {
+#' ci_f_ncp(x = 188.251, df1 = 5, df2 = 144)
+#' @references
+#' \enumerate{
+#'   \item Kelley, K. (2007). Constructing confidence intervals for standardized effect sizes: Theory, application, and implementation. Journal of Statistical Software, 20 (8), 1–24.
+#'   \item Smithson, M. (2003). Confidence intervals. New York, NY: Sage Publications.
+#' }
+#' @seealso \code{\link{ci_rsquared}}.
+ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_input(probs)
   dname <- deparse1(substitute(x))
   iprobs <- 1 - probs
-  stopifnot(inherits(x, "lm") ||
-              (is.numeric(x) && length(x) == 1L && !is.null(df1) && !is.null(df2)))
+  eps <- 0.0001
+  stopifnot(inherits(x, "lm") || is.numeric(x))
 
   # Distinguish input
   if (inherits(x, "lm")) {
@@ -38,6 +44,9 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_t
     df2 <- fstat[["dendf"]]
   }
   if (is.numeric(x)) {
+    stopifnot(length(x) == 1L,
+              !is.null(df1),
+              !is.null(df2))
     stat <- x
   }
 
@@ -46,8 +55,8 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_t
     lci <- 0
   } else {
     lci <- optimize(function(ncp) (pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1])^2,
-                    interval = c(0, stat))[["minimum"]]
-    if (lci < lower_tol) {
+                    interval = c(eps / 2, stat * df1))[["minimum"]]
+    if (lci < eps) {
       lci <- 0
     }
   }
@@ -57,7 +66,7 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_t
     uci <- Inf
   } else {
     uci <- optimize(function(ncp) (pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2])^2,
-                    interval = c(stat, stat * 4))[["minimum"]]
+                    interval = c(stat * (df1 - 1), stat * df1 * 4))[["minimum"]]
   }
 
   # Organize output

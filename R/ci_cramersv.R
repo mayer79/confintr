@@ -30,7 +30,10 @@
 #' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
 #' ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
 #' @references
-#' Smithson, Michael (2003). Confidence Intervals. Series: Quantitative Applications in the Social Sciences. SAGE Publications.
+#' \enumerate{
+#'   \item Kelley, K. (2007). Constructing confidence intervals for standardized effect sizes: Theory, application, and implementation. Journal of Statistical Software, 20 (8), 1–24.
+#'   \item Smithson, M. (2003). Confidence intervals. New York, NY: Sage Publications.
+#' }
 #' @seealso \code{\link{ci_chisq_ncp}}.
 ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
                         boot_type = c("percentile", "t", "bca"), R = 10000,

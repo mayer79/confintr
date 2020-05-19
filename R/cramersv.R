@@ -2,7 +2,6 @@
 #'
 #' This function calculates Cramér's V, a measure of association between two categorical variables. It is a scaled version of the chi-squared test statistic and lies between 0 and 1. It is calcuated as sqrt(chi-squared / (n * (k - 1))), where n is the number of observations and k is the smaller of the number of levels of the two variables.
 #'
-#' Note that the chi-squared test statistic is calculated without correction for the 2x2 case.
 #' @param x A \code{data.frame} with exactly two columns.
 #' @param correct Should Yate's continuity correction be applied for the 2x2 case? The default \code{FALSE} gives the usual Cramér's V.
 #' @return A numeric vector of length one.
@@ -18,9 +17,8 @@ cramersv <- function(x, correct = FALSE) {
   # Input check and initialization
   stopifnot(is.data.frame(x),
             ncol(x) == 2L)
-  chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
+  chisq <- chisq.test(x[, 1], x[, 2], correct = correct)
   stat <- as.numeric(chisq[["statistic"]])
-  df <- chisq[["parameter"]]
   n <- sum(chisq[["observed"]])
   k <- min(dim(chisq[["observed"]]))
 

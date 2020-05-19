@@ -1,8 +1,8 @@
 #' Confidence Interval for the Population Cramer's V
 #'
-#' This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on non-centrality parameter of the chis-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available. Bootstrap confidence intervals are calculated by the package "resample" with default "percentile". Note that bootstrapping Cramer's V is computationally expensive. Further note that a significant chi-squared test coincides with a positive lower confidence limit for Cramer's V.
+#' This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on non-centrality parameter of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available. Bootstrap confidence intervals are calculated by the package "resample" with default "percentile". Note that bootstrapping Cramer's V is computationally expensive. Further note that no Yate's correction for the 2x2 case is applied when calculating the chi-squared test statistic.
 #'
-#' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
+#' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this. Further note that for large chi-squared test statistics, the results might be unreliable (see \code{?pchisq}).
 #' @importFrom stats chisq.test complete.cases
 #' @importFrom resample bootstrap
 #' @param x A \code{data.frame} with exactly two columns.
@@ -11,7 +11,6 @@
 #' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param adjust By default, the confidence limits of the non-centrality parameter ncp of the chi-squared distribution are shifted upwards by the degrees of freedom, reflecting the fact that a chi-squared distribution has expectation df + ncp.
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
@@ -29,11 +28,7 @@
 #' ci_cramersv(ir[, c("Species", "PL")])
 #' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
 #' ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
-#' @references
-#' \enumerate{
-#'   \item Kelley, K. (2007). Constructing confidence intervals for standardized effect sizes: Theory, application, and implementation. Journal of Statistical Software, 20 (8), 1–24.
-#'   \item Smithson, M. (2003). Confidence intervals. New York, NY: Sage Publications.
-#' }
+#' @references Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_chisq_ncp}}.
 ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
                         boot_type = c("percentile", "t", "bca"), R = 10000,
@@ -54,7 +49,7 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap
     n <- sum(chisq[["observed"]])
     k <- min(dim(chisq[["observed"]]))
     df <- chisq[["parameter"]]
-    cint <- sqrt((ncp + adjust * df) / (n * (k - 1)))
+    cint <- sqrt((ncp + df) / (n * (k - 1)))
   } else if (type == "bootstrap") {
     S <- bootstrap(x, statistic = cramersv, R = R, seed = seed)
     cint <- ci_boot(S, boot_type, probs, ...)

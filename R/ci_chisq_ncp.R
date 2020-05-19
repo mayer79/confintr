@@ -2,7 +2,7 @@
 #'
 #' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on test inversion.
 #'
-#' Note that no correction is applied for 2x2 tables. Further note that lower limits below 0.0001 are set to 0.
+#' Note that no correction is applied for 2x2 tables. Further note that lower limits below 0.0001 are set to 0 and that for large chi-squared test statistics, the results might be unreliable (see \code{?pchisq}).
 #' @importFrom stats chisq.test pchisq optimize
 #' @param x The chi-squared test statistic or a \code{data.frame} with exactly two columns.
 #' @param df The degrees of freedom. Only used if \code{x} is a test statistic.
@@ -10,7 +10,7 @@
 #' @return A list with class \code{htest} containing these components:
 #' \itemize{
 #'   \item \code{conf.int}: The confidence interval.
-#'   \item \code{estimate}: NA.
+#'   \item \code{estimate}: The estimated non-centrality parameter.
 #'   \item \code{method}: A character string describing the applied method.
 #'   \item \code{data.name}: A character string with the name(s) of the data.
 #' }
@@ -22,11 +22,7 @@
 #' ci_chisq_ncp(chisq$statistic, df = chisq$parameter)
 #' ci_chisq_ncp(ir[, c("Species", "PL")])
 #' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
-#' @references
-#' \enumerate{
-#'   \item Kelley, K. (2007). Constructing confidence intervals for standardized effect sizes: Theory, application, and implementation. Journal of Statistical Software, 20 (8), 1–24.
-#'   \item Smithson, M. (2003). Confidence intervals. New York, NY: Sage Publications.
-#' }
+#' @references Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_cramersv}}.
 ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
@@ -67,7 +63,7 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
 
   # Organize output
   cint <- check_output(c(lci, uci), probs, c(0, Inf))
-  prepare_output(cint, estimate = NA, probs = probs, type = "chi-squared",
+  prepare_output(cint, estimate = stat - df, probs = probs, type = "chi-squared",
                  boot_type = NA, data_name = dname,
                  estimate_name = "chi-squared non-centrality parameter")
 }

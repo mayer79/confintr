@@ -1,6 +1,6 @@
 #' Moments
 #'
-#' Functions to calculate moments, skewness, and Pearson's measure of kurtosis. The latter is defined as the ratio of the 4th central moment and the squared second central moment. For a theoretic normal distribution, it equals 3.
+#' Functions to calculate moments, skewness, and Pearson's measure of kurtosis. The latter is defined as the ratio of the 4th central moment and the squared second central moment. For a normal distribution, the kurtosis equals 3.
 #'
 #' @name moments
 #' @param z Numeric vector.

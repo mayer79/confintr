@@ -8,7 +8,8 @@
 check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
   stopifnot(length(ci) == 2L,
             length(probs) == 2L,
-            length(parameter_range) == 2L)
+            length(parameter_range) == 2L,
+            ci[1] <= ci[2])
   w <- which(probs %in% 0:1)
   if (length(w)) {
     ci[w] <- parameter_range[w]

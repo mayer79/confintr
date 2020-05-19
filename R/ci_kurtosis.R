@@ -3,7 +3,7 @@
 #' This function calculates bootstrap confidence intervals for the population kurtosis using the R package "resample". The default Bootstrap type is "percentile". "bootstrapT" is not available since there is no simple general formula for the standard error of the kurtosis.
 #'
 #' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
-#' Further note that we use the version of the kurtosis that equals 3 for a theoretical normal distribution.
+#' Further note that we use the version of the kurtosis that equals 3 for a normal distribution.
 #' @importFrom resample bootstrap
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
@@ -24,8 +24,7 @@
 #' set.seed(1)
 #' x <- rnorm(100)
 #' ci_kurtosis(x, R = 1000)
-#' @references
-#' Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>.
+#' @seealso \code{\link{moments}}.
 ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("percentile", "t", "bca"),
                         R = 10000, seed = NULL, ...) {

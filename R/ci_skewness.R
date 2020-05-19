@@ -23,8 +23,7 @@
 #' set.seed(1)
 #' x <- rnorm(100)
 #' ci_skewness(x, R = 1000)
-#' @references
-#' Tim Hesterberg (2015). resample: Resampling Functions. R package version 0.4. <CRAN.R-project.org/package=resample>.
+#' @seealso \code{\link{moments}}.
 ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("percentile", "t", "bca"),
                         R = 10000, seed = NULL, ...) {

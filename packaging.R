@@ -19,11 +19,11 @@ pkg <- file.path("release", "cis")
 create_package(
   pkg,
   fields = list(
-    Title = "Non-Standard Confidence Intervals",
+    Title = "Confidence Intervals",
     Type = "Package",
     Version = "0.1.0",
     Date = Sys.Date(),
-    Description = "Allows calculation of classic and bootstrap confidence intervals for different parameters such as the population mean.",
+    Description = "Allows calculation of classic and bootstrap confidence intervals for different parameters such as the population mean, variance, skewness, kurtosis, Cramer's V, R-squared, correlations, quantiles and more.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
     URL = "https://github.com/mayer79/cis",
     BugReports = "https://github.com/mayer79/cis/issues",

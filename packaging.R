@@ -23,7 +23,7 @@ create_package(
     Type = "Package",
     Version = "0.1.0",
     Date = Sys.Date(),
-    Description = "Allows calculation of classic and bootstrap confidence intervals for different parameters such as the population mean, variance, skewness, kurtosis, Cramer's V, R-squared, correlations, quantiles and more.",
+    Description = "Allows calculation of classic and bootstrap confidence intervals for different parameters such as the population mean, variance, skewness, kurtosis, Cramer's V, R-squared, quantiles, different types of correlaction measures etc.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
     URL = "https://github.com/mayer79/cis",
     BugReports = "https://github.com/mayer79/cis/issues",

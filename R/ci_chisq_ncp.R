@@ -29,6 +29,7 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
   check_input(probs)
   dname <- deparse1(substitute(x))
   iprobs <- 1 - probs
+  eps <- 0.0001
   stopifnot(is.data.frame(x) || is.numeric(x))
 
   # Distinguish input
@@ -47,8 +48,8 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
     lci <- 0
   } else {
     lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
-                    interval = c(0.00005, stat))[["minimum"]]
-    if (lci < 0.0001) {
+                    interval = c(eps / 2, stat))[["minimum"]]
+    if (lci < eps) {
       lci <- 0
     }
   }

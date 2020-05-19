@@ -12,8 +12,6 @@
 #' x <- ci_mean(1:100)
 #' x
 print.cint <- function(x, digits = getOption("digits"), ...) {
-  cat("\n")
-  
   # Calculate prefix from "probs" used in methods info
   if (any(x$probs %in% 0:1)) {
     prefx <- "One-sided"
@@ -24,29 +22,34 @@ print.cint <- function(x, digits = getOption("digits"), ...) {
   }
   
   # Method info
-  cat(strwrap(paste0(prefx, " ",
-                     format(100 * (probs[2] - probs[1])), "% ",
-                     x$method, " confidence interval for the ", x$parameter, 
-                     x$info),
-              prefix = "\t"), sep = "\n")
+  cat("\n")
+  cat(strwrap(paste(prefx, .format_p(diff(x$probs), digits = digits),
+              x$method, "confidence interval for the", x$parameter, x$info),
+      prefix = "\t"), sep = "\n")
   cat("\n")
   
   # Estimate
   cat("Sample estimate:", format(x$estimate, digits = digits), "\n")
   
   # Confidence interval
-  cat("Confidence interval:\n ",
-    paste(format(x$cint[1:2], digits = digits), collapse = " "), "\n", sep = "")
+  names(x$cint) <- .format_p(x$probs, digits = digits)
+  cat("Confidence interval:\n")
+  print(x$cint[1:2], digits = digits)
 
   cat("\n")
   invisible(x)
 }
 
-# x <- list(cint = c(0, 1),
-#           estimate = 0.5,
-#           parameter = "true Pearson correlation",
-#           probs = c(0.0, 0.975),
-#           method = "Bootstrap t",
-#           info = "")
-# class(x) <- "cint"
-# x
+# Helper function
+.format_p <- function(z, digits = max(2L, getOption("digits"))) {
+  paste0(format(100 * z, digits = digits), "%")
+}
+
+x <- list(cint = c(0.2323, 0.745345),
+          estimate = 0.5567566575677,
+          parameter = "true Pearson correlation",
+          probs = c(0.0, 0.9999),
+          method = "Bootstrap t",
+          info = "")
+class(x) <- "cint"
+x

@@ -1,0 +1,52 @@
+#' Print a cint Object
+#'
+#' Print method for an object of class \code{cint}.
+#'
+#' @param x A on object of class \code{cint}.
+#' @param digits Number of digits used to format sample estimate and confidence limits.
+#' @param ... Further arguments passed from other methods.
+#' @return Invisibly, the input is returned.
+#' @method print cint
+#' @export
+#' @examples
+#' x <- ci_mean(1:100)
+#' x
+print.cint <- function(x, digits = getOption("digits"), ...) {
+  cat("\n")
+  
+  # Calculate prefix from "probs" used in methods info
+  if (any(x$probs %in% 0:1)) {
+    prefx <- "One-sided"
+  } else if (!isTRUE(all.equal(x$probs[1], 1 - x$probs[2]))) {
+    prefx <- "Asymmetric two-sided"
+  } else {
+    prefx <- "Two-sided"
+  }
+  
+  # Method info
+  cat(strwrap(paste0(prefx, " ",
+                     format(100 * (probs[2] - probs[1])), "% ",
+                     x$method, " confidence interval for the ", x$parameter, 
+                     x$info),
+              prefix = "\t"), sep = "\n")
+  cat("\n")
+  
+  # Estimate
+  cat("Sample estimate:", format(x$estimate, digits = digits), "\n")
+  
+  # Confidence interval
+  cat("Confidence interval:\n ",
+    paste(format(x$cint[1:2], digits = digits), collapse = " "), "\n", sep = "")
+
+  cat("\n")
+  invisible(x)
+}
+
+# x <- list(cint = c(0, 1),
+#           estimate = 0.5,
+#           parameter = "true Pearson correlation",
+#           probs = c(0.0, 0.975),
+#           method = "Bootstrap t",
+#           info = "")
+# class(x) <- "cint"
+# x

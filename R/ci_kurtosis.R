@@ -12,12 +12,14 @@
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
-#' @return A list with class \code{htest} containing these components:
+#' @return A list with class \code{cint} containing these components:
 #' \itemize{
-#'   \item \code{conf.int}: The confidence interval.
-#'   \item \code{estimate}: The parameter estimate.
-#'   \item \code{method}: A character string describing the applied method.
-#'   \item \code{data.name}: A character string with the name(s) of the data.
+#'   \item \code{parameter}: The parameter in question.
+#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{estimate}: The estimate for the parameter.
+#'   \item \code{probs}: A vector of error probabilities.
+#'   \item \code{type}: The type of the interval.
+#'   \item \code{info}: An additional description text for the interval.
 #' }
 #' @export
 #' @examples
@@ -32,7 +34,6 @@ ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
   check_input(probs)
-  dname <- deparse1(substitute(x))
 
   # Calculate CI
   x <- x[!is.na(x)]
@@ -41,6 +42,10 @@ ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 
   # Organize output
   cint <- check_output(cint, probs, c(-Inf, Inf))
-  prepare_output(cint, estimate = kurtosis(x), probs = probs, type = type,
-                 boot_type = boot_type, data_name = dname, estimate_name = "kurtosis")
+  out <- list(parameter = "population kurtosis",
+              interval = cint, estimate = kurtosis(x),
+              probs = probs, type = type,
+              info = boot_info(type, boot_type, R))
+  class(out) <- "cint"
+  out
 }

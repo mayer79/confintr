@@ -12,37 +12,37 @@
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
 #' @param ... Further arguments passed to \code{resample::CI.boot_type}.
-#' @return A list with class \code{htest} containing these components:
+#' @return A list with class \code{cint} containing these components:
 #' \itemize{
-#'   \item \code{conf.int}: The confidence interval.
-#'   \item \code{estimate}: The parameter estimate.
-#'   \item \code{method}: A character string describing the applied method.
-#'   \item \code{data.name}: A character string with the name(s) of the data.
+#'   \item \code{parameter}: The parameter in question.
+#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{estimate}: The estimate for the parameter.
+#'   \item \code{probs}: A vector of error probabilities.
+#'   \item \code{type}: The type of the interval.
+#'   \item \code{info}: An additional description text for the interval.
 #' }
 #' @export
 #' @examples
-#' chisq <- chisq.test(iris$Species, iris$Petal.Width > 1)
-#' ci_cramersv(chisq)
 #' ir <- iris
 #' ir$PL <- ir$Petal.Width > 1
 #' ci_cramersv(ir[, c("Species", "PL")])
 #' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
 #' ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
-#' @references Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+#' @references
+#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_chisq_ncp}}.
-ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap"),
+ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                         boot_type = c("percentile", "t", "bca"), R = 10000,
                         seed = NULL, adjust = TRUE, lower_tol = 0.0001, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
   check_input(probs)
-  dname <- deparse1(substitute(x))
   stopifnot(is.data.frame(x), ncol(x) == 2L)
 
   # Calculate CI
-  if (type == "chisq") {
-    ncp <- ci_chisq_ncp(x, probs = probs)[["conf.int"]]
+  if (type == "chi-squared") {
+    ncp <- ci_chisq_ncp(x, probs = probs)[["interval"]]
 
     # Scale to Cramer's V
     chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
@@ -60,6 +60,10 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chisq", "bootstrap
 
   # Organize output
   cint <- check_output(cint, probs, c(0, 1))
-  prepare_output(cint, estimate = cramersv(x), probs = probs, type = type,
-                 boot_type = boot_type, data_name = dname, estimate_name = "Cramer's V")
+  out <- list(parameter = "population Cramér's V",
+              interval = cint, estimate = cramersv(x),
+              probs = probs, type = type,
+              info = boot_info(type, boot_type, R))
+  class(out) <- "cint"
+  out
 }

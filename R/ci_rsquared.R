@@ -8,12 +8,14 @@
 #' @param df1 The numerator degree of freedom. Only used if \code{x} is a test statistic.
 #' @param df2 The denominator degree of freedom. Only used if \code{x} is a test statistic.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @return A list with class \code{htest} containing these components:
+#' @return A list with class \code{cint} containing these components:
 #' \itemize{
-#'   \item \code{conf.int}: The confidence interval.
-#'   \item \code{estimate}: The observed R-squared.
-#'   \item \code{method}: A character string describing the applied method.
-#'   \item \code{data.name}: A character string with the name(s) of the data.
+#'   \item \code{parameter}: The parameter in question.
+#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{estimate}: The estimate for the parameter.
+#'   \item \code{probs}: A vector of error probabilities.
+#'   \item \code{type}: The type of the interval.
+#'   \item \code{info}: An additional description text for the interval.
 #' }
 #' @export
 #' @examples
@@ -21,12 +23,11 @@
 #' ci_rsquared(fit)
 #' ci_rsquared(188.251, 5, 144)
 #' @references
-#' @references Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_f_ncp}}.
 ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_tol = 0.0001) {
   # Input checks and initialization
   check_input(probs)
-  dname <- deparse1(substitute(x))
   iprobs <- 1 - probs
   stopifnot(inherits(x, "lm") || is.numeric(x))
 
@@ -47,13 +48,16 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lowe
   }
 
   # Calculate limits for ncp
-  ncp <- ci_f_ncp(stat, df1 = df1, df2 = df2, probs = probs)[["conf.int"]]
+  ncp <- ci_f_ncp(stat, df1 = df1, df2 = df2, probs = probs)[["interval"]]
   cint <- ncp_to_r2(ncp, df1, df2)
 
   # Organize output
   cint <- check_output(cint, probs, c(0, 1))
-  prepare_output(cint, estimate = f_to_r2(stat, df1, df2), probs = probs, type = "F",
-                 boot_type = NA, data_name = dname, estimate_name = "R-squared")
+  out <- list(interval = cint, estimate = f_to_r2(stat, df1, df2),
+              parameter = "population R-squared",
+              probs = probs, type = "F", info = "")
+  class(out) <- "cint"
+  out
 }
 
 # Helper functions

@@ -1,18 +1,17 @@
 #' Print a cint Object
 #'
-#' Print method for an object of class \code{cint}.
+#' Print type for an object of class \code{cint}.
 #'
 #' @param x A on object of class \code{cint}.
 #' @param digits Number of digits used to format sample estimate and confidence limits.
-#' @param ... Further arguments passed from other methods.
+#' @param ... Further arguments passed from other types.
 #' @return Invisibly, the input is returned.
 #' @method print cint
 #' @export
 #' @examples
-#' x <- ci_mean(1:100)
-#' x
+#' ci_mean(1:100)
 print.cint <- function(x, digits = getOption("digits"), ...) {
-  # Calculate prefix from "probs" used in methods info
+  # Calculate prefix from "probs" used in types info
   if (any(x$probs %in% 0:1)) {
     prefx <- "One-sided"
   } else if (!isTRUE(all.equal(x$probs[1], 1 - x$probs[2]))) {
@@ -20,36 +19,33 @@ print.cint <- function(x, digits = getOption("digits"), ...) {
   } else {
     prefx <- "Two-sided"
   }
-  
-  # Method info
+
+  # type info
   cat("\n")
   cat(strwrap(paste(prefx, .format_p(diff(x$probs), digits = digits),
-              x$method, "confidence interval for the", x$parameter, x$info),
+              x$type, "confidence interval for the", x$parameter, x$info),
       prefix = "\t"), sep = "\n")
   cat("\n")
-  
+
   # Estimate
   cat("Sample estimate:", format(x$estimate, digits = digits), "\n")
-  
+
   # Confidence interval
-  names(x$cint) <- .format_p(x$probs, digits = digits)
+  names(x$interval) <- .format_p(x$probs, digits = digits)
   cat("Confidence interval:\n")
-  print(x$cint[1:2], digits = digits)
+  print(x$interval[1:2], digits = digits)
 
   cat("\n")
   invisible(x)
 }
 
-# Helper function
+# Helper functions
 .format_p <- function(z, digits = max(2L, getOption("digits"))) {
   paste0(format(100 * z, digits = digits), "%")
 }
 
-x <- list(cint = c(0.2323, 0.745345),
-          estimate = 0.5567566575677,
-          parameter = "true Pearson correlation",
-          probs = c(0.0, 0.9999),
-          method = "Bootstrap t",
-          info = "")
-class(x) <- "cint"
-x
+boot_info <- function(type, boot_type, R) {
+  if (type == "bootstrap") {
+    sprintf("based on %s bootstrap samples and the '%s' method", R, boot_type)
+  }
+}

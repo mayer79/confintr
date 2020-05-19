@@ -7,12 +7,14 @@
 #' @param x The chi-squared test statistic or a \code{data.frame} with exactly two columns.
 #' @param df The degrees of freedom. Only used if \code{x} is a test statistic.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @return A list with class \code{htest} containing these components:
+#' @return A list with class \code{cint} containing these components:
 #' \itemize{
-#'   \item \code{conf.int}: The confidence interval.
-#'   \item \code{estimate}: The estimated non-centrality parameter.
-#'   \item \code{method}: A character string describing the applied method.
-#'   \item \code{data.name}: A character string with the name(s) of the data.
+#'   \item \code{parameter}: The parameter in question.
+#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{estimate}: The estimate for the parameter.
+#'   \item \code{probs}: A vector of error probabilities.
+#'   \item \code{type}: The type of the interval.
+#'   \item \code{info}: An additional description text for the interval.
 #' }
 #' @export
 #' @examples
@@ -22,12 +24,12 @@
 #' ci_chisq_ncp(chisq$statistic, df = chisq$parameter)
 #' ci_chisq_ncp(ir[, c("Species", "PL")])
 #' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
-#' @references Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+#' @references
+#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_cramersv}}.
 ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_input(probs)
-  dname <- deparse1(substitute(x))
   iprobs <- 1 - probs
   eps <- 0.0001
   stopifnot(is.data.frame(x) || is.numeric(x))
@@ -64,8 +66,10 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
 
   # Organize output
   cint <- check_output(c(lci, uci), probs, c(0, Inf))
-  prepare_output(cint, estimate = stat - df, probs = probs, type = "chi-squared",
-                 boot_type = NA, data_name = dname,
-                 estimate_name = "chi-squared non-centrality parameter")
+  out <- list(parameter = "non-centrality parameter of the chi-squared distribution",
+              interval = cint, estimate = stat - df,
+              probs = probs, type = "chi-squared", info = "")
+  class(out) <- "cint"
+  out
 }
 

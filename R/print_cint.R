@@ -12,9 +12,9 @@
 #' ci_mean(1:100)
 print.cint <- function(x, digits = getOption("digits"), ...) {
   # Calculate prefix from "probs" used in types info
-  if (any(x$probs %in% 0:1)) {
+  if (is_onesided(x$probs)) {
     prefx <- "One-sided"
-  } else if (!isTRUE(all.equal(x$probs[1], 1 - x$probs[2]))) {
+  } else if (!is_symmetric(x$probs)) {
     prefx <- "Asymmetric two-sided"
   } else {
     prefx <- "Two-sided"
@@ -48,4 +48,12 @@ boot_info <- function(type, boot_type, R) {
   if (type == "bootstrap") {
     sprintf("based on %s bootstrap samples and the '%s' method", R, boot_type)
   }
+}
+
+is_symmetric <- function(probs) {
+  isTRUE(all.equal(probs[1], 1 - probs[2]))
+}
+
+is_onesided <- function(probs) {
+  any(probs %in% 0:1)
 }

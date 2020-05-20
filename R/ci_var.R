@@ -51,7 +51,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
     cint <- estimate * (n - 1) / qchisq(1 - probs, df = n - 1)
   } else if (type == "bootstrap") {
     if (boot_type == "bootstrapT") {
-      S <- bootstrap(x, statistic = c(var = var(x), sderr = stderr_var(x)), R = R, seed = seed)
+      S <- bootstrap(x, statistic = c(var = var(x), sderr = se_var(x)), R = R, seed = seed)
     } else {
       S <- bootstrap(x, statistic = var, R = R, seed = seed)
     }

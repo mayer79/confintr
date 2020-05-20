@@ -10,6 +10,7 @@ check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
             length(probs) == 2L,
             length(parameter_range) == 2L,
             ci[1] <= ci[2])
+  ci <- as.numeric(ci)
   w <- which(probs %in% 0:1)
   if (length(w)) {
     ci[w] <- parameter_range[w]

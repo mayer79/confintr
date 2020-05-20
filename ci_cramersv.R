@@ -7,7 +7,7 @@
 #' @importFrom resample bootstrap
 #' @param x A \code{data.frame} with exactly two columns.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @param type Type of confidence interval. One of "chisq" (default) or "bootstrap".
+#' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
@@ -31,9 +31,10 @@
 #' @references
 #' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_chisq_ncp}}.
-ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
-                        boot_type = c("percentile", "t", "bca"), R = 10000,
-                        seed = NULL, adjust = TRUE, lower_tol = 0.0001, ...) {
+ci_cramersv <- function(x, probs = c(0.025, 0.975),
+                        type = c("chi-squared", "bootstrap"),
+                        boot_type = c("percentile", "t", "bca"),
+                        R = 10000, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

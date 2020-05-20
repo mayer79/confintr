@@ -24,41 +24,18 @@
 #' @export
 #' @examples
 #' x <- 1:100
+#' sd(x)
 #' ci_sd(x)
-#' sqrt(ci_var(x)$cint)
+#' sqrt(ci_var(x)$interval)
 #' ci_sd(x, type = "bootstrap", R = 1000)
 #' @seealso \code{\link{ci_var}}.
 ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                     boot_type = c("bootstrapT", "percentile", "t", "bca"),
                     R = 10000, seed = NULL, ...) {
-  # Input checks and initialization
-  type <- match.arg(type)
-  boot_type <- match.arg(boot_type)
-  check_input(probs)
-
-  # Remove NAs and calculate estimate
-  x <- x[!is.na(x)]
-  estimate <- sd(x)
-  n <- length(x)
-
-  # Calculate CI
-  if (type == "chi-squared") {
-    cint <- estimate * sqrt((n - 1) / qchisq(1 - probs, df = n - 1))
-  } else if (type == "bootstrap") {
-    if (boot_type == "bootstrapT") {
-      S <- bootstrap(x, statistic = c(var = var(x), sderr = stderr_var(x)), R = R, seed = seed)
-    } else {
-      S <- bootstrap(x, statistic = var, R = R, seed = seed)
-    }
-    cint <- sqrt(ci_boot(S, boot_type, probs, ...))
-  }
-
-  # Organize output
-  cint <- check_output(cint, probs, c(0, Inf))
-  out <- list(parameter = "population standard deviation",
-              interval = cint, estimate = estimate,
-              probs = probs, type = type,
-              info = boot_info(type, boot_type, R))
-  class(out) <- "cint"
+  out <- ci_var(x = x, probs = probs, type = type, boot_type = boot_type,
+                R = R, seed = seed, ...)
+  out$estimate <- sqrt(out$estimate)
+  out$interval <- sqrt(out$interval)
+  out$parameter <- "population standard deviation"
   out
 }

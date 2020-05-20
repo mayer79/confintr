@@ -28,7 +28,8 @@
 #' ci_mean(x, type = "Wald")
 #' ci_mean(x, type = "bootstrap", R = 1000)
 #' ci_mean(x, type = "bootstrap", boot_type = "t", R = 1000)
-#' @references Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+#' @references
+#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap"),
                     boot_type = c("bootstrapT", "percentile", "t", "bca"),
                     R = 10000, seed = NULL, ...) {

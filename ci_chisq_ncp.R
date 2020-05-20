@@ -2,11 +2,15 @@
 #'
 #' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on test inversion.
 #'
-#' Note that no correction is applied for 2x2 tables. Further note that lower limits below 0.0001 are set to 0 and that for large chi-squared test statistics, the results might be unreliable (see \code{?pchisq}).
+#' Note that no continuity correction is applied for 2x2 tables. Further note that lower limits below 0.0001 are set to 0 and that for large chi-squared test statisticss might provide unreliable results (see \code{?pchisq}).
 #' @importFrom stats chisq.test pchisq optimize
 #' @param x The chi-squared test statistic or a \code{data.frame} with exactly two columns.
 #' @param df The degrees of freedom. Only used if \code{x} is a test statistic.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap". "bootstrap" is only supported if \code{x} is a \code{data.frame}.
+#' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
+#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
+#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
 #' @return A list with class \code{cint} containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -27,8 +31,13 @@
 #' @references
 #' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_cramersv}}.
-ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
+ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975),
+                         type = c("chi-squared", "bootstrap"),
+                         boot_type = c("percentile", "t", "bca"), R = 10000,
+                         seed = NULL, ) {
   # Input checks and initialization
+  type <- match.arg(type)
+  boot_type <- match.arg(boot_type)
   check_input(probs)
   iprobs <- 1 - probs
   eps <- 0.0001
@@ -37,39 +46,44 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975)) {
   # Distinguish input
   if (is.data.frame(x)) {
     stopifnot(ncol(x) == 2L)
-    chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
-    stat <- chisq[["statistic"]]
-    df <- chisq[["parameter"]]
   } else {
     stopifnot(length(x) == 1L, !is.null(df))
     stat <- x
   }
 
-  # Calculate lower limit
-  if (probs[1] == 0) {
-    lci <- 0
-  } else {
-    lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
-                    interval = c(eps / 2, stat))[["minimum"]]
-    if (lci < eps) {
-      lci <- 0
-    }
-  }
+  if (type == "chi-squared") {
+    # Extract results
+    chisq <- chisq.test(x[, 1], x[, 2], correct = FALSE)
+    stat <- chisq[["statistic"]]
+    df <- chisq[["parameter"]]
 
-  # Calculate upper limit
-  if (probs[2] == 1) {
-    uci <- Inf
-  } else {
-    uci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[2])^2,
-                    interval = c(stat - df, 4 * stat))[["minimum"]]
+    if (probs[1] == 0) {
+      lci <- 0
+    } else {
+      lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
+                      interval = c(eps / 2, stat))[["minimum"]]
+    }
+    if (probs[2] == 1) {
+      uci <- Inf
+    } else {
+      uci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[2])^2,
+                      interval = c(stat - df, 4 * stat))[["minimum"]]
+    cint <- c(lci, uci)
+  }
+  } else if (type == "bootstrap") {
+    S <- bootstrap(x, statistic = chisq.test(x = x[, 1], y = x[, 2], correct = FALSE)$statistic,
+                   R = R, seed = seed)
+    cint <- ci_boot(S, boot_type, probs, ...)
+  }
+  if (cint[1] < eps) {
+    cint[1] <- 0
   }
 
   # Organize output
-  cint <- check_output(c(lci, uci), probs, c(0, Inf))
+  cint <- check_output(cint, probs, c(0, Inf))
   out <- list(parameter = "non-centrality parameter of the chi-squared distribution",
               interval = cint, estimate = stat - df,
               probs = probs, type = "chi-squared", info = "")
   class(out) <- "cint"
   out
 }
-

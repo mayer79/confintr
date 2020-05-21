@@ -14,7 +14,7 @@ library(devtools)
 
 # Create a new package
 dir.create(file.path("release"))
-pkg <- file.path("release", "cis")
+pkg <- file.path("release", "confintr")
 
 create_package(
   pkg,
@@ -27,8 +27,8 @@ create_package(
     Many of the classic confidence intervals are described in Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications. Bootstrap confidence intervals are calculated through R package 'boot'.
     Both one- and two-sided intervals are supported.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
-    URL = "https://github.com/mayer79/cis",
-    BugReports = "https://github.com/mayer79/cis/issues",
+    URL = "https://github.com/mayer79/confintr",
+    BugReports = "https://github.com/mayer79/confintr/issues",
     Depends = "R (>= 3.1.0)",
     VignetteBuilder = "knitr",
     License = "GPL(>= 2)",
@@ -57,7 +57,7 @@ devtools::document(pkg)
 
 if (FALSE) {
   # Copy vignette
-  # use_vignette(name = "cis", title = "cis")
+  # use_vignette(name = "confintr", title = "confintr")
   dir.create(file.path(pkg, "vignettes"))
   dir.create(file.path(pkg, "doc"))
   dir.create(file.path(pkg, "Meta"))

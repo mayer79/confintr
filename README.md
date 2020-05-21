@@ -1,6 +1,6 @@
-# cis
+# confintr
 
-The `cis` package offers classic and bootstrap confidence intervals for the following parameters:
+The `confintr` package offers classic and bootstrap confidence intervals for the following parameters:
 
 - mean,
 
@@ -24,19 +24,19 @@ Both one- and two-sided intervals are supported.
 
 From CRAN:
 ``` r
-install.packages("cis")
+install.packages("confintr")
 ```
 
 Latest version from github:
 ``` r
 # library(devtools)
-install_github("mayer79/cis")
+install_github("mayer79/confintr")
 ```
 
 ## Teaser
 
 ``` r
-library(cis)
+library(confintr)
 
 # Mean
 ci_mean(1:100)

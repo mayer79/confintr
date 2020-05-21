@@ -24,27 +24,6 @@ check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
   out
 }
 
-# Apply Bootstrap Confidence Interval to result of bootstrap
-#' @importFrom boot boot.ci
-ci_boot <- function(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs, ...) {
-  boot_type <- match.arg(boot_type)
-  if (probs[1] == 0) {
-    conf <- probs[2]
-  } else if (probs[2] == 1) {
-    conf <- 1 - probs[1]
-  } else {
-    conf <- c(1 - 2 * probs[1], 2 * probs[2] - 1)
-  }
-  cint <- boot.ci(S, conf = conf, type = boot_type, ...)[[map_boot_type(boot_type)]]
-  m <- ncol(cint)
-  if (probs[1] == 0) {
-    return(c(-Inf, cint[1, m]))
-  } else if (probs[2] == 1) {
-    return(c(cint[1, m - 1], Inf))
-  }
-  c(cint[1, m - 1], cint[2, m])
-}
-
 # Map boot type to a nice name and also to the output of boot.ci
 map_boot_type <- function(ty) {
   out <- c(norm = "normal", basic = "basic", stud = "student",

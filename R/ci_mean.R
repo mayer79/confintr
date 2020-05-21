@@ -25,9 +25,9 @@
 #' @examples
 #' x <- 1:100
 #' ci_mean(x)
-#' ci_mean(x, type = "Wald")
-#' ci_mean(x, type = "bootstrap", R = 1000)
-#' ci_mean(x, type = "bootstrap", R = 1000)
+#' ci_mean(x, type = "bootstrap", R = 1000, seed = 1)
+#' ci_mean(x, type = "bootstrap", R = 1000, probs = c(0.025, 1), seed = 1)
+#' ci_mean(x, type = "bootstrap", R = 1000, probs = c(0, 0.975), seed = 1)
 #' ci_mean(x, type = "bootstrap", boot_type = "bca", R = 1000)
 #' @references
 #' \enumerate{

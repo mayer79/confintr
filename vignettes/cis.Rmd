@@ -26,23 +26,23 @@ The aim of this vignette is to introduce the R package `cis` for calculating cla
 
 Confidence intervals for the following parameters are available:
 
-- mean,
+- mean (Student, Wald, bootstrap),
 
-- proportion,
+- proportion (Wilson, Clopper-Pearson, Agresti-Coutts, bootstrap),
 
-- median and other quantiles,
+- median and other quantiles (distribution-free binomial and bootstrap),
 
-- variance and standard deviation,
+- variance and standard deviation (chi-squared, bootstrap),
 
-- skewness and kurtosis,
+- skewness and kurtosis (bootstrap only),
 
-- R-squared and the non-centrality parameter of the F distribution,
+- R-squared and the non-centrality parameter of the F distribution (parametric),
 
-- Cramér's V and the non-centrality parameter of the chi-squared distribution,
+- Cramér's V and the non-centrality parameter of the chi-squared distribution (parametric and bootstrap),
 
-- Pearson-, Spearman-, Kendall correlation coefficients
+- Pearson-, Spearman-, Kendall correlation coefficients (normal for Pearson, bootstrap)
 
-Many of the classic confidence intervals are described in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019].
+Many of the classic confidence intervals are discussed in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019].
 
 ## Installation
 
@@ -65,6 +65,9 @@ library(cis)
 # Mean
 ci_mean(1:100)
 ci_mean(1:100, type = "bootstrap")
+
+# 95% value at risk
+ci_quantile(rexp(1000), q = 0.95)
 
 # Correlation
 ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 1000)

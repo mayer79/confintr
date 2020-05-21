@@ -4,6 +4,8 @@ The `cis` package offers classic and bootstrap confidence intervals for the foll
 
 - mean,
 
+- quantiles (e.g. the median),
+
 - proportion,
 
 - variance and standard deviation,
@@ -14,7 +16,9 @@ The `cis` package offers classic and bootstrap confidence intervals for the foll
 
 - Cramér's V and the non-centrality parameter of the chi-squared distribution,
 
-- Pearson-, Spearman-, Kendall correlation coefficients
+- Pearson-, Spearman-, Kendall correlation coefficients.
+
+The package will be extended in the future.
 
 ## Installation
 
@@ -37,6 +41,9 @@ library(cis)
 # Mean
 ci_mean(1:100)
 ci_mean(1:100, type = "bootstrap")
+
+# 95% value at risk
+ci_quantile(rexp(1000), q = 0.95)
 
 # Correlation
 ci_cor(iris[1:2], method = "spearman", type = "bootstrap")

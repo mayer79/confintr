@@ -3,7 +3,7 @@
 #=====================================================================================
 
 if (FALSE) {
-  library(resample)
+  library(boot)
   lapply(list.files("R", full.names = TRUE), source)
 }
 
@@ -23,8 +23,8 @@ create_package(
     Type = "Package",
     Version = "0.1.0",
     Date = Sys.Date(),
-    Description = "Allows calculation of classic and bootstrap confidence intervals for different parameters such as the population mean, variance, skewness, kurtosis, Cramer's V, R-squared, quantiles, different types of correlaction measures etc.
-    Many classic confidence intervals are described in Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.",
+    Description = "Allows calculation of classic and bootstrap confidence intervals for different parameters such as the population mean, variance, skewness, kurtosis, Cramer's V, R-squared, quantiles, proportions, different types of correlaction measures etc.
+    Many classic confidence intervals are described in Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications. Bootstrap confidence intervals are calculated through R package 'boot'.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
     URL = "https://github.com/mayer79/cis",
     BugReports = "https://github.com/mayer79/cis/issues",
@@ -36,7 +36,7 @@ create_package(
 file.copy(file.path(pkg, "DESCRIPTION"), to = getwd(), overwrite = TRUE)
 # Use package has no option to look for pkg, so we first copy description from pkg, modify it and move back
 use_package("stats", "Imports")
-use_package("resample", "Imports")
+use_package("boot", "Imports")
 use_package("knitr", "Suggests")
 
 # Set up other files -------------------------------------------------

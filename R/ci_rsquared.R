@@ -1,6 +1,6 @@
 #' Confidence Interval for the Population R-Squared
 #'
-#' This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic.
+#' This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
 #'
 #' According to \code{?pf}, the results might be unreliable for large F values. Further note that small values of the lower confidence limits are rounded down to 0.
 #' @importFrom stats lm pf optimize
@@ -20,12 +20,13 @@
 #' @export
 #' @examples
 #' fit <- lm(Sepal.Length ~ ., data = iris)
+#' summary(fit)$r.squared
 #' ci_rsquared(fit)
 #' ci_rsquared(188.251, 5, 144)
 #' @references
 #' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_f_ncp}}.
-ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lower_tol = 0.0001) {
+ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_input(probs)
   iprobs <- 1 - probs
@@ -33,9 +34,7 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lowe
 
   # Distinguish input
   if (inherits(x, "lm")) {
-    sx <- summary(x)
-    stopifnot("fstatistic" %in% names(sx))
-    fstat <- sx[["fstatistic"]]
+    fstat <- summary(x)[["fstatistic"]]
     stat <- fstat[["value"]]
     df1 <- fstat[["numdf"]]
     df2 <- fstat[["dendf"]]
@@ -58,19 +57,6 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975), lowe
               probs = probs, type = "F", info = "")
   class(out) <- "cint"
   out
-}
-
-# Helper functions
-f_to_r2 <- function(f, df1, df2) {
-  f / (f + df2 / df1)
-}
-
-#r2_to_f <- function(r2, df1, df2) {
-#  r2 / (1 - r2) * df2 / df1
-#}
-
-ncp_to_r2 <- function(ncp, df1, df2) {
-  ncp / (ncp + df1 + df2 + 1)
 }
 
 

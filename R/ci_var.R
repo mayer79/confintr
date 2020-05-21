@@ -1,17 +1,18 @@
 #' Confidence Interval for the Population Variance
 #'
-#' This function calculates confidence intervals for the population variance. By default classic confidence intervals are calculated based on the chi-squared distribution, assuming normal distribution. Alternatively, bootstrap confidence intervals are supported by the package "resample". The default Bootstrap type is "BootstrapT", utilizing the standard error for the variance given in Wilks, namely the root of (mu4 - (n-3)/(n-1)var^2)/n, where n is the sample size, var the sample variance and mu4 the fouth central moment of the sample. This formula does not assume normality.
+#' This function calculates confidence intervals for the population variance. By default, classic confidence intervals are calculated based on the chi-squared distribution, assuming normal distribution (see Smithson). Bootstrap confidence intervals are also available and are recommended for the non-normal case as the chi-squared confidence intervals are sensitive to deviations from normality.
 #'
-#' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
+#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+#' The "stud" (bootstrap t) bootstrap uses a general formula for the standard error of the sample variance given in Wilks.
 #' @importFrom stats var qchisq
-#' @importFrom resample bootstrap
+#' @importFrom boot boot
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".
-#' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
+#' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "stud", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{resample::CI.boot_type}.
+#' @param ... Further arguments passed to \code{boot::boot}.
 #' @return A list with class \code{cint} containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -26,15 +27,16 @@
 #' x <- 1:100
 #' ci_var(x)
 #' ci_var(x, type = "bootstrap", R = 1000)
-#' ci_var(x, type = "bootstrap", boot_type = "bca", R = 1000)
 #' @references
 #' \enumerate{
 #'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #'   \item S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons.
+#'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
+#'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 #' }
-#' @seealso \code{\link{ci_sd}} and \code{\link{stderr_var}}.
+#' @seealso \code{\link{ci_sd}}.
 ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
-                   boot_type = c("bootstrapT", "percentile", "t", "bca"),
+                   boot_type = c("bca", "perc", "stud", "norm", "basic"),
                    R = 10000, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
@@ -50,12 +52,9 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
   if (type == "chi-squared") {
     cint <- estimate * (n - 1) / qchisq(1 - probs, df = n - 1)
   } else if (type == "bootstrap") {
-    if (boot_type == "bootstrapT") {
-      S <- bootstrap(x, statistic = c(var = var(x), sderr = se_var(x)), R = R, seed = seed)
-    } else {
-      S <- bootstrap(x, statistic = var, R = R, seed = seed)
-    }
-    cint <- ci_boot(S, boot_type, probs, ...)
+    set_seed(seed)
+    S <- boot(x, statistic = function(x, id) c(var(x[id]), se_var(x[id])), R = R, ...)
+    cint <- ci_boot(S, boot_type, probs)
   }
   cint <- check_output(cint, probs, c(0, Inf))
 

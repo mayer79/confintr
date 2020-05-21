@@ -1,17 +1,15 @@
 #' Confidence Interval for the Population Standard Deviation
 #'
-#' This function calculates confidence intervals for the population standard deviation. They are derived by calculating confidence intervals for the variance and then taking the square-root. The classic approach for normally distributed random samples is based on the chi-squared distribution. This is the default. Alternatively, bootstrap confidence intervals are supported by the package "resample".
-#'
-#' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
+#' This function calculates confidence intervals for the population standard deviation. They are derived by calculating confidence intervals for the variance and then taking the square-root. For details, see \code{\link{ci_var}}.
 #' @importFrom stats var qchisq
 #' @importFrom resample bootstrap
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".
-#' @param boot_type Type of bootstrap confidence interval ("bootstrapT", "percentile", "t", or "bca"). Only used for \code{type = "bootstrap"}.
+#' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "stud", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{resample::CI.boot_type}.
+#' @param ... Further arguments passed to \code{boot::boot}.
 #' @return A list with class \code{cint} containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -30,7 +28,7 @@
 #' ci_sd(x, type = "bootstrap", R = 1000)
 #' @seealso \code{\link{ci_var}}.
 ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
-                    boot_type = c("bootstrapT", "percentile", "t", "bca"),
+                    boot_type = c("bca", "perc", "stud", "norm", "basic"),
                     R = 10000, seed = NULL, ...) {
   out <- ci_var(x = x, probs = probs, type = type, boot_type = boot_type,
                 R = R, seed = seed, ...)

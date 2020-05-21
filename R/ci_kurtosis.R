@@ -1,17 +1,16 @@
 #' Confidence Interval for the Kurtosis
 #'
-#' This function calculates bootstrap confidence intervals for the population kurtosis using the R package "resample". The default Bootstrap type is "percentile". "bootstrapT" is not available since there is no simple general formula for the standard error of the kurtosis.
+#' This function calculates bootstrap confidence intervals for the population kurtosis, see Details. Note that we use the version of the kurtosis that equals 3 for a normal distribution.
 #'
-#' Note that for "percentile" and "bca" bootstrap, modified percentiles for better small-sample accuracy are used. Pass \code{expand = FALSE} to \code{...} in order to suppress this.
-#' Further note that we use the version of the kurtosis that equals 3 for a normal distribution.
-#' @importFrom resample bootstrap
+#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+#' @importFrom boot boot
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. Currently not used as the only type is "bootstrap".
-#' @param boot_type Type of bootstrap confidence interval ("percentile", "t", or "bca").
+#' @param boot_type Type of bootstrap confidence interval c("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{resample::CI.boot_type}.
+#' @param ... Further arguments passed to \code{boot::boot}.
 #' @return A list with class \code{cint} containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -26,9 +25,14 @@
 #' set.seed(1)
 #' x <- rnorm(100)
 #' ci_kurtosis(x, R = 1000)
-#' @seealso \code{\link{moments}}.
+#' @seealso \code{\link{moments}}, \code{\link{ci_skewness}}.
+#' @references
+#' \enumerate{
+#'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
+#'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
+#' }
 ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
-                        boot_type = c("percentile", "t", "bca"),
+                        boot_type = c("bca", "perc", "norm", "basic"),
                         R = 10000, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
@@ -37,8 +41,9 @@ ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 
   # Calculate CI
   x <- x[!is.na(x)]
-  S <- bootstrap(x, statistic = kurtosis, R = R, seed = seed)
-  cint <- ci_boot(S, boot_type, probs, ...)
+  set_seed(seed)
+  S <- boot(x, statistic = function(x, id) kurtosis(x[id]), R = R, ...)
+  cint <- ci_boot(S, boot_type, probs)
 
   # Organize output
   cint <- check_output(cint, probs, c(-Inf, Inf))

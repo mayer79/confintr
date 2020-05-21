@@ -1,5 +1,63 @@
 # Helper functions
 
+# Input check
+check_input <- function(probs) {
+  stopifnot(length(probs) == 2L,
+            is.numeric(probs),
+            probs >= 0, probs <= 1,
+            probs[1] < probs[2],
+            probs[1] + 1 - probs[2] > 0)
+}
+
+# Output Check
+check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
+  stopifnot(length(ci) == 2L,
+            length(probs) == 2L,
+            length(parameter_range) == 2L,
+            ci[1] <= ci[2])
+  ci <- as.numeric(ci)
+  w <- which(probs %in% 0:1)
+  if (length(w)) {
+    ci[w] <- parameter_range[w]
+  }
+  pmin(pmax(ci, parameter_range[1]), parameter_range[2])
+}
+
+# Apply Bootstrap Confidence Interval to result of bootstrap
+#' @importFrom boot boot.ci
+ci_boot <- function(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs, ...) {
+  boot_type <- match.arg(boot_type)
+  if (probs[1] == 0) {
+    conf <- probs[2]
+  } else if (probs[2] == 1) {
+    conf <- 1 - probs[1]
+  } else {
+    conf <- c(1 - 2 * probs[1], 2 * probs[2] - 1)
+  }
+  cint <- boot.ci(S, conf = conf, type = boot_type, ...)[[map_boot_type(boot_type)]]
+  m <- ncol(cint)
+  if (probs[1] == 0) {
+    return(c(-Inf, cint[1, m]))
+  } else if (probs[2] == 1) {
+    return(c(cint[1, m - 1], Inf))
+  }
+  c(cint[1, m - 1], cint[2, m])
+}
+
+# Map boot type to a nice name and also to the output of boot.ci
+map_boot_type <- function(ty) {
+  out <- c(norm = "normal", basic = "basic", stud = "student",
+           perc = "percent", bca = "bca")[ty]
+  as.character(out)
+}
+
+# Set seed
+set_seed <- function(s) {
+  if (!is.null(s)) {
+    set.seed(s)
+  }
+}
+
 # Formats probabilities
 format_p <- function(z, digits = max(2L, getOption("digits"))) {
   paste0(format(100 * z, digits = digits), "%")
@@ -8,7 +66,7 @@ format_p <- function(z, digits = max(2L, getOption("digits"))) {
 # Pastes together some info on bootstrap
 boot_info <- function(type, boot_type, R) {
   if (type == "bootstrap") {
-    sprintf("based on %s bootstrap samples and the '%s' method", R, boot_type)
+    sprintf("based on %s bootstrap samples and the %s method", R, map_boot_type(boot_type))
   }
 }
 
@@ -56,4 +114,24 @@ asymmetric_stop <- function() {
 # Title case
 title_case1 <- function(s) {
   paste0(toupper(substring(s, 1, 1)), substring(s, 2))
+}
+
+# Map F test statistic to R-squared
+f_to_r2 <- function(f, df1, df2) {
+  f / (f + df2 / df1)
+}
+
+# Map R-squared to F test statistic
+#r2_to_f <- function(r2, df1, df2) {
+#  r2 / (1 - r2) * df2 / df1
+#}
+
+# Map non-centrality parameter of the F distribution to the R-squared
+ncp_to_r2 <- function(ncp, df1, df2) {
+  ncp / (ncp + df1 + df2 + 1)
+}
+
+# Map F test statistic to non-centrality parameter
+f_to_ncp <- function(f, df1, df2) {
+  df1 / df2 * f * (df1 + df2 + 1)
 }

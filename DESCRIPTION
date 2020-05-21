@@ -1,8 +1,8 @@
 Type: Package
 Package: cis
-Title: Non-Standard Confidence Intervals
+Title: Confidence Intervals
 Version: 0.1.0
-Date: 2020-05-16
+Date: 2020-05-21
 Authors@R: 
     person(given = "Michael",
            family = "Mayer",
@@ -11,7 +11,11 @@ Authors@R:
 Maintainer: Michael Mayer <mayermichael79@gmail.com>
 Description: Allows calculation of classic and bootstrap
     confidence intervals for different parameters such as the population
-    mean.
+    mean, variance, skewness, kurtosis, Cramer's V, R-squared, quantiles,
+    proportions, different types of correlaction measures etc.  Many
+    classic confidence intervals are described in Smithson, M. (2003).
+    Confidence intervals. Series: Quantitative Applications in the Social
+    Sciences. New York, NY: Sage Publications.
 License: GPL(>= 2)
 URL: https://github.com/mayer79/cis
 BugReports: https://github.com/mayer79/cis/issues

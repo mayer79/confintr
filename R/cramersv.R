@@ -3,6 +3,7 @@
 #' This function calculates Cramér's V, a measure of association between two categorical variables. It is a scaled version of the chi-squared test statistic and lies between 0 and 1. Cramér's V is calculated as sqrt(chi-squared / (n * (k - 1))), where n is the number of observations and k is the smaller of the number of levels of the two variables.
 #'
 #' Note that no continuity correction is applied to the 2x2 case.
+#' @importFrom stats chisq.test
 #' @param x A \code{data.frame} with exactly two columns.
 #' @return A numeric vector of length one.
 #' @export
@@ -12,7 +13,6 @@
 #' cramersv(ir[, c("Species", "PL")])
 #' @references
 #' Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
-#' @seealso \code{\link{ci_cramersv}}.
 cramersv <- function(x) {
   # Input check and initialization
   stopifnot(is.data.frame(x),

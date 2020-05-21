@@ -1,6 +1,6 @@
 #' Confidence Interval for the Non-Centrality Parameter of the F Distribution
 #'
-#' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated.
+#' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
 #'
 #' Note that for numeric reasons, lower limits below 0.0001 are set to 0. Further note that, according to \code{?pf}, the results might be unreliable for large F values.
 #' @importFrom stats lm pf optimize
@@ -48,7 +48,7 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
     stat <- x
   }
 
-  # Calculate lower limit
+  # Calculate limits
   if (probs[1] == 0) {
     lci <- 0
   } else {
@@ -59,7 +59,6 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
     }
   }
 
-  # Calculate upper limit
   if (probs[2] == 1) {
     uci <- Inf
   } else {
@@ -74,9 +73,4 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
               probs = probs, type = "F", info = "")
   class(out) <- "cint"
   out
-}
-
-# Helper function
-f_to_ncp <- function(f, df1, df2) {
-  df1 / df2 * f * (df1 + df2 + 1)
 }

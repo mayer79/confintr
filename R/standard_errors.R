@@ -14,7 +14,7 @@ NULL
 
 #' @rdname se
 #' @export
-stderr_mean <- function(z, na.rm = TRUE, ...) {
+se_mean <- function(z, na.rm = TRUE, ...) {
   z <- z[!is.na(z)]
   sqrt(var(z) / length(z))
 }

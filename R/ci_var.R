@@ -26,7 +26,7 @@
 #' @examples
 #' x <- 1:100
 #' ci_var(x)
-#' ci_var(x, type = "bootstrap", R = 1000)
+#' ci_var(x, type = "bootstrap", R = 999)
 #' @references
 #' \enumerate{
 #'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
@@ -37,7 +37,7 @@
 #' @seealso \code{\link{ci_sd}}.
 ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                    boot_type = c("bca", "perc", "stud", "norm", "basic"),
-                   R = 10000, seed = NULL, ...) {
+                   R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

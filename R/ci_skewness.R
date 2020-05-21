@@ -24,7 +24,7 @@
 #' @examples
 #' set.seed(1)
 #' x <- rnorm(100)
-#' ci_skewness(x, R = 1000)
+#' ci_skewness(x, R = 999)
 #' @seealso \code{\link{moments}}, \code{\link{ci_kurtosis}}.
 #' @references
 #' \enumerate{
@@ -33,7 +33,7 @@
 #' }
 ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 10000, seed = NULL, ...) {
+                        R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

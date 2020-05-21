@@ -18,7 +18,7 @@ The `cis` package offers classic and bootstrap confidence intervals for the foll
 
 - Pearson-, Spearman-, Kendall correlation coefficients.
 
-The package will be extended in the future.
+Both one- and two-sided intervals are supported.
 
 ## Installation
 

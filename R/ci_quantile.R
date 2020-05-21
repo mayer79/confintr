@@ -27,7 +27,7 @@
 #' x <- 1:100
 #' ci_quantile(x)
 #' ci_quantile(x, q = 0.25)
-#' ci_quantile(x, q = 0.25, type = "bootstrap", R = 1000)
+#' ci_quantile(x, q = 0.25, type = "bootstrap", R = 999)
 #' @references
 #' \enumerate{
 #'   \item Hahn, G. and Meeker, W (1991). Statistical Intervals. Wiley 1991.
@@ -37,7 +37,7 @@
 ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
                         type = c("binomial", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 10000, seed = NULL, ...) {
+                        R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

@@ -24,11 +24,11 @@
 #' sd(x)
 #' ci_sd(x)
 #' sqrt(ci_var(x)$interval)
-#' ci_sd(x, type = "bootstrap", R = 1000)
+#' ci_sd(x, type = "bootstrap", R = 999)
 #' @seealso \code{\link{ci_var}}.
 ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                     boot_type = c("bca", "perc", "stud", "norm", "basic"),
-                    R = 10000, seed = NULL, ...) {
+                    R = 9999, seed = NULL, ...) {
   out <- ci_var(x = x, probs = probs, type = type, boot_type = boot_type,
                 R = R, seed = seed, ...)
   out$estimate <- sqrt(out$estimate)

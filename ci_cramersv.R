@@ -26,7 +26,7 @@
 #' ir <- iris
 #' ir$PL <- ir$Petal.Width > 1
 #' ci_cramersv(ir[, c("Species", "PL")])
-#' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
+#' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 999)
 #' ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
 #' @references
 #' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
@@ -34,7 +34,7 @@
 ci_cramersv <- function(x, probs = c(0.025, 0.975),
                         type = c("chi-squared", "bootstrap"),
                         boot_type = c("percentile", "t", "bca"),
-                        R = 10000, seed = NULL, ...) {
+                        R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

@@ -44,6 +44,8 @@ Confidence intervals for the following parameters are available:
 
 Many of the classic confidence intervals are discussed in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019].
 
+The package supports both one- and two-sided intervals.
+
 ## Installation
 
 From CRAN:
@@ -70,7 +72,7 @@ ci_mean(1:100, type = "bootstrap")
 ci_quantile(rexp(1000), q = 0.95)
 
 # Correlation
-ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 1000)
+ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 999)
 
 # Proportions
 ci_proportion(10, n = 100, type = "Wilson")

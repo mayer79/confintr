@@ -28,7 +28,7 @@
 #' ci_proportion(x)
 #' ci_proportion(x, type = "Wilson")
 #' ci_proportion(x, type = "Agresti-Coull")
-#' ci_proportion(x, type = "bootstrap", R = 1000)
+#' ci_proportion(x, type = "bootstrap", R = 999)
 #' @references
 #' \enumerate{
 #'   \item Clopper, C. and Pearson, E. S. (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. Biometrika. 26 (4).
@@ -40,7 +40,7 @@
 ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
                           type = c("Clopper-Pearson", "Agresti-Coull", "Wilson", "bootstrap"),
                           boot_type = c("bca", "perc", "stud", "norm", "basic"),
-                          R = 10000, seed = NULL, ...) {
+                          R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

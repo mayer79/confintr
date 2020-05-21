@@ -33,7 +33,7 @@
 #' @seealso \code{\link{ci_cramersv}}.
 ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975),
                          type = c("chi-squared", "bootstrap"),
-                         boot_type = c("percentile", "t", "bca"), R = 10000,
+                         boot_type = c("percentile", "t", "bca"), R = 9999,
                          seed = NULL, ) {
   # Input checks and initialization
   type <- match.arg(type)

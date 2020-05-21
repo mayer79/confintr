@@ -26,9 +26,9 @@
 #' @export
 #' @examples
 #' ci_cor(iris[1:2])
-#' ci_cor(iris[1:2], type = "bootstrap", R = 1000, seed = 1)
-#' ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 1000, seed = 1)
-#' ci_cor(iris[1:2], method = "k", type = "bootstrap", R = 1000, seed = 1)
+#' ci_cor(iris[1:2], type = "bootstrap", R = 999, seed = 1)
+#' ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 999, seed = 1)
+#' ci_cor(iris[1:2], method = "k", type = "bootstrap", R = 999, seed = 1)
 #' @references
 #' \enumerate{
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
@@ -38,7 +38,7 @@ ci_cor <- function(x, y = NULL, probs = c(0.025, 0.975),
                    method = c("pearson", "kendall", "spearman"),
                    type = c("normal", "bootstrap"),
                    boot_type = c("bca", "perc", "norm", "basic"),
-                   R = 10000, seed = NULL, ...) {
+                   R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   method <- match.arg(method)
   type <- match.arg(type)

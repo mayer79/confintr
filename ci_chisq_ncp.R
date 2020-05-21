@@ -3,7 +3,7 @@
 #' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on test inversion.
 #'
 #' Note that no continuity correction is applied for 2x2 tables. Further note that lower limits below 0.0001 are set to 0 and that for large chi-squared test statisticss might provide unreliable results (see \code{?pchisq}).
-#' @importFrom stats chisq.test pchisq optimize
+#' @importFrom stats chisq.test pchisq uniroot
 #' @param x The chi-squared test statistic or a \code{data.frame} with exactly two columns.
 #' @param df The degrees of freedom. Only used if \code{x} is a test statistic.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
@@ -60,14 +60,14 @@ ci_chisq_ncp <- function(x, df = NULL, probs = c(0.025, 0.975),
     if (probs[1] == 0) {
       lci <- 0
     } else {
-      lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
-                      interval = c(eps / 2, stat))[["minimum"]]
+      lci <- uniroot(function(ncp) pchisq(stat, df = df, ncp = ncp) - iprobs[1],
+                     interval = c(eps / 2, stat))$root
     }
     if (probs[2] == 1) {
       uci <- Inf
     } else {
-      uci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[2])^2,
-                      interval = c(stat - df, 4 * stat))[["minimum"]]
+      uci <- uniroot(function(ncp) pchisq(stat, df = df, ncp = ncp) - iprobs[2],
+                     interval = c(stat - df, 4 * stat))$root
     cint <- c(lci, uci)
   }
   } else if (type == "bootstrap") {

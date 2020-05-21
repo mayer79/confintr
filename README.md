@@ -4,7 +4,7 @@ The `cis` package offers classic and bootstrap confidence intervals for the foll
 
 - mean,
 
-- quantiles (e.g. the median),
+- quantiles incl. median,
 
 - proportion,
 

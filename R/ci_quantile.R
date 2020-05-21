@@ -34,6 +34,7 @@
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
 #'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 #' }
+#' @seealso \code{\link{ci_quantile}}.
 ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
                         type = c("binomial", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),

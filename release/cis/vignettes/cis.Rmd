@@ -30,8 +30,6 @@ Confidence intervals for the following parameters are available:
 
 - proportion,
 
-- median and other quantiles,
-
 - variance and standard deviation,
 
 - skewness and kurtosis,
@@ -42,7 +40,7 @@ Confidence intervals for the following parameters are available:
 
 - Pearson-, Spearman-, Kendall correlation coefficients
 
-Many of the classic confidence intervals are described in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019].
+Many of the classic confidence intervals are described in Smithson [@smithson2003]. Bootstrap confidence intervals are described in Efron [@efron1939] and implemented by the `boot` package [@ripley2019].
 
 ## Installation
 

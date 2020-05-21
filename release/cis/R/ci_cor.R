@@ -6,7 +6,6 @@
 #' @importFrom stats qnorm cor cor.test complete.cases
 #' @importFrom boot boot
 #' @param x A numeric vector or a \code{matrix/data.frame} with exactly two numeric columns.
-#' @param y A numeric vector (only used if \code{x} is a vector).
 #' @param method Type of correlation coefficient, one of "pearson" (default), "kendall", or "spearman". For the latter two, only bootstrap confidence intervals are supported. The names can be abbreviated.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "normal" (the default) or "bootstrap" (the only option for rank-correlations).

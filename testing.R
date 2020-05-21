@@ -85,3 +85,29 @@ ir$PL <- ir$Petal.Width > 1
 cramersv(ir[, c("Species", "PL")])
 ci_cramersv(ir[, c("Species", "PL")])
 ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 1000)
+
+
+
+# Mean
+ci_mean(1:100)
+ci_mean(1:100, type = "bootstrap")
+
+# Correlation
+ci_cor(iris[1:2], method = "spearman", type = "bootstrap")
+
+# Proportions
+ci_proportion(10, n = 100, type = "Wilson")
+ci_proportion(10, n = 100, type = "Clopper-Pearson")
+
+# R-squared
+fit <- lm(Sepal.Length ~ ., data = iris)
+ci_rsquared(fit, probs = c(0.05, 1))
+
+# Kurtosis
+ci_kurtosis(1:100)
+
+
+# Der folgende Code berechnet ein 95\%-Konfidenzinterval
+k <- qbinom(0.025, 76, 0.5)
+ell <- qbinom(0.975, 76, 0.5) + 1
+sort(wohnungen$Preis)[c(k, ell)]    # Ergibt 1093 1270

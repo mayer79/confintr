@@ -10,6 +10,8 @@ The `confintr` package offers classic and bootstrap confidence intervals for the
 
 - variance and standard deviation,
 
+- IQR and MAD,
+
 - skewness and kurtosis,
 
 - R-squared and the non-centrality parameter of the F distribution,

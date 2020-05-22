@@ -34,13 +34,15 @@ Confidence intervals for the following parameters are available:
 
 - variance and standard deviation (chi-squared, bootstrap),
 
+- IQR and MAD (bootstrap only),
+
 - skewness and kurtosis (bootstrap only),
 
 - R-squared and the non-centrality parameter of the F distribution (parametric),
 
 - Cramér's V and the non-centrality parameter of the chi-squared distribution (parametric and bootstrap),
 
-- Pearson-, Spearman-, Kendall correlation coefficients (normal for Pearson, bootstrap)
+- Pearson-, Spearman-, Kendall correlation coefficients (normal for Pearson, bootstrap for any)
 
 Many of the classic confidence intervals are discussed in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019].
 

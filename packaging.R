@@ -24,7 +24,7 @@ create_package(
     Type = "Package",
     Version = "0.1.0",
     Date = Sys.Date(),
-    Description = "Calculates classic and bootstrap confidence intervals for different parameters such as the population mean, variance, skewness, kurtosis, Cramer's V, R-squared, quantiles, proportions, different types of correlaction measures etc.
+    Description = "Calculates classic and bootstrap confidence intervals for many parameters such as the population mean, variance, IQR, MAD, skewness, kurtosis, Cramer's V, R-squared, quantiles (incl. median), proportions, different types of correlaction measures etc.
     Many of the classic confidence intervals are described in Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications. Bootstrap confidence intervals are calculated through R package 'boot'.
     Both one- and two-sided intervals are supported.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",

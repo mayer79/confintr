@@ -46,7 +46,7 @@ format_p <- function(z, digits = max(2L, getOption("digits"))) {
 # Pastes together some info on bootstrap
 boot_info <- function(type, boot_type, R) {
   if (type == "bootstrap") {
-    sprintf("based on %s bootstrap samples and the %s method", R, map_boot_type(boot_type))
+    sprintf("based on %s bootstrap replications and the %s method", R, map_boot_type(boot_type))
   }
 }
 
@@ -115,3 +115,35 @@ ncp_to_r2 <- function(ncp, df1, df2) {
 f_to_ncp <- function(f, df1, df2) {
   df1 / df2 * f * (df1 + df2 + 1)
 }
+
+# Set small values to 0
+zap_small <- function(z, eps = 0.0001) {
+  z[z < eps] <- 0
+  z
+}
+
+# Function to efficiently calculate the mean difference statistic in boot
+boot_two_means <- function(X, id, se = FALSE, var.equal = FALSE) {
+  X <- X[id, ]
+  v <- X[["v"]]
+  g <- X[["g"]]
+  x <- v[g == 1]
+  y <- v[g == 2]
+  c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal))
+}
+
+# Function to efficiently calculate the median difference statistic in boot
+boot_two_stats <- function(X, id, FUN = mean, ...) {
+  X <- X[id, ]
+  x <- X[X[["g"]] == 1, "v"]
+  y <- X[X[["g"]] == 2, "v"]
+  FUN(x, ...) - FUN(y, ...)
+}
+
+# Error if R < n for bca bootstrap
+check_bca <- function(boot_type, n, R) {
+  if (boot_type == "bca" && n > R) {
+    stop("Number of bootstrap replications must be larger than the sample size.")
+  }
+}
+

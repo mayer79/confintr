@@ -46,7 +46,7 @@ format_p <- function(z, digits = max(2L, getOption("digits"))) {
 # Pastes together some info on bootstrap
 boot_info <- function(type, boot_type, R) {
   if (type == "bootstrap") {
-    sprintf("based on %s bootstrap samples and the %s method", R, map_boot_type(boot_type))
+    sprintf("based on %s bootstrap replications and the %s method", R, map_boot_type(boot_type))
   }
 }
 
@@ -139,3 +139,11 @@ boot_two_stats <- function(X, id, FUN = mean, ...) {
   y <- X[X[["g"]] == 2, "v"]
   FUN(x, ...) - FUN(y, ...)
 }
+
+# Error if R < n for bca bootstrap
+check_bca <- function(boot_type, n, R) {
+  if (boot_type == "bca" && n > R) {
+    stop("Number of bootstrap replications must be larger than the sample size.")
+  }
+}
+

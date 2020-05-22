@@ -64,6 +64,7 @@ ci_cor <- function(x, y = NULL, probs = c(0.025, 0.975),
     cint <- cor.test(x = x[, 1], y = x[, 2], alternative = probs2alternative(probs),
                         conf.level = diff(probs))$conf.int
   } else { # bootstrap
+    check_bca(boot_type, nrow(x), R)
     set_seed(seed)
     S <- boot(x, statistic = function(x, id) cor(x[id, 1], x[id, 2], method = method),
               R = R, ...)

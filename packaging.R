@@ -11,8 +11,6 @@ library(usethis)
 library(devtools)
 library(testthat)
 
-#https://cran.r-project.org/web/packages/QuantileNPCI/QuantileNPCI.pdf
-
 # Create a new package
 dir.create(file.path("release"))
 pkg <- file.path("release", "confintr")
@@ -24,7 +22,7 @@ create_package(
     Type = "Package",
     Version = "0.1.0",
     Date = Sys.Date(),
-    Description = "Calculates classic and bootstrap confidence intervals for many parameters such as the population mean, variance, IQR, MAD, skewness, kurtosis, Cramer's V, R-squared, quantiles (incl. median), proportions, different types of correlaction measures etc.
+    Description = "Calculates classic and/or bootstrap confidence intervals for many parameters such as the population mean, variance, IQR, MAD, skewness, kurtosis, Cramer's V, R-squared, quantiles (incl. median), proportions, different types of correlaction measures, difference in means, quantiles and medians.
     Many of the classic confidence intervals are described in Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications. Bootstrap confidence intervals are calculated through R package 'boot'.
     Both one- and two-sided intervals are supported.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
@@ -41,6 +39,7 @@ file.copy(file.path(pkg, "DESCRIPTION"), to = getwd(), overwrite = TRUE)
 use_package("stats", "Imports")
 use_package("boot", "Imports")
 use_package("knitr", "Suggests")
+use_package("testthat", "Suggests")
 
 # Set up other files -------------------------------------------------
 # use_readme_md()
@@ -60,7 +59,9 @@ file.copy(list.files("R", full.names = TRUE), file.path(pkg, "R"), overwrite = T
 devtools::document(pkg)
 
 # Tests
-dir.create(file.path(pkg, "tests"))
+if (!dir.exists(file.path(pkg, "tests"))) {
+  dir.create(file.path(pkg, "tests"))
+}
 file.copy("tests", pkg, recursive = TRUE)
 test(pkg)
 

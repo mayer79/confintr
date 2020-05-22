@@ -3,11 +3,14 @@
 \name{se}
 \alias{se}
 \alias{se_mean}
+\alias{se_mean_diff}
 \alias{se_var}
 \alias{se_proportion}
 \title{Standard errors}
 \usage{
 se_mean(z, na.rm = TRUE, ...)
+
+se_mean_diff(z, y, na.rm = TRUE, var.equal = FALSE, ...)
 
 se_var(z, na.rm = TRUE, ...)
 
@@ -19,6 +22,10 @@ se_proportion(z, na.rm = TRUE, ...)
 \item{na.rm}{Should missing values be removed before calculation? The default is \code{TRUE} for convenience.}
 
 \item{...}{Further arguments to be passed from other methods.}
+
+\item{y}{Numeric vector.}
+
+\item{var.equal}{Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.}
 }
 \value{
 A numeric vector of length one.

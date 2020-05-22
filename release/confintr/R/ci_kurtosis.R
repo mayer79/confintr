@@ -41,6 +41,7 @@ ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 
   # Calculate CI
   x <- x[!is.na(x)]
+  check_bca(boot_type, length(x), R)
   set_seed(seed)
   S <- boot(x, statistic = function(x, id) kurtosis(x[id]), R = R, ...)
   cint <- ci_boot(S, boot_type, probs)

@@ -9,15 +9,16 @@ Authors@R:
            role = c("aut", "cre"),
            email = "mayermichael79@gmail.com")
 Maintainer: Michael Mayer <mayermichael79@gmail.com>
-Description: Calculates classic and bootstrap confidence
-    intervals for different parameters such as the population mean,
-    variance, skewness, kurtosis, Cramer's V, R-squared, quantiles,
-    proportions, different types of correlaction measures etc.  Many of
-    the classic confidence intervals are described in Smithson, M. (2003).
-    Confidence intervals. Series: Quantitative Applications in the Social
-    Sciences. New York, NY: Sage Publications. Bootstrap confidence
-    intervals are calculated through R package 'boot'.  Both one- and
-    two-sided intervals are supported.
+Description: Calculates classic and/or bootstrap confidence
+    intervals for many parameters such as the population mean, variance,
+    IQR, MAD, skewness, kurtosis, Cramer's V, R-squared, quantiles (incl.
+    median), proportions, different types of correlaction measures,
+    difference in means, quantiles and medians.  Many of the classic
+    confidence intervals are described in Smithson, M. (2003). Confidence
+    intervals. Series: Quantitative Applications in the Social Sciences.
+    New York, NY: Sage Publications. Bootstrap confidence intervals are
+    calculated through R package 'boot'.  Both one- and two-sided
+    intervals are supported.
 License: GPL(>= 2)
 URL: https://github.com/mayer79/confintr
 BugReports: https://github.com/mayer79/confintr/issues
@@ -33,4 +34,5 @@ Imports:
     stats,
     boot
 Suggests: 
-    knitr
+    knitr,
+    testthat

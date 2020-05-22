@@ -18,7 +18,7 @@ ci_quantile(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{q}{A single probability value determining the quantile. Set to 0.5 for the median.}
+\item{q}{A single probability value determining the quantile. Set to 0.5 for the median (the default).}
 
 \item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 

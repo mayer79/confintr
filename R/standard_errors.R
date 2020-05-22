@@ -5,6 +5,7 @@
 #' @name se
 #' @importFrom stats var
 #' @param z Numeric vector.
+#' @param y Numeric vector.
 #' @param na.rm Should missing values be removed before calculation? The default is \code{TRUE} for convenience.
 #' @param var.equal Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.
 #' @param ... Further arguments to be passed from other methods.
@@ -24,12 +25,12 @@ se_mean <- function(z, na.rm = TRUE, ...) {
 
 #' @rdname se
 #' @export
-se_mean_diff <- function(x, y, na.rm = TRUE, var.equal = FALSE, ...) {
+se_mean_diff <- function(z, y, na.rm = TRUE, var.equal = FALSE, ...) {
   if (na.rm) {
-    x <- x[!is.na(x)]
+    z <- z[!is.na(z)]
     y <- y[!is.na(y)]
   }
-  t.test(x, y, var.equal = var.equal)$stderr
+  t.test(z, y, var.equal = var.equal)$stderr
 }
 
 #' @rdname se

@@ -20,7 +20,7 @@ The `confintr` package offers classic and bootstrap confidence intervals for the
 
 - Pearson-, Spearman-, Kendall correlation coefficients,
 
-- mean and median differences.
+- mean, quantile and median differences.
 
 Both one- and two-sided intervals are supported.
 

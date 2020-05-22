@@ -60,7 +60,6 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
       lci <- 0
     }
   }
-
   if (probs[2] == 1) {
     uci <- Inf
   } else {

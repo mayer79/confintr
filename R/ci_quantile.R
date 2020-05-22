@@ -6,7 +6,7 @@
 #' @importFrom stats quantile qbinom
 #' @importFrom boot boot
 #' @param x A numeric vector.
-#' @param q A single probability value determining the quantile. Set to 0.5 for the median.
+#' @param q A single probability value determining the quantile. Set to 0.5 for the median (the default).
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "binomial" (default), or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
@@ -49,10 +49,10 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
   # Remove NAs and calculate estimate
   x <- x[!is.na(x)]
   estimate <- quantile(x, probs = q, names = FALSE)
+  n <- length(x)
 
   # Calculate CI
   if (type == "binomial") {
-    n <- length(x)
     k <- qbinom(probs, n, q) + 0:1
     x <- sort(x)
     cint <- limits
@@ -63,6 +63,7 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
       cint[2] <- x[k[2]]
     }
   } else { # Bootstrap
+    check_bca(boot_type, n, R)
     set_seed(seed)
     S <- boot(x, statistic = function(x, id) quantile(x[id], probs = q, names = FALSE),
               R = R, ...)

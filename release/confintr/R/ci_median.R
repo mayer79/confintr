@@ -2,7 +2,7 @@
 #'
 #' This function calculates confidence intervals for the population median by calling \code{ci_quantile(..., q = 0.5)}. See \code{\link{ci_quantile}} for details.
 #' @param x A numeric vector.
-#' @param q A single probability value determining the quantile. Set to 0.5 for the median.
+#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "binomial" (default), or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.

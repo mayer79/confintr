@@ -1,0 +1,107 @@
+#' Confidence Interval for the Non-Centrality Parameter of the Chi-Squared Distribution
+#'
+#' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap. The results might differ considerably.
+#'
+#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+#' Note that limits below 0.0001 are set to 0 and that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
+#' @importFrom stats chisq.test pchisq optimize
+#' @importFrom boot boot
+#' @param The result of \code{stats::chisq.test}, a \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.
+#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param correct Should Yates continuity correction be applied to the 2x2 case? The default is \code{TRUE} (this is also used in the bootstrap).
+#' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".
+#' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
+#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
+#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
+#' @return A list with class \code{cint} containing these components:
+#' \itemize{
+#'   \item \code{parameter}: The parameter in question.
+#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{estimate}: The estimate for the parameter.
+#'   \item \code{probs}: A vector of error probabilities.
+#'   \item \code{type}: The type of the interval.
+#'   \item \code{info}: An additional description text for the interval.
+#' }
+#' @export
+#' @examples
+#' tab <- table(mtcars[c("am", "vs")])
+#' chi <- chisq.test(tab)
+#' ci_chisq_ncp(mtcars[c("am", "vs")])
+#' ci_chisq_ncp(mtcars[c("am", "vs")], type = "bootstrap", R = 999)
+#' ir <- iris
+#' ir$PL <- ir$Petal.Width > 1
+#' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
+#' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1), type = "bootstrap", R = 999)
+#' @references
+#' \enumerate{
+#'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+#'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
+#'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
+#' }
+#' @seealso \code{\link{ci_cramersv}}.
+ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
+                         type = c("chi-squared", "bootstrap"),
+                         boot_type = c("bca", "perc", "norm", "basic"),
+                         R = 9999, seed = NULL, ...) {
+  # Input checks and initialization
+  type <- match.arg(type)
+  boot_type <- match.arg(boot_type)
+  check_input(probs)
+  eps <- 0.0001
+  stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
+  if (inherits(x, "htest")) {
+    stopifnot("X-squared" %in% names(x[["statistic"]]))
+  }
+
+  # Turn input into stat & df
+  if (is.data.frame(x)) {
+    stopifnot(ncol(x) == 2L)
+    x <- table(x[, 1], x[, 2])
+  }
+  if (is.matrix(x)) { # a table is a matrix
+    stopifnot(all(x >= 0))
+    x <- chisq.test(x, correct = correct)
+  }
+
+  stat <- x[["statistic"]]
+  df <- x[["parameter"]]
+  estimate <- stat - df
+
+  # Calculate ci
+  if (type == "chi-squared") {
+    iprobs <- 1 - probs
+
+    if (probs[1] == 0) {
+      lci <- 0
+    } else {
+      lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
+                     interval = c(eps / 2, stat))$minimum
+    }
+    if (probs[2] == 1) {
+      uci <- Inf
+    } else {
+      uci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[2])^2,
+                     interval = c(stat - df, 4 * stat))$minimum
+    }
+    cint <- c(lci, uci)
+  } else { # bootstrap
+    # Reconstruct data
+    tab <- data.frame(x[["observed"]])
+    X <- tab[rep(seq_len(nrow(tab)), times = tab[, "Freq"]), 1:2]
+
+    # Bootstrap
+    set_seed(seed)
+    S <- boot(X, statistic = function(x, id) suppressWarnings(chisq.test(
+      table(x[id, 1], x[id, 2]), correct = correct)$statistic - df), R = R, ...)
+    cint <- ci_boot(S, boot_type, probs)
+  }
+
+  # Organize output
+  cint <- check_output(zap_small(cint, eps), probs, c(0, Inf))
+  out <- list(parameter = "non-centrality parameter of the chi-squared distribution",
+              interval = cint, estimate = zap_small(estimate, eps),
+              probs = probs, type = type,
+              info = boot_info(type, boot_type, R))
+  class(out) <- "cint"
+  out
+}

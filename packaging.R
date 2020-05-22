@@ -9,6 +9,7 @@ if (FALSE) {
 
 library(usethis)
 library(devtools)
+library(testthat)
 
 #https://cran.r-project.org/web/packages/QuantileNPCI/QuantileNPCI.pdf
 
@@ -32,7 +33,8 @@ create_package(
     Depends = "R (>= 3.1.0)",
     VignetteBuilder = "knitr",
     License = "GPL(>= 2)",
-    Maintainer = "Michael Mayer <mayermichael79@gmail.com>"))
+    Maintainer = "Michael Mayer <mayermichael79@gmail.com>"),
+  open = FALSE)
 
 file.copy(file.path(pkg, "DESCRIPTION"), to = getwd(), overwrite = TRUE)
 # Use package has no option to look for pkg, so we first copy description from pkg, modify it and move back
@@ -44,9 +46,11 @@ use_package("knitr", "Suggests")
 # use_readme_md()
 # use_news_md()
 # use_cran_comments()
+# use_testthat()
 
 # Copy readme etc.
-file.copy(c("NEWS.md", "README.md", "cran-comments.md", "DESCRIPTION", ".Rbuildignore"), pkg, overwrite = TRUE)
+file.copy(c("NEWS.md", "README.md", "cran-comments.md", "DESCRIPTION", ".Rbuildignore"),
+          pkg, overwrite = TRUE)
 
 # Copy R scripts and document them
 if (!dir.exists(file.path(pkg, "R"))) {
@@ -55,7 +59,12 @@ if (!dir.exists(file.path(pkg, "R"))) {
 file.copy(list.files("R", full.names = TRUE), file.path(pkg, "R"), overwrite = TRUE)
 devtools::document(pkg)
 
-if (FALSE) {
+# Tests
+dir.create(file.path(pkg, "tests"))
+file.copy("tests", pkg, recursive = TRUE)
+test(pkg)
+
+if (TRUE) {
   # Copy vignette
   # use_vignette(name = "confintr", title = "confintr")
   dir.create(file.path(pkg, "vignettes"))

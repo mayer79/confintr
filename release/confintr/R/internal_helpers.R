@@ -115,9 +115,3 @@ ncp_to_r2 <- function(ncp, df1, df2) {
 f_to_ncp <- function(f, df1, df2) {
   df1 / df2 * f * (df1 + df2 + 1)
 }
-
-# Set small values to 0
-zap_small <- function(z, eps = 0.0001) {
-  z[z < eps] <- 0
-  z
-}

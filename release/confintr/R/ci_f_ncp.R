@@ -3,7 +3,7 @@
 #' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
 #'
 #' Note that for numeric reasons, lower limits below 0.0001 are set to 0. Further note that, according to \code{?pf}, the results might be unreliable for large F values.
-#' @importFrom stats lm pf optimize
+#' @importFrom stats lm pf uniroot
 #' @param x The result of \code{lm} or the F test statistic.
 #' @param df1 The numerator degree of freedom, e.g. the number of parameters (including the intercept) of a linear regression. Only used if \code{x} is a test statistic.
 #' @param df2 The denominator degree of freedom, e.g. n - df1 - 1 in a linear regression. Only used if \code{x} is a test statistic.
@@ -54,8 +54,8 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   if (probs[1] == 0) {
     lci <- 0
   } else {
-    lci <- optimize(function(ncp) (pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1])^2,
-                   interval = c(eps / 2, stat * df1))$minimum
+    lci <- uniroot(function(ncp) pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1],
+                   interval = c(eps / 2, stat * df1))$root
     if (lci < eps) {
       lci <- 0
     }
@@ -64,8 +64,8 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   if (probs[2] == 1) {
     uci <- Inf
   } else {
-    uci <- optimize(function(ncp) (pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2])^2,
-                   interval = c(stat * (df1 - 1), stat * df1 * 4))$minimum
+    uci <- uniroot(function(ncp) pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2],
+                   interval = c(stat * (df1 - 1), stat * df1 * 4))$root
   }
 
   # Organize output

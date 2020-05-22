@@ -121,3 +121,21 @@ zap_small <- function(z, eps = 0.0001) {
   z[z < eps] <- 0
   z
 }
+
+# Function to efficiently calculate the mean difference statistic in boot
+boot_two_means <- function(X, id, se = FALSE, var.equal = FALSE) {
+  X <- X[id, ]
+  v <- X[["v"]]
+  g <- X[["g"]]
+  x <- v[g == 1]
+  y <- v[g == 2]
+  c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal))
+}
+
+# Function to efficiently calculate the median difference statistic in boot
+boot_two_stats <- function(X, id, FUN = mean, ...) {
+  X <- X[id, ]
+  x <- X[X[["g"]] == 1, "v"]
+  y <- X[X[["g"]] == 2, "v"]
+  FUN(x, ...) - FUN(y, ...)
+}

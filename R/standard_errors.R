@@ -6,6 +6,7 @@
 #' @importFrom stats var
 #' @param z Numeric vector.
 #' @param na.rm Should missing values be removed before calculation? The default is \code{TRUE} for convenience.
+#' @param var.equal Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.
 #' @param ... Further arguments to be passed from other methods.
 #' @return A numeric vector of length one.
 #' @examples
@@ -15,14 +16,28 @@ NULL
 #' @rdname se
 #' @export
 se_mean <- function(z, na.rm = TRUE, ...) {
-  z <- z[!is.na(z)]
+  if (na.rm) {
+    z <- z[!is.na(z)]
+  }
   sqrt(var(z) / length(z))
 }
 
 #' @rdname se
 #' @export
+se_mean_diff <- function(x, y, na.rm = TRUE, var.equal = FALSE, ...) {
+  if (na.rm) {
+    x <- x[!is.na(x)]
+    y <- y[!is.na(y)]
+  }
+  t.test(x, y, var.equal = var.equal)$stderr
+}
+
+#' @rdname se
+#' @export
 se_var <- function(z, na.rm = TRUE, ...) {
-  z <- z[!is.na(z)]
+  if (na.rm) {
+    z <- z[!is.na(z)]
+  }
   n <- length(z)
   if (n <= 3L) {
     stop("Not enough non-missing observations to calculate standard error. Need at least four.")
@@ -33,7 +48,9 @@ se_var <- function(z, na.rm = TRUE, ...) {
 #' @rdname se
 #' @export
 se_proportion <- function(z, na.rm = TRUE, ...) {
-  z <- z[!is.na(z)]
+  if (na.rm) {
+    z <- z[!is.na(z)]
+  }
   p <- mean(z)
   n <- length(z)
   sqrt(p * (1 - p) / n)

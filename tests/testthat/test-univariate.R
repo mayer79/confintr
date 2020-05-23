@@ -17,12 +17,17 @@ test_that("ci_sd works", {
   expect_equal(ci_sd(x)$estimate, sd(x))
   expect_equal(ci_sd(x)$interval, sqrt(ci_var(x)$interval))
   expect_equal(ci_sd(x)$interval, c(5.495730, 9.919015), tol = 0.001)
+  expect_equal(ci_sd(x, probs = c(0, 0.975))$interval, c(0, 9.919015), tol = 0.001)
+  expect_equal(ci_sd(x, probs = c(0.025, 1))$interval, c(5.49573, Inf), tol = 0.001)
   expect_equal(ci_sd(x, type = "bootstrap", R = 499, seed = 1)$interval, c(5.799715,8.433808), tol = 0.001)
   expect_equal(ci_sd(x)$interval[2], ci_sd(x, probs = c(0, 0.975))$interval[2])
   expect_equal(ci_sd(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
                ci_sd(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
   expect_equal(ci_sd(x, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
                ci_sd(x, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
+  x <- rnorm(100)
+  xp <- (x - mean(x)) / sd(x) * 8
+  expect_equal(ci_sd(xp, probs = c(0, 0.95)), 0.907, tol = 0.01)
 })
 
 test_that("ci_quantile works", {
@@ -56,6 +61,9 @@ test_that("ci_mean works", {
   x <- 1:27
   expect_equal(ci_mean(x)$estimate, mean(x))
   expect_equal(ci_mean(x)$interval, as.numeric(t.test(x)$conf.int))
+  expect_equal(ci_mean(x)$interval, c(10.86013, 17.13987), tolerance = 0.001)
+  expect_equal(c(ci_mean(x, probs = c(0.025, 1))$interval[1], ci_mean(x, probs = c(0, 0.975))$interval[2]),
+               c(10.86013, 17.13987), tolerance = 0.001)
   expect_equal(ci_mean(x, type = "bootstrap", R = 249, seed = 2)$interval, c(11.27594, 16.81534), tol = 0.0001)
   expect_equal(ci_mean(x)$interval[2], ci_mean(x, probs = c(0, 0.975))$interval[2])
   expect_equal(ci_mean(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
@@ -83,6 +91,7 @@ test_that("ci_proportion works", {
                ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
   expect_equal(ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
                ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
+  expect_equal(ci_proportion(45, n = 50, probs = c(0, 0.95), type = "Wilson")$interval[2], 0.95047, tolerance = 0.001)
 })
 
 

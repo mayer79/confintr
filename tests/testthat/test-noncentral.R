@@ -1,4 +1,4 @@
-context("Cramer's V")
+context("CIs about non-centrality parameters")
 
 test_that("different input leads to same and correct result", {
   tab <- table(mtcars[c("am", "vs")])

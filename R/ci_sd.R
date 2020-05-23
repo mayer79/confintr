@@ -1,7 +1,6 @@
 #' Confidence Interval for the Population Standard Deviation
 #'
 #' This function calculates confidence intervals for the population standard deviation. They are derived by calculating confidence intervals for the variance and then taking the square-root. For details, see \code{\link{ci_var}}.
-#' @importFrom stats var qchisq
 #' @param x A numeric vector.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".

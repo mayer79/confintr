@@ -1,8 +1,8 @@
 #' Confidence Interval for the Interquartile Range
 #'
-#' This function calculates bootstrap confidence intervals for the population interquartile range.
+#' This function calculates bootstrap confidence intervals for the population interquartile range (IQR), i.e. the difference between first and third quartile.
 #'
-#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' @importFrom boot boot
 #' @importFrom stats IQR
 #' @param x A numeric vector.
@@ -47,7 +47,7 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
   cint <- ci_boot(S, boot_type, probs)
 
   # Organize output
-  cint <- check_output(cint, probs, c(-Inf, Inf))
+  cint <- check_output(cint, probs, c(0, Inf))
   out <- list(parameter = "population IQR",
               interval = cint, estimate = IQR(x),
               probs = probs, type = type,

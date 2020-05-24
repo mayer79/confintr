@@ -8,7 +8,7 @@
 #' @importFrom boot boot
 #' @param x The result of \code{stats::chisq.test}, a \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @param correct Should Yates continuity correction be applied to the 2x2 case? The default is \code{TRUE} (this is also used in the bootstrap).
+#' @param correct Should Yates continuity correction be applied to the 2x2 case? The default is \code{TRUE} (also used in the bootstrap).
 #' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.

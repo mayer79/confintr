@@ -1,6 +1,6 @@
 #' Confidence Interval for the Population Cramer's V
 #'
-#' This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on non-centrality parameter of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available.
+#' This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on non-centrality parameter of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available. In order to allow hypothesis tests of association, we set the lower limit to 0 as soon as the lower confidence limit of the corresponding non-centrality parameter is 0. Without this slightly conservative modification, the lower confidence interval of Cramer's V would always be strictly positive.
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' Note that no continuity correction is applied for 2x2 tables. Further note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
@@ -28,6 +28,7 @@
 #' ci_cramersv(ir[, c("Species", "PL")])
 #' ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 999)
 #' ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
+#' ci_cramersv(mtcars[c("am", "vs")])
 #' @references
 #' \enumerate{
 #'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
@@ -61,11 +62,15 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975),
   out <- ci_chisq_ncp(x, probs = probs, type = type, boot_type = boot_type,
                       R = R, seed = seed, correct = FALSE, ...)
   ci <- sqrt((out$interval + df) / (n * (k - 1)))
-  ci <- check_output(ci, probs, 0:1)
 
-  # replace ncp by Cramer's V
+  # Modification to allow hypothesis test of association
+  if (out$interval[1] == 0) {
+    ci[1] <- 0
+  }
+
+  # Replace ncp by Cramer's V
   out$estimate <- cramersv(x)
-  out$interval <- ci
+  out$interval <- check_output(ci, probs, 0:1)
   out$parameter <- "population Cramer's V"
   out
 }

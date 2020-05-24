@@ -2,7 +2,7 @@
 % Please edit documentation in R/cramersv.R
 \name{cramersv}
 \alias{cramersv}
-\title{Cramér's V}
+\title{Cramer's V}
 \usage{
 cramersv(x)
 }
@@ -13,10 +13,10 @@ cramersv(x)
 A numeric vector of length one.
 }
 \description{
-This function calculates Cramér's V, a measure of association between two categorical variables. It is a scaled version of the chi-squared test statistic and lies between 0 and 1. Cramér's V is calculated as sqrt(chi-squared / (n * (k - 1))), where n is the number of observations and k is the smaller of the number of levels of the two variables.
+This function calculates Cramer's V, a measure of association between two categorical variables. It is a scaled version of the chi-squared test statistic and lies between 0 and 1. Cramer's V is calculated as sqrt(chi-squared / (n * (k - 1))), where n is the number of observations and k is the smaller of the number of levels of the two variables.
 }
 \details{
-Yates continuity correction is never applied. So in the 2x2 case, if \code{x} is the result of \code{stats::chisq.test}, make sure no continuity correction was applied.
+Yates continuity correction is never applied. So in the 2x2 case, if \code{x} is the result of \code{stats::chisq.test}, make sure no continuity correction was applied. Otherwise, results can be inconsistent.
 }
 \examples{
 tab <- table(mtcars[c("am", "vs")])

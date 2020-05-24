@@ -1,10 +1,10 @@
 #' Confidence Interval for the Non-Centrality Parameter of the Chi-Squared Distribution
 #'
-#' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap. The results might differ considerably.
+#' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap.
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
-#' Note that limits below 0.0001 are set to 0 and that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
-#' @importFrom stats chisq.test pchisq optimize
+#' Note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
+#' @importFrom stats chisq.test pchisq uniroot
 #' @importFrom boot boot
 #' @param x The result of \code{stats::chisq.test}, a \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
@@ -25,14 +25,12 @@
 #' }
 #' @export
 #' @examples
-#' tab <- table(mtcars[c("am", "vs")])
-#' chi <- chisq.test(tab)
 #' ci_chisq_ncp(mtcars[c("am", "vs")])
 #' ci_chisq_ncp(mtcars[c("am", "vs")], type = "bootstrap", R = 999)
 #' ir <- iris
 #' ir$PL <- ir$Petal.Width > 1
+#' ci_chisq_ncp(ir[, c("Species", "PL")])
 #' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
-#' ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1), type = "bootstrap", R = 999)
 #' @references
 #' \enumerate{
 #'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
@@ -48,7 +46,7 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
   check_input(probs)
-  eps <- 0.0001
+  limits <- c(0, Inf)
   stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
   if (inherits(x, "htest")) {
     stopifnot("X-squared" %in% names(x[["statistic"]]))
@@ -66,22 +64,33 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
 
   stat <- x[["statistic"]]
   df <- x[["parameter"]]
-  estimate <- stat - df
+  estimate <- chi2_to_ncp(stat, df)
 
   # Calculate ci
   if (type == "chi-squared") {
     iprobs <- 1 - probs
     if (probs[1] == 0) {
-      lci <- 0
+      lci <- limits[1]
     } else {
-      lci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[1])^2,
-                     interval = c(eps / 2, stat))$minimum
+      lci <- try(uniroot(function(ncp) pchisq(stat, df = df, ncp = ncp) - iprobs[1],
+                         interval = c(0, estimate))$root, silent = TRUE)
+      if (inherits(lci, "try-error")) {
+         lci <- limits[1]
+      }
     }
     if (probs[2] == 1) {
-      uci <- Inf
+      uci <- limits[2]
     } else {
-      uci <- optimize(function(ncp) (pchisq(stat, df = df, ncp = ncp) - iprobs[2])^2,
-                     interval = c(stat - df, 4 * stat))$minimum
+      # Upper limit might be improved
+      n <- sum(x[["observed"]])
+      k <- min(dim(x[["observed"]]))
+      upper_limit <- pmax(4 * estimate, df + n * (k - 1), 100)
+      uci <- try(uniroot(function(ncp) pchisq(stat, df = df, ncp = ncp) - iprobs[2],
+                         interval = c(estimate, upper_limit))$root, silent = TRUE)
+      if (inherits(uci, "try-error")) {
+        warning("Upper limit outside search range. Set to the maximum of the parameter range.")
+        uci <- limits[2]
+      }
     }
     cint <- c(lci, uci)
   } else { # bootstrap
@@ -89,18 +98,21 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
     tab <- data.frame(x[["observed"]])
     X <- tab[rep(seq_len(nrow(tab)), times = tab[, "Freq"]), 1:2]
 
-    # Bootstrap
+    # Bootstrap the chi-squared test statistic
     check_bca(boot_type, nrow(X), R)
     set_seed(seed)
     S <- boot(X, statistic = function(x, id) suppressWarnings(chisq.test(
-      table(x[id, 1], x[id, 2]), correct = correct)$statistic - df), R = R, ...)
+      table(x[id, 1], x[id, 2]), correct = correct)$statistic), R = R, ...)
     cint <- ci_boot(S, boot_type, probs)
+
+    # Map chi-squared to ncp
+    cint <- chi2_to_ncp(cint, df)
   }
 
   # Organize output
-  cint <- check_output(zap_small(cint, eps), probs, c(0, Inf))
+  cint <- check_output(cint, probs, limits)
   out <- list(parameter = "non-centrality parameter of the chi-squared distribution",
-              interval = cint, estimate = zap_small(estimate, eps),
+              interval = cint, estimate = estimate,
               probs = probs, type = type,
               info = boot_info(type, boot_type, R))
   class(out) <- "cint"

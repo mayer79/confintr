@@ -1,12 +1,10 @@
 #' Bootstrap Confidence Interval
 #'
-#' Apply Bootstrap Confidence Interval to result of boot
-#'
-#' Note that no continuity correction is applied to the 2x2 case.
+#' Internel wrapper to \code{boot::boot.ci}. Contains the logic for one-sided and asymmetric confidence intervals.
 #' @importFrom boot boot.ci
 #' @param S Result of \code{boot}.
 #' @param boot_type Confidence interval type passed to \code{boot::boot.ci}.
-#' @param probs Probability cuts for the confidence intervals. If one sided or asymmetric, need to be correctly transformed.
+#' @param probs Probability cuts for the confidence intervals.
 #' @param ... Further arguments passed to \code{boot::boot.ci}.
 #' @return A numeric vector of length two.
 ci_boot <- function(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs, ...) {

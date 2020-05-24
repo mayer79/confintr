@@ -2,8 +2,8 @@
 #'
 #' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
 #'
-#' Note that for numeric reasons, lower limits below 0.0001 are set to 0. Further note that, according to \code{?pf}, the results might be unreliable for large F values.
-#' @importFrom stats lm pf optimize
+#' Note that, according to \code{?pf}, the results might be unreliable for very large F values.
+#' @importFrom stats lm pf uniroot
 #' @param x The result of \code{lm} or the F test statistic.
 #' @param df1 The numerator degree of freedom, e.g. the number of parameters (including the intercept) of a linear regression. Only used if \code{x} is a test statistic.
 #' @param df2 The denominator degree of freedom, e.g. n - df1 - 1 in a linear regression. Only used if \code{x} is a test statistic.
@@ -31,7 +31,7 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_input(probs)
   iprobs <- 1 - probs
-  eps <- 0.0001
+  limits <- c(0, Inf)
   stopifnot(inherits(x, "lm") || is.numeric(x))
 
   # Distinguish input
@@ -50,27 +50,37 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
     stat <- x
   }
 
+  # Estimate
+  estimate <- f_to_ncp(stat, df1, df2)
+
   # Calculate limits
   if (probs[1] == 0) {
-    lci <- 0
+    lci <- limits[1]
   } else {
-    lci <- optimize(function(ncp) (pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1])^2,
-                   interval = c(eps / 2, stat * df1))$minimum
-    if (lci < eps) {
-      lci <- 0
+    lci <- try(uniroot(function(ncp) pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1],
+                       interval = c(0, estimate))$root, silent = TRUE)
+    if (inherits(lci, "try-error")) {
+      lci <- limits[1]
     }
   }
   if (probs[2] == 1) {
-    uci <- Inf
+    uci <- limits[2]
   } else {
-    uci <- optimize(function(ncp) (pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2])^2,
-                   interval = c(stat * (df1 - 1), stat * df1 * 4))$minimum
+    # Upper limit might be improved
+    upper_limit <- pmax(4 * estimate, stat * df1 * 4, df1 * 100)
+    uci <- try(uniroot(function(ncp) pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2],
+                       interval = c(estimate, upper_limit))$root,
+               silent = TRUE)
+    if (inherits(uci, "try-error")) {
+      warning("Upper limit outside search range. Set to the maximum of the parameter range.")
+      uci <- limits[2]
+    }
   }
 
   # Organize output
-  cint <- check_output(c(lci, uci), probs, c(0, Inf))
+  cint <- check_output(c(lci, uci), probs, limits)
   out <- list(parameter = "non-centrality parameter of the F-distribution",
-              interval = cint, estimate = f_to_ncp(stat, df1, df2),
+              interval = cint, estimate = estimate,
               probs = probs, type = "F", info = "")
   class(out) <- "cint"
   out

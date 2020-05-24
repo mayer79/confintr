@@ -7,6 +7,7 @@ check_input <- function(probs) {
             probs >= 0, probs <= 1,
             probs[1] < probs[2],
             probs[1] + 1 - probs[2] > 0)
+  TRUE
 }
 
 # Output Check
@@ -28,6 +29,9 @@ check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
 map_boot_type <- function(ty) {
   out <- c(norm = "normal", basic = "basic", stud = "student",
            perc = "percent", bca = "bca")[ty]
+  if (anyNA(out)) {
+    stop("Wrong boot_type.")
+  }
   as.character(out)
 }
 
@@ -89,6 +93,7 @@ probs2alternative <- function(p) {
 # Consistent error message
 asymmetric_stop <- function() {
   stop("Asymmetric two-sided case not supported in this case.")
+  FALSE
 }
 
 # Title case
@@ -113,22 +118,19 @@ ncp_to_r2 <- function(ncp, df1, df2) {
 
 # Map F test statistic to non-centrality parameter
 f_to_ncp <- function(f, df1, df2) {
-  df1 / df2 * f * (df1 + df2 + 1)
+  df1 * f * (df1 + df2 + 1) / df2
 }
 
-# Set small values to 0
-zap_small <- function(z, eps = 0.0001) {
-  z[z < eps] <- 0
-  z
+# Map chi-squared statistic to non-centrality parameter
+chi2_to_ncp <- function(stat, df) {
+  pmax(0, stat - df)
 }
 
 # Function to efficiently calculate the mean difference statistic in boot
 boot_two_means <- function(X, id, se = FALSE, var.equal = FALSE) {
   X <- X[id, ]
-  v <- X[["v"]]
-  g <- X[["g"]]
-  x <- v[g == 1]
-  y <- v[g == 2]
+  x <- X[X[["g"]] == 1, "v"]
+  y <- X[X[["g"]] == 2, "v"]
   c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal))
 }
 
@@ -145,5 +147,6 @@ check_bca <- function(boot_type, n, R) {
   if (boot_type == "bca" && n > R) {
     stop("Number of bootstrap replications must be larger than the sample size.")
   }
+  TRUE
 }
 

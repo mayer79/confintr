@@ -41,10 +41,10 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates bootstrap confidence intervals for the population kurtosis, see Details. Note that we use the version of the kurtosis that equals 3 for a normal distribution.
+This function calculates bootstrap confidence intervals for the population kurtosis, see Details. Note that we use the version of the kurtosis that equals 3 for a theoretical normal distribution.
 }
 \details{
-Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 }
 \examples{
 set.seed(1)

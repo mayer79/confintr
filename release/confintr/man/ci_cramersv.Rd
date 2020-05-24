@@ -45,7 +45,7 @@ This function calculates confidence intervals for the population Cramer's V. By 
 }
 \details{
 Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
-Note that no continuity correction is applied for 2x2 tables. Further note that very small values are rounded down to 0 and that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
+Note that no continuity correction is applied for 2x2 tables. Further note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
 }
 \examples{
 ir <- iris

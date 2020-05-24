@@ -46,7 +46,7 @@ Confidence intervals for the following parameters are available:
 
 - Mean, quantile and median differences of two samples (for quantile/median only bootstrap).
 
-Many of the classic confidence intervals are discussed in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019].
+Many of the classic confidence intervals are discussed in [@smithson2003]. Bootstrap confidence intervals are described in [@efron1993] and implemented by the `boot` package [@ripley2019]. Different types of bootstrap confidence intervals are available. Usually, the default type is the bias-corrected accelerated bootstrap "bca", which requires at least as many replications as samples. For the mean and mean difference, the default is bootstrap t ("stud"). Percentile, standard and basic bootstrap intervals are available as well.
 
 The package supports both one- and two-sided intervals.
 

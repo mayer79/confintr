@@ -25,13 +25,13 @@ se_proportion(z, na.rm = TRUE, ...)
 
 \item{y}{Numeric vector.}
 
-\item{var.equal}{Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.}
+\item{var.equal}{Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used (see \code{stats::t.test}). This also applies to the "stud" bootstrap.}
 }
 \value{
 A numeric vector of length one.
 }
 \description{
-Functions to calculate standard errors of different statistics. The availability of a standard error (or statistic proportional to it) allows to apply "bootstrapT" bootstrap.
+Functions to calculate standard errors of different statistics. The availability of a standard error (or statistic proportional to it) allows to apply "stud" (bootstrap t) bootstrap.
 }
 \examples{
 se_mean(1:100)

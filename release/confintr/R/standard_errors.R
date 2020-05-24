@@ -1,13 +1,13 @@
 #' Standard errors
 #'
-#' Functions to calculate standard errors of different statistics. The availability of a standard error (or statistic proportional to it) allows to apply "bootstrapT" bootstrap.
+#' Functions to calculate standard errors of different statistics. The availability of a standard error (or statistic proportional to it) allows to apply "stud" (bootstrap t) bootstrap.
 #'
 #' @name se
-#' @importFrom stats var
+#' @importFrom stats var t.test
 #' @param z Numeric vector.
 #' @param y Numeric vector.
 #' @param na.rm Should missing values be removed before calculation? The default is \code{TRUE} for convenience.
-#' @param var.equal Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.
+#' @param var.equal Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used (see \code{stats::t.test}). This also applies to the "stud" bootstrap.
 #' @param ... Further arguments to be passed from other methods.
 #' @return A numeric vector of length one.
 #' @examples
@@ -20,7 +20,11 @@ se_mean <- function(z, na.rm = TRUE, ...) {
   if (na.rm) {
     z <- z[!is.na(z)]
   }
-  sqrt(var(z) / length(z))
+  n <- length(z)
+  if (n < 1L) {
+    stop("Not enough non-missing observations to calculate standard error.")
+  }
+  sqrt(var(z) / n)
 }
 
 #' @rdname se
@@ -54,6 +58,9 @@ se_proportion <- function(z, na.rm = TRUE, ...) {
   }
   p <- mean(z)
   n <- length(z)
+  if (n < 1L) {
+    stop("Not enough non-missing observations to calculate standard error.")
+  }
   sqrt(p * (1 - p) / n)
 }
 

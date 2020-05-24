@@ -26,7 +26,7 @@ kurtosis(z, na.rm = TRUE)
 A numeric vector of length one.
 }
 \description{
-Functions to calculate moments, skewness, and Pearson's measure of kurtosis. The latter is defined as the ratio of the 4th central moment and the squared second central moment. For a normal distribution, the kurtosis equals 3.
+Functions to calculate moments, skewness, and Pearson's measure of kurtosis. The latter is defined as the ratio of the 4th central moment and the squared second central moment. For a theoretical normal distribution, the kurtosis equals 3.
 }
 \examples{
 x <- 1:100

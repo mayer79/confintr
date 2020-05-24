@@ -44,21 +44,19 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap. The results might differ considerably.
+This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap.
 }
 \details{
 Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
-Note that limits below 0.0001 are set to 0 and that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
+Note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
 }
 \examples{
-tab <- table(mtcars[c("am", "vs")])
-chi <- chisq.test(tab)
 ci_chisq_ncp(mtcars[c("am", "vs")])
 ci_chisq_ncp(mtcars[c("am", "vs")], type = "bootstrap", R = 999)
 ir <- iris
 ir$PL <- ir$Petal.Width > 1
+ci_chisq_ncp(ir[, c("Species", "PL")])
 ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1))
-ci_chisq_ncp(ir[, c("Species", "PL")], probs = c(0.05, 1), type = "bootstrap", R = 999)
 }
 \references{
 \enumerate{

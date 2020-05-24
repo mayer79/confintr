@@ -2,7 +2,7 @@
 #'
 #' This function calculates confidence intervals for a population quantile. By default, distribution-free confidence intervals based on the binomial distribution are formed, see Hahn and Meeker. Alternatively, bootstrap confidence intervals are available.
 #'
-#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the mean is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+#' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' @importFrom stats quantile qbinom
 #' @importFrom boot boot
 #' @param x A numeric vector.

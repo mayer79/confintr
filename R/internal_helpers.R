@@ -118,13 +118,12 @@ ncp_to_r2 <- function(ncp, df1, df2) {
 
 # Map F test statistic to non-centrality parameter
 f_to_ncp <- function(f, df1, df2) {
-  df1 / df2 * f * (df1 + df2 + 1)
+  df1 * f * (df1 + df2 + 1) / df2
 }
 
-# Set small values to 0
-zap_small <- function(z, eps = 0.0001) {
-  z[z < eps] <- 0
-  z
+# Map chi-squared statistic to non-centrality parameter
+chi2_to_ncp <- function(stat, df) {
+  pmax(0, stat - df)
 }
 
 # Function to efficiently calculate the mean difference statistic in boot

@@ -7,7 +7,7 @@
 ci_rsquared(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 }
 \arguments{
-\item{x}{The result of \code{lm} or the F test statistic.}
+\item{x}{The result of \code{stats::lm} or the F test statistic.}
 
 \item{df1}{The numerator degree of freedom. Only used if \code{x} is a test statistic.}
 
@@ -30,7 +30,7 @@ A list with class \code{cint} containing these components:
 This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
 }
 \details{
-According to \code{?pf}, the results might be unreliable for large F values. Further note that small values of the lower confidence limits are rounded down to 0.
+According to \code{?pf}, the results might be unreliable for very large F values.
 }
 \examples{
 fit <- lm(Sepal.Length ~ ., data = iris)

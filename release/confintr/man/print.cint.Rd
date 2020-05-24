@@ -11,13 +11,13 @@
 
 \item{digits}{Number of digits used to format sample estimate and confidence limits.}
 
-\item{...}{Further arguments passed from other types.}
+\item{...}{Further arguments passed from other methods.}
 }
 \value{
 Invisibly, the input is returned.
 }
 \description{
-Print type for an object of class \code{cint}.
+Print method for an object of class \code{cint}.
 }
 \examples{
 ci_mean(1:100)

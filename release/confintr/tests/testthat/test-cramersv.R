@@ -13,3 +13,8 @@ test_that("wrong input leads to error", {
   expect_error(cramersv(1:100))
   expect_error(cramersv(cbind(1:2, -1:0)))
 })
+
+test_that("V is equal to known value", {
+  m <- cbind(c(21, 14), c(3, 10))
+  expect_equal(cramersv(m), 0.328, tolerance = 0.001)
+})

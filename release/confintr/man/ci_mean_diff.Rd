@@ -51,7 +51,7 @@ This function calculates confidence intervals for the population value of mean(x
 }
 \details{
 Bootstrap confidence intervals are calculated by the package "boot". The default bootstrap type for the mean difference is "stud" (bootstrap t) as it enjoys the property of being second order accurate and has a stable variance estimator (see Efron, p. 188).
-The sampling is done within sample. If \code{boot_type = "stud"}, the standard error is estimated by Welch's method if \code{var.equal = FALSE} (the default) and by pooling otherwise.
+The resampling is done within sample. If \code{boot_type = "stud"}, the standard error is estimated by Welch's method if \code{var.equal = FALSE} (the default) and by pooling otherwise.
 Thus, \code{var.equal} has not only an effect for the classic Student approach (\code{type = "t"}) but also for \code{boot_type = "stud"}.
 }
 \examples{

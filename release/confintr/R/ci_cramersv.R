@@ -3,7 +3,7 @@
 #' This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on non-centrality parameter of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available.
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
-#' Note that no continuity correction is applied for 2x2 tables. Further note that very small values are rounded down to 0 and that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
+#' Note that no continuity correction is applied for 2x2 tables. Further note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
 #' @importFrom stats chisq.test
 #' @param x The result of \code{stats::chisq.test}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.
 #' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.

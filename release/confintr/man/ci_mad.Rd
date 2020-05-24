@@ -20,7 +20,7 @@ ci_mad(
 
 \item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
-\item{constant}{Scaling factor applied. The default (1.4826) ensures that the mad equals the standard deviation for a theoretical normal distribution.}
+\item{constant}{Scaling factor applied. The default (1.4826) ensures that the MAD equals the standard deviation for a theoretical normal distribution.}
 
 \item{type}{Type of confidence interval. Currently not used as the only type is "bootstrap".}
 
@@ -44,10 +44,10 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates bootstrap confidence intervals for the population median absolute deviation.
+This function calculates bootstrap confidence intervals for the population median absolute deviation, see \code{stats::mad} for more information on this measure of scale.
 }
 \details{
-Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 }
 \examples{
 set.seed(1)

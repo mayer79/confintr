@@ -11,7 +11,7 @@ ci_boot(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs, ...)
 
 \item{boot_type}{Confidence interval type passed to \code{boot::boot.ci}.}
 
-\item{probs}{Probability cuts for the confidence intervals. If one sided or asymmetric, need to be correctly transformed.}
+\item{probs}{Probability cuts for the confidence intervals.}
 
 \item{...}{Further arguments passed to \code{boot::boot.ci}.}
 }
@@ -19,8 +19,5 @@ ci_boot(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs, ...)
 A numeric vector of length two.
 }
 \description{
-Apply Bootstrap Confidence Interval to result of boot
-}
-\details{
-Note that no continuity correction is applied to the 2x2 case.
+Internel wrapper to \code{boot::boot.ci}. Contains the logic for one-sided and asymmetric confidence intervals.
 }

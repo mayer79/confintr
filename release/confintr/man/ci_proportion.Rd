@@ -44,10 +44,11 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (not recommended, but added for consistency and didactic purposes).
+This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (mainly added for consistency and didactic purposes).
 }
 \details{
 Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+Note that we use the formula in \url{https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval} which does not simplify the 0.975 quantile of the normal by 2 as sometimes in other references.
 }
 \examples{
 x <- rep(0:1, times = c(50, 100))

@@ -41,7 +41,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
 
   # Remove NAs and calculate estimate
   x <- x[!is.na(x)]

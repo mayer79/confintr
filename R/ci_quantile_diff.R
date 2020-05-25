@@ -41,7 +41,7 @@ ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "boo
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
   stopifnot(length(q) == 1L, q > 0, q < 1)
 
   # Remove NAs and calculate estimate

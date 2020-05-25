@@ -30,7 +30,7 @@
 #' @seealso \code{\link{ci_f_ncp}}.
 ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
-  check_input(probs)
+  check_probs(probs)
   iprobs <- 1 - probs
   stopifnot(inherits(x, "lm") || is.numeric(x))
 

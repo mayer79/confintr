@@ -42,7 +42,7 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
   stopifnot(length(q) == 1L, q > 0, q < 1)
   limits <- c(-Inf, Inf)
 

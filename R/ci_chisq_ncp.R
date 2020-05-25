@@ -45,7 +45,7 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
   limits <- c(0, Inf)
   stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
   if (inherits(x, "htest")) {

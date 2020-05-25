@@ -37,7 +37,7 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
 
   # Calculate CI
   x <- x[!is.na(x)]

@@ -41,7 +41,7 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975),
                         boot_type = c("bca", "perc", "norm", "basic"),
                         R = 9999, seed = NULL, ...) {
   # Input check and initialization
-  check_input(probs)
+  check_probs(probs)
   stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
   if (inherits(x, "htest")) {
     stopifnot("X-squared" %in% names(x[["statistic"]]))

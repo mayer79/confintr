@@ -1,6 +1,6 @@
 #' Confidence Interval for the Non-Centrality Parameter of the Chi-Squared Distribution
 #'
-#' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap.
+#' This function calculates confidence intervals for the non-centrality parameter of the chi-squared distribution based on chi-squared test inversion or the bootstrap. A positive lower (1-alpha)*100%-confidence limit for the ncp goes hand-in-hand with a significant association test at level alpha.
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' Note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).

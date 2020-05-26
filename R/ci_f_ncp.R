@@ -1,6 +1,6 @@
 #' Confidence Interval for the Non-Centrality Parameter of the F Distribution
 #'
-#' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
+#' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple. A positive lower (1-alpha)*100%-confidence limit for the ncp goes hand-in-hand with a significant F test at level alpha.
 #'
 #' Note that, according to \code{?pf}, the results might be unreliable for very large F values.
 #' @importFrom stats lm pf uniroot

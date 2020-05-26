@@ -1,6 +1,6 @@
 # confintr
 
-The `confintr` package offers classic and bootstrap confidence intervals for the following parameters:
+The `confintr` package offers classic and/or bootstrap confidence intervals for the following parameters:
 
 - mean,
 
@@ -23,6 +23,8 @@ The `confintr` package offers classic and bootstrap confidence intervals for the
 - mean, quantile and median differences.
 
 Both one- and two-sided intervals are supported.
+
+Different types of bootstrap intervals are possible through argument `boot_type`, see vignette.
 
 ## Installation
 

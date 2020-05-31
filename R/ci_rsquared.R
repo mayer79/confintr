@@ -3,7 +3,7 @@
 #' This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. A positive lower (1-alpha)*100%-confidence limit for the R-squared goes hand-in-hand with a significant F test at level alpha.
 #'
 #' According to \code{?pf}, the results might be unreliable for very large F values. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
-#' @importFrom stats lm pf optimize
+#' @importFrom stats lm pf
 #' @param x The result of \code{stats::lm} or the F test statistic.
 #' @param df1 The numerator degree of freedom. Only used if \code{x} is a test statistic.
 #' @param df2 The denominator degree of freedom. Only used if \code{x} is a test statistic.

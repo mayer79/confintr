@@ -19,9 +19,9 @@ create_package(
   fields = list(
     Title = "Confidence Intervals",
     Type = "Package",
-    Version = "0.1.0.1",
+    Version = "0.1.0",
     Date = Sys.Date(),
-    Description = "Calculates classic and/or bootstrap confidence intervals for many parameters such as the population mean, variance, IQR, MAD, skewness, kurtosis, Cramer's V, R-squared, quantiles (incl. median), proportions, different types of correlation measures, difference in means, quantiles and medians. Many of the classic confidence intervals are described in Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications. Bootstrap confidence intervals are calculated with the R package 'boot'. Both one- and two-sided intervals are supported.",
+    Description = "Calculates classic and/or bootstrap confidence intervals for many parameters such as the population mean, variance, interquartile range (IQR), median absolute deviation (MAD), skewness, kurtosis, Cramer's V, R-squared, quantiles (incl. median), proportions, different types of correlation measures, difference in means, quantiles and medians. Many of the classic confidence intervals are described in Smithson, M. (2003, ISBN: 978-0761924999). Bootstrap confidence intervals are calculated with the R package 'boot'. Both one- and two-sided intervals are supported.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
     URL = "https://github.com/mayer79/confintr",
     BugReports = "https://github.com/mayer79/confintr/issues",
@@ -60,7 +60,7 @@ if (!dir.exists(file.path(pkg, "tests"))) {
   dir.create(file.path(pkg, "tests"))
 }
 file.copy("tests", pkg, recursive = TRUE)
-test(pkg)
+# test(pkg)
 
 if (TRUE) {
   # Copy vignette

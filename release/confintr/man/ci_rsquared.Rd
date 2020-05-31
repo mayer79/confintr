@@ -27,10 +27,10 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
+This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. A positive lower (1-alpha)*100\%-confidence limit for the R-squared goes hand-in-hand with a significant F test at level alpha.
 }
 \details{
-According to \code{?pf}, the results might be unreliable for very large F values.
+According to \code{?pf}, the results might be unreliable for very large F values. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
 }
 \examples{
 fit <- lm(Sepal.Length ~ ., data = iris)

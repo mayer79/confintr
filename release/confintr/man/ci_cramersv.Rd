@@ -11,6 +11,7 @@ ci_cramersv(
   boot_type = c("bca", "perc", "norm", "basic"),
   R = 9999,
   seed = NULL,
+  test_adjustment = TRUE,
   ...
 )
 }
@@ -27,6 +28,8 @@ ci_cramersv(
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
+\item{test_adjustment}{Adjustment to allow for test of association, see Details. The default is \code{TRUE}.}
+
 \item{...}{Further arguments passed to \code{resample::CI.boot_type}.}
 }
 \value{
@@ -41,9 +44,10 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on non-centrality parameter of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available.
+This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on the non-centrality parameter (ncp) of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available, also by boostrapping confidence intervals for the ncp.
 }
 \details{
+A positive lower (1-alpha)*100\%-confidence limit for the ncp goes hand-in-hand with a significant association test at level alpha. In order to allow such test approach also with Cramer's V, if the lower bound for the ncp is 0, we round down to 0 also the lower bound for Cramer's V. Without this slightly conservative adjustment, the lower limit for V would always be positive since ci for V = sqrt((ci for ncp + df)/(n (k - 1))), where k is the smaller number of levels in the two variables (see Smithson for this formula). Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is also a reason to bootstrap V via ncp instead of directly bootstrapping V.
 Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 Note that no continuity correction is applied for 2x2 tables. Further note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
 }
@@ -53,6 +57,8 @@ ir$PL <- ir$Petal.Width > 1
 ci_cramersv(ir[, c("Species", "PL")])
 ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 999)
 ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
+ci_cramersv(mtcars[c("am", "vs")])
+ci_cramersv(mtcars[c("am", "vs")], test_adjustment = FALSE)
 }
 \references{
 \enumerate{

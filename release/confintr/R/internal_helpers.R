@@ -1,7 +1,7 @@
 # Helper functions
 
 # Input check
-check_input <- function(probs) {
+check_probs <- function(probs) {
   stopifnot(length(probs) == 2L,
             is.numeric(probs),
             probs >= 0, probs <= 1,

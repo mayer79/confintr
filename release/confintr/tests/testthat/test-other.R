@@ -26,12 +26,12 @@ test_that("moments works", {
   expect_equal(kurtosis(1:100), 1.79976, tolerance = 0.001)
 })
 
-test_that("check_input works", {
-  expect_error(check_input(0, 1))
-  expect_error(check_input(-1, 0.9))
-  expect_error(check_input(0, 9))
-  expect_error(check_input(0.9, 0.1))
-  expect_equal(check_input(c(0.1, 0.9)), TRUE)
+test_that("check_probs works", {
+  expect_error(check_probs(0, 1))
+  expect_error(check_probs(-1, 0.9))
+  expect_error(check_probs(0, 9))
+  expect_error(check_probs(0.9, 0.1))
+  expect_equal(check_probs(c(0.1, 0.9)), TRUE)
 })
 
 test_that("check_output works", {

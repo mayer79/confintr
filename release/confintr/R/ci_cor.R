@@ -43,7 +43,7 @@ ci_cor <- function(x, y = NULL, probs = c(0.025, 0.975),
   method <- match.arg(method)
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
 
   # Distinguish input
   if (is.data.frame(x) || is.matrix(x)) {

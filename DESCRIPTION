@@ -2,7 +2,7 @@ Type: Package
 Package: confintr
 Title: Confidence Intervals
 Version: 0.1.0
-Date: 2020-05-24
+Date: 2020-05-31
 Authors@R: 
     person(given = "Michael",
            family = "Mayer",
@@ -11,14 +11,13 @@ Authors@R:
 Maintainer: Michael Mayer <mayermichael79@gmail.com>
 Description: Calculates classic and/or bootstrap confidence
     intervals for many parameters such as the population mean, variance,
-    IQR, MAD, skewness, kurtosis, Cramer's V, R-squared, quantiles (incl.
-    median), proportions, different types of correlation measures,
-    difference in means, quantiles and medians. Many of the classic
-    confidence intervals are described in Smithson, M. (2003). Confidence
-    intervals. Series: Quantitative Applications in the Social Sciences.
-    New York, NY: Sage Publications. Bootstrap confidence intervals are
-    calculated with the R package 'boot'. Both one- and two-sided
-    intervals are supported.
+    interquartile range (IQR), median absolute deviation (MAD), skewness,
+    kurtosis, Cramer's V, R-squared, quantiles (incl. median),
+    proportions, different types of correlation measures, difference in
+    means, quantiles and medians. Many of the classic confidence intervals
+    are described in Smithson, M. (2003, ISBN: 978-0761924999). Bootstrap
+    confidence intervals are calculated with the R package 'boot'. Both
+    one- and two-sided intervals are supported.
 License: GPL(>= 2)
 URL: https://github.com/mayer79/confintr
 BugReports: https://github.com/mayer79/confintr/issues

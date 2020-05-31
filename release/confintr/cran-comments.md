@@ -1,3 +1,11 @@
-## New package confintr
+## Resubmission of initial submission
 
-* The is a new R package offering many standard and non-standard confidence intervals such as CIs for quantiles and Cramér's V. Both classic and bootstrap confidence intervals are supported. The package has minimal dependencies: only "boot", which itself has no external dependencies.
+Fixed the following tasks by Martina Schmirl:
+
+1. explained acronyms:
+   - "IQR" -> "interquartile range (IQR)"
+   - "MAD" -> "median absolute deviation (MAD)"
+   
+2. Fixed reference in description to "... are described in Smithson, M. (2003, ISBN: 978-0761924999)."
+
+Furthemore, the docu has slightly been improved as well as the function "ci_cramersv".

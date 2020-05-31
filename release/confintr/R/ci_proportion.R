@@ -45,7 +45,7 @@ ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
-  check_input(probs)
+  check_probs(probs)
 
   # Distinguish input
   if (is.numeric(x) && length(x) == 1L) {

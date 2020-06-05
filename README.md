@@ -18,6 +18,8 @@ The `confintr` package offers classic and/or bootstrap confidence intervals for 
 
 - Cramér's V and the non-centrality parameter of the chi-squared distribution,
 
+- the odds ratio of a 2x2 table,
+
 - Pearson-, Spearman-, Kendall correlation coefficients,
 
 - mean, quantile and median differences.

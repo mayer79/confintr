@@ -42,6 +42,8 @@ Confidence intervals for the following parameters are available:
 
 - Cramér's V and the non-centrality parameter of the chi-squared distribution (parametric and bootstrap),
 
+- the odds ratio of a 2x2 table (exact),
+
 - Pearson-, Spearman-, Kendall correlation coefficients (normal for Pearson, bootstrap for any),
 
 - Mean, quantile and median differences of two samples (for quantile/median only bootstrap).

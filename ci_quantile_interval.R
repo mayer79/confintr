@@ -35,10 +35,10 @@
 #'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 #' }
 #' @seealso \code{\link{ci_quantile}}.
-ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
-                        type = c("binomial", "bootstrap"),
-                        boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 9999, seed = NULL, ...) {
+ci_quantile_interval <- function(x, q = 0.5, probs = c(0.025, 0.975),
+                                 type = c("wilks", "bootstrap"),
+                                 boot_type = c("bca", "perc", "norm", "basic"),
+                                 R = 9999, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -79,3 +79,17 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
   class(out) <- "cint"
   out
 }
+
+ibeta <- function(x, a, b) {
+  pbeta(x, a, b) * beta(a, b)
+}
+n <- 20
+beta <- 0.95
+gamma <- 0.5
+eval_fun <- function(r, n, gamma) {
+  s <- n - r + 1
+  1 - ibeta(gamma, s - r, n - s + r + 1)
+}
+candidates <- eval_fun(seq_len(n), n, gamma)
+ok <- candidates > beta
+(seq_len(n))[ok][which.max(candidates[ok])]

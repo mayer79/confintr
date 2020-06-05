@@ -30,7 +30,7 @@
 #' ci_quantile(x, q = 0.25, type = "bootstrap", R = 999)
 #' @references
 #' \enumerate{
-#'   \item Hahn, G. and Meeker, W (1991). Statistical Intervals. Wiley 1991.
+#'   \item Hahn, G. and Meeker, W. (1991). Statistical Intervals. Wiley 1991.
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
 #'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 #' }

@@ -1,12 +1,12 @@
 ---
-title: "The 'confintr' Package"
+title: "Using confintr"
 author: "Michael Mayer"
 date: "`r Sys.Date()`"
 bibliography: "biblio.bib"
 link-citations: true
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{confintr}
+  %\VignetteIndexEntry{Using confintr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

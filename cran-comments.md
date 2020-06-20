@@ -1,5 +1,5 @@
 ## Small update
 
-- Fixed a wrong "VignetteIndexEntry".
+- Fixed wrong "VignetteIndexEntry".
 
-- Added exact confidence intervals for the odds ratio.
+- Added confidence intervals for the odds ratio via stats::fisher.test.

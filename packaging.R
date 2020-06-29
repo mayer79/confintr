@@ -36,6 +36,7 @@ file.copy(file.path(pkg, "DESCRIPTION"), to = getwd(), overwrite = TRUE)
 use_package("stats", "Imports")
 use_package("boot", "Imports")
 use_package("knitr", "Suggests")
+use_package("rmarkdown", "Suggests")
 use_package("testthat", "Suggests")
 
 # Set up other files -------------------------------------------------

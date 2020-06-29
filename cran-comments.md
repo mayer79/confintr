@@ -1,4 +1,6 @@
-## Small update
+## Resubmission
+
+- Resubmission reason: forgot rmarkdown package in suggests.
 
 - Fixed wrong "VignetteIndexEntry".
 

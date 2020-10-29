@@ -37,8 +37,8 @@ install.packages("confintr")
 
 Latest version from github:
 ``` r
-# library(devtools)
-install_github("mayer79/confintr")
+library(devtools)
+install_github("mayer79/confintr", subdir = "release/confintr")
 ```
 
 ## Teaser

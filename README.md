@@ -1,5 +1,7 @@
 # confintr
 
+[![CRAN version](http://www.r-pkg.org/badges/version/confintr)](https://cran.r-project.org/package=confintr) [![](https://cranlogs.r-pkg.org/badges/confintr)](https://cran.r-project.org/package=confintr) [![](https://cranlogs.r-pkg.org/badges/grand-total/confintr?color=orange)](https://cran.r-project.org/package=confintr)
+
 The `confintr` package offers classic and/or bootstrap confidence intervals for the following parameters:
 
 - mean,

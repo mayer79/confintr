@@ -50,14 +50,40 @@ library(confintr)
 
 # Mean
 ci_mean(1:100)
+
+# Output
+# Two-sided 95% t confidence interval for the population mean
+# 
+# Sample estimate: 50.5 
+# Confidence interval:
+#     2.5%    97.5% 
+# 44.74349 56.25651 
+
+# Mean using the Bootstrap
 ci_mean(1:100, type = "bootstrap")
+
+# Result
+#   Two-sided 95% bootstrap confidence interval for the population mean
+# 	based on 9999 bootstrap replications and the student method
+# 
+# Sample estimate: 50.5 
+# Confidence interval:
+#     2.5%    97.5% 
+# 44.89255 56.31045 
 
 # 95% value at risk
 ci_quantile(rexp(1000), q = 0.95)
 
-# IQR
-ci_IQR(rexp(100), R = 999)
+# Result
+# 	Two-sided 95% binomial confidence interval for the population 95%
+# 	quantile
+# 
+# Sample estimate: 2.954119 
+# Confidence interval:
+#     2.5%    97.5% 
+# 2.757986 3.368160 
 
+# Further examples (without output)
 # Correlation
 ci_cor(iris[1:2], method = "spearman", type = "bootstrap")
 

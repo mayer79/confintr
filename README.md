@@ -51,7 +51,6 @@ library(confintr)
 # Mean
 ci_mean(1:100)
 
-# Output
 # Two-sided 95% t confidence interval for the population mean
 # 
 # Sample estimate: 50.5 
@@ -62,7 +61,6 @@ ci_mean(1:100)
 # Mean using the Bootstrap
 ci_mean(1:100, type = "bootstrap")
 
-# Result
 #   Two-sided 95% bootstrap confidence interval for the population mean
 # 	based on 9999 bootstrap replications and the student method
 # 
@@ -74,14 +72,29 @@ ci_mean(1:100, type = "bootstrap")
 # 95% value at risk
 ci_quantile(rexp(1000), q = 0.95)
 
-# Result
 # 	Two-sided 95% binomial confidence interval for the population 95%
 # 	quantile
 # 
 # Sample estimate: 2.954119 
 # Confidence interval:
 #     2.5%    97.5% 
-# 2.757986 3.368160 
+# 2.757986 3.368160
+
+ci_mean_diff(1:100, 2:101)
+
+#	Two-sided 95% t confidence interval for the population value of mean(x)-mean(y)
+#
+# Sample estimate: -1 
+# Confidence interval:
+#      2.5%     97.5% 
+# -9.090881  7.090881 
+
+ci_mean_diff(1:100, 2:101, type = "boot", seed = 1)
+
+# Sample estimate: -1 
+# Confidence interval:
+#      2.5%     97.5% 
+# -9.020367  7.040650
 
 # Further examples (without output)
 # Correlation

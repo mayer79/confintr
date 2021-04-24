@@ -1,4 +1,5 @@
-# confintr
+# confintr <a href='https://github.com/mayer79/confintr'><img src='man/figures/logo.png' align="right" height="138.5"/></a>
+
 
 [![CRAN version](http://www.r-pkg.org/badges/version/confintr)](https://cran.r-project.org/package=confintr) [![](https://cranlogs.r-pkg.org/badges/confintr)](https://cran.r-project.org/package=confintr) [![](https://cranlogs.r-pkg.org/badges/grand-total/confintr?color=orange)](https://cran.r-project.org/package=confintr)
 

@@ -63,6 +63,12 @@ if (!dir.exists(file.path(pkg, "tests"))) {
 file.copy("tests", pkg, recursive = TRUE)
 # test(pkg)
 
+# Add logo
+use_logo("logo.png")
+dir.create(file.path(pkg, "man", "figures"))
+file.copy(file.path("man", "figures", "logo.png"),
+          file.path(pkg, "man", "figures", "logo.png"))
+
 if (TRUE) {
   # Copy vignette
   # use_vignette(name = "confintr", title = "confintr")

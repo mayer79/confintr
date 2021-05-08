@@ -81,6 +81,7 @@ ci_quantile(rexp(1000), q = 0.95)
 #     2.5%    97.5% 
 # 2.757986 3.368160
 
+# Mean difference
 ci_mean_diff(1:100, 2:101)
 
 #	Two-sided 95% t confidence interval for the population value of mean(x)-mean(y)
@@ -101,6 +102,7 @@ ci_mean_diff(1:100, 2:101, type = "boot", seed = 1)
 # -9.020367  7.040650
 
 # Further examples (without output)
+
 # Correlation
 ci_cor(iris[1:2], method = "spearman", type = "bootstrap")
 

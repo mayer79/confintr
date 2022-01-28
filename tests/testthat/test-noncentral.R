@@ -1,5 +1,3 @@
-context("CIs about non-centrality parameters")
-
 test_that("confidence intervals for ncp of chi2 work", {
   tab <- table(mtcars[c("am", "vs")])
   chi <- chisq.test(tab, correct = FALSE)

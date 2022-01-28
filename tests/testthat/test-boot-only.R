@@ -1,5 +1,3 @@
-context("Confidence intervals for parameters where only bootstrap is implemented")
-
 test_that("ci_IQR works", {
   x <- 1:24
   expect_equal(ci_IQR(x)$estimate, IQR(x))

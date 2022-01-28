@@ -1,5 +1,3 @@
-context("Cramer's V")
-
 test_that("different input leads to same and correct result", {
   tab <- table(mtcars[c("am", "vs")])
   chi <- chisq.test(tab, correct = FALSE)

@@ -1,5 +1,3 @@
-context("CIs about mean difference")
-
 test_that("parametric confidence intervals for mean difference work", {
   set.seed(1)
   x <- runif(20)

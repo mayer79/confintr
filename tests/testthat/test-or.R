@@ -1,5 +1,3 @@
-context("Confidence intervals for odds ratios")
-
 test_that("ci_oddsratio works", {
   x <- cbind(c(10, 5), c(4, 4))
   expect_equal(ci_oddsratio(x)$interval,

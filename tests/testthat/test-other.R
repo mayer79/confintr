@@ -1,5 +1,3 @@
-context("Non-core functions")
-
 test_that("is.cint works", {
   expect_equal(is.cint(ci_mean(runif(100))), TRUE)
   expect_equal(is.cint("cint"), FALSE)

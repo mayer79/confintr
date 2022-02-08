@@ -26,10 +26,6 @@ use_description(
 use_package("stats", "Imports")
 use_package("boot", "Imports")
 
-use_gpl_license(2)
-
-use_github_links() # use this if this project is on github
-
 # Your files that do not belong to the package itself (others are added by "use_* function")
 use_build_ignore(c("^packaging.R$", "[.]Rproj$", "^backlog$",
                    "^cran-comments.md$", "^logo.png$"), escape = FALSE)
@@ -55,6 +51,10 @@ use_news_md()
 
 # Add logo
 use_logo("logo.png")
+
+use_gpl_license(2)
+
+use_github_links() # use this if this project is on github
 
 # If package goes to CRAN: infos (check results etc.) for CRAN
 use_cran_comments()

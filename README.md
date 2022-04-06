@@ -91,7 +91,7 @@ ci_mean_diff(1:100, 2:101)
 #      2.5%     97.5% 
 # -9.090881  7.090881 
 
-ci_mean_diff(1:100, 2:101, type = "boot", seed = 1)
+ci_mean_diff(1:100, 2:101, type = "bootstrap", seed = 1)
 
 # Two-sided 95% bootstrap confidence interval for the population value of mean(x)-mean(y)
 # based on 9999 bootstrap replications and the student method

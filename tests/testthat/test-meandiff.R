@@ -18,11 +18,11 @@ test_that("bootstrap confidence intervals for mean difference work", {
   x <- runif(20)
   y <- runif(15)
   expect_equal(ci_mean_diff(x, y, type = "bootstrap", seed = 1, R = 455)$interval,
-               c(-0.08988837, 0.30675682), tolerance = 0.001)
+               c(-0.1053810, 0.3105886), tolerance = 0.001)
   expect_equal(ci_mean_diff(x, y, type = "bootstrap", boot_type = "bca", seed = 1, R = 455)$interval,
                c(-0.07918491, 0.29466186), tolerance = 0.001)
   expect_equal(ci_mean_diff(x, y, probs = c(0.025, 1), type = "bootstrap", seed = 1, R = 455)$interval[1],
-               -0.08988837, tolerance = 0.001)
+               -0.105381, tolerance = 0.001)
   expect_equal(ci_mean_diff(x, y, probs = c(0, 0.975), type = "bootstrap", seed = 1, R = 455)$interval[2],
-               0.30675682, tolerance = 0.001)
+               0.3105886, tolerance = 0.001)
 })

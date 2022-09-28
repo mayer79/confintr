@@ -62,7 +62,7 @@ test_that("ci_mean works", {
   expect_equal(ci_mean(x)$interval, c(10.86013, 17.13987), tolerance = 0.001)
   expect_equal(c(ci_mean(x, probs = c(0.025, 1))$interval[1], ci_mean(x, probs = c(0, 0.975))$interval[2]),
                c(10.86013, 17.13987), tolerance = 0.001)
-  expect_equal(ci_mean(x, type = "bootstrap", R = 249, seed = 2)$interval, c(11.27594, 16.81534), tolerance = 0.0001)
+  expect_equal(ci_mean(x, type = "bootstrap", R = 249, seed = 2)$interval, c(11.09861, 16.99854), tolerance = 0.0001)
   expect_equal(ci_mean(x)$interval[2], ci_mean(x, probs = c(0, 0.975))$interval[2])
   expect_equal(ci_mean(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
                ci_mean(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])

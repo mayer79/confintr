@@ -52,7 +52,7 @@ Many of the classic confidence intervals on this list are discussed in [@smithso
 
 We offer different types of bootstrap intervals:
 
-1. Normal ("norm") bootstrap confidence interval: This is the Wald/Student confidence interval using as standard error the standard deviation of the bootstrap distribution. Simple, but only first-order accurate and not transformation respecting.
+1. Normal ("norm") bootstrap confidence interval: This is the Wald/Student confidence interval using as standard error the standard deviation of the bootstrap distribution plus a bootstrap bias correction. Simple, but only first-order accurate and not transformation respecting.
 
 2. Percentile ("perc") bootstrap confidence interval: Uses quantiles of the bootstrap distribution as confidence limits. Simple, but only first order accurate. Transformation respecting.
 
@@ -60,7 +60,7 @@ We offer different types of bootstrap intervals:
 
 4. Bias-corrected and accelerated ("bca") confidence interval: Refined version of the percentile bootstrap which is second order accurate and transformation respecting. Needs more replications than observations. **Usually our default.**
 
-5. Student-t ("stud") bootstrap confidence interval: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the standard error of the bootstrapped statistic. Second order accurate but not transformation respecting. Requires a formula for the standard error, which `confintr` provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
+5. Student-t ("stud") bootstrap confidence interval: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the variance of the bootstrapped statistic. Second order accurate but not transformation respecting. Requires a formula for the variance of the estimator, which `confintr` provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
 
 For details on bootstrap confidence intervals, we refer to [@efron1993]. We provide them through the widely used `boot` package [@ripley2019]. 
 
@@ -81,6 +81,8 @@ install_github("mayer79/confintr")
 
 ```{r}
 library(confintr)
+
+set.seed(1)
 
 # Mean
 ci_mean(1:100)

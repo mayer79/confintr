@@ -54,7 +54,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
   } else if (type == "bootstrap") {
     check_bca(boot_type, n, R)
     set_seed(seed)
-    S <- boot(x, statistic = function(x, id) c(var(x[id]), se_var(x[id])), R = R, ...)
+    S <- boot(x, statistic = function(x, id) c(var(x[id]), se_var(x[id])^2), R = R, ...)
     cint <- ci_boot(S, boot_type, probs)
   }
   cint <- check_output(cint, probs, c(0, Inf))

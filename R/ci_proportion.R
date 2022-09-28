@@ -87,7 +87,7 @@ ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
     x <- rep(0:1, times = c(n - x, x))
     check_bca(boot_type, n, R)
     set_seed(seed)
-    S <- boot(x, statistic = function(x, id) c(mean(x[id]), se_proportion(x[id])), R = R, ...)
+    S <- boot(x, statistic = function(x, id) c(mean(x[id]), se_proportion(x[id])^2), R = R, ...)
     cint <- ci_boot(S, boot_type, probs)
   }
 

@@ -9,3 +9,4 @@
 ^logo.png$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^CRAN-SUBMISSION$

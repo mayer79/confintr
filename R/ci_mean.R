@@ -57,7 +57,7 @@ ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap
   } else if (type == "bootstrap") {
     check_bca(boot_type, length(x), R)
     set_seed(seed)
-    S <- boot(x, statistic = function(x, id) c(mean(x[id]), se_mean(x[id])),
+    S <- boot(x, statistic = function(x, id) c(mean(x[id]), se_mean(x[id])^2),
               R = R, ...)
     cint <- ci_boot(S, boot_type, probs)
   }

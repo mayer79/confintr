@@ -1,8 +1,8 @@
-This is mainly a maintenance release:
+# New release
 
-- removing testthat::context()
-- getting rid of CRAN note on LazyData
-- improving the way how the package itself is being generated.
+Hi CRAN team
+
+This release fixes a mistake in the calculation of studentized boostrap confidence intervals.
 
 ## Checks
 
@@ -10,18 +10,31 @@ This is mainly a maintenance release:
 
 `devtools::check()` result:
 
+❯ checking for unstated dependencies in examples ... OK
    WARNING
   'qpdf' is needed for checks on size reduction of PDFs
 
-0 errors √ | 1 warning x | 0 notes √
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
 
-### Online checks seem fine as well:
+0 errors ✔ | 1 warning ✖ | 1 note ✖
 
-- check_win_devel()
-- check_rhub()
+### `check_rhub()`
 
-checking for detritus in the temp directory ... NOTE
-  Found the following files/directories:
-    'lastMiKTeXException'
+Ubuntu Linux (release)
 
-0 errors √ | 0 warnings √ | 1 note x
+* checking for future file timestamps ... NOTE
+unable to verify current time
+
+Win (devel)
+
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+
+Fedora Linux (devel)
+
+* checking for future file timestamps ... NOTE
+unable to verify current time
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found

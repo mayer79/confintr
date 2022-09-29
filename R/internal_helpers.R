@@ -131,7 +131,7 @@ boot_two_means <- function(X, id, se = FALSE, var.equal = FALSE) {
   X <- X[id, ]
   x <- X[X[["g"]] == 1, "v"]
   y <- X[X[["g"]] == 2, "v"]
-  c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal))
+  c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal)^2)
 }
 
 # Function to efficiently calculate the median difference statistic in boot

@@ -48,6 +48,7 @@ install_github("mayer79/confintr")
 
 ``` r
 library(confintr)
+set.seed(1)
 
 # Mean
 ci_mean(1:100)
@@ -68,7 +69,7 @@ ci_mean(1:100, type = "bootstrap")
 # Sample estimate: 50.5 
 # Confidence interval:
 #     2.5%    97.5% 
-# 44.89255 56.31045 
+# 44.72913 56.34685
 
 # 95% value at risk
 ci_quantile(rexp(1000), q = 0.95)
@@ -79,7 +80,7 @@ ci_quantile(rexp(1000), q = 0.95)
 # Sample estimate: 2.954119 
 # Confidence interval:
 #     2.5%    97.5% 
-# 2.757986 3.368160
+# 2.745526 3.499928 
 
 # Mean difference
 ci_mean_diff(1:100, 2:101)
@@ -99,7 +100,7 @@ ci_mean_diff(1:100, 2:101, type = "bootstrap", seed = 1)
 # Sample estimate: -1 
 # Confidence interval:
 #      2.5%     97.5% 
-# -9.020367  7.040650
+# -9.057506  7.092050
 
 # Further examples (without output)
 

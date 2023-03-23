@@ -1,3 +1,11 @@
+# confintr 0.2.1
+
+## Maintenance
+
+- Better readme
+- Github actions
+- Gitpage
+
 # confintr 0.2.0
 
 ## Bug fix

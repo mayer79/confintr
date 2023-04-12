@@ -1,28 +1,4 @@
-test_that("is.cint works", {
-  expect_equal(is.cint(ci_mean(runif(100))), TRUE)
-  expect_equal(is.cint("cint"), FALSE)
-})
 
-test_that("standard errors work", {
-  expect_equal(se_mean(1:10), t.test(1:10)$stderr)
-  expect_equal(se_proportion(0:1), 0.5 / sqrt(2))
-  expect_equal(se_mean_diff(1:3, 1:3), t.test(1:3, 1:3)$stderr)
-  expect_equal(se_mean_diff(1:3, 1:3, var.equal = TRUE),
-               t.test(1:3, 1:3, var.equal = TRUE)$stderr)
-  expect_equal(se_var(1:10), 2.356, tolerance = 1e-4)
-  expect_error(se_var(1:3))
-  expect_error(se_mean(NA))
-  expect_error(se_proportion(NA))
-  expect_error(se_mean_diff(1, 2))
-})
-
-
-test_that("moments works", {
-  expect_equal(moment(1:100, central = FALSE), mean(1:100))
-  expect_equal(moment(1:100), 0)
-  expect_equal(skewness(1:100), 0)
-  expect_equal(kurtosis(1:100), 1.79976, tolerance = 0.001)
-})
 
 test_that("check_probs works", {
   expect_error(check_probs(0, 1))

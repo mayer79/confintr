@@ -1,32 +1,3 @@
-test_that("ci_var works", {
-  x <- 1:24
-  expect_equal(ci_var(x)$estimate, var(x))
-  expect_equal(ci_var(x)$interval, c(30.20305, 98.38687), tolerance = 0.001)
-  expect_equal(ci_var(x, type = "bootstrap", R = 499, seed = 1)$interval, c(33.63669, 71.12911), tolerance = 0.001)
-  expect_equal(ci_var(x)$interval[2], ci_var(x, probs = c(0, 0.975))$interval[2])
-  expect_equal(ci_var(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
-               ci_var(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
-  expect_equal(ci_var(x, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
-               ci_var(x, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
-})
-
-test_that("ci_sd works", {
-  x <- 1:24
-  expect_equal(ci_sd(x)$estimate, sd(x))
-  expect_equal(ci_sd(x)$interval, sqrt(ci_var(x)$interval))
-  expect_equal(ci_sd(x)$interval, c(5.495730, 9.919015), tolerance = 0.001)
-  expect_equal(ci_sd(x, probs = c(0, 0.975))$interval, c(0, 9.919015), tolerance = 0.001)
-  expect_equal(ci_sd(x, probs = c(0.025, 1))$interval, c(5.49573, Inf), tolerance = 0.001)
-  expect_equal(ci_sd(x, type = "bootstrap", R = 499, seed = 1)$interval, c(5.799715,8.433808), tolerance = 0.001)
-  expect_equal(ci_sd(x)$interval[2], ci_sd(x, probs = c(0, 0.975))$interval[2])
-  expect_equal(ci_sd(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
-               ci_sd(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
-  expect_equal(ci_sd(x, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
-               ci_sd(x, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
-  x <- rnorm(100)
-  xp <- (x - mean(x)) / sd(x) * 8
-  expect_equal(ci_sd(xp, probs = c(0, 0.95))$interval[2], 9.07, tolerance = 0.01)
-})
 
 test_that("ci_quantile works", {
   x <- 1:27

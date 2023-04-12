@@ -20,7 +20,7 @@
 #' Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot}.
+#' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -34,7 +34,7 @@
 #' @examples
 #' x <- 1:100
 #' ci_var(x)
-#' ci_var(x, type = "bootstrap", R = 999)
+#' ci_var(x, type = "bootstrap", R = 999)  # In practice, use larger R
 #' @references
 #' \enumerate{
 #'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
@@ -95,7 +95,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot}.
+#' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -108,10 +108,8 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' @export
 #' @examples
 #' x <- 1:100
-#' sd(x)
 #' ci_sd(x)
-#' sqrt(ci_var(x)$interval)
-#' ci_sd(x, type = "bootstrap", R = 999)
+#' ci_sd(x, type = "bootstrap", R = 999)  # In practice, use larger R
 #' @seealso \code{\link{ci_var}}.
 ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                   boot_type = c("bca", "perc", "stud", "norm", "basic"),
@@ -140,7 +138,7 @@ ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap
 #' @param boot_type Type of bootstrap confidence interval c("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot}.
+#' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -152,9 +150,8 @@ ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap
 #' }
 #' @export
 #' @examples
-#' set.seed(1)
 #' x <- rnorm(100)
-#' ci_IQR(x, R = 999)
+#' ci_IQR(x, R = 999)  # In practice, use larger R
 #' @references
 #' \enumerate{
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
@@ -192,7 +189,7 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' CI for the MAD
 #'
 #' This function calculates bootstrap confidence intervals for the population median
-#' absolute deviation (MAD), see \code{stats::mad} for more information on this measure of scale.
+#' absolute deviation (MAD), see \code{stats::mad()} for more information on this measure of scale.
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references.
 #' The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the
@@ -207,7 +204,7 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' @param boot_type Type of bootstrap confidence interval c("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot}.
+#' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
@@ -219,9 +216,8 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' }
 #' @export
 #' @examples
-#' set.seed(1)
 #' x <- rnorm(100)
-#' ci_mad(x, R = 999)
+#' ci_mad(x, R = 999)  # In practice, use larger R
 #' @references
 #' \enumerate{
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.

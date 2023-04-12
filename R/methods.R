@@ -1,12 +1,11 @@
-#' Print a cint Object
+#' Print "cint" Object
 #'
-#' Print method for an object of class \code{cint}.
+#' Print method for an object of class "cint".
 #'
-#' @param x A on object of class \code{cint}.
-#' @param digits Number of digits used to format sample estimate and confidence limits.
+#' @param x A on object of class "cint".
+#' @param digits Number of digits used to format numbers.
 #' @param ... Further arguments passed from other methods.
 #' @return Invisibly, the input is returned.
-#' @method print cint
 #' @export
 #' @examples
 #' ci_mean(1:100)
@@ -28,4 +27,18 @@ print.cint <- function(x, digits = getOption("digits"), ...) {
 
   cat("\n")
   invisible(x)
+}
+
+#' Type Check
+#'
+#' Checks if an object inherits class "cint".
+#'
+#' @param x Any object.
+#' @return A logical vector of length one.
+#' @export
+#' @examples
+#' is.cint(ci_proportion(5, 20))
+#' is.cint(c(1, 2))
+is.cint <- function(x) {
+  inherits(x, "cint")
 }

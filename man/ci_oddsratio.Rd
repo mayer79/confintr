@@ -2,17 +2,17 @@
 % Please edit documentation in R/ci_oddsratio.R
 \name{ci_oddsratio}
 \alias{ci_oddsratio}
-\title{Confidence Interval for the Odds Ratio}
+\title{CI for the Odds Ratio}
 \usage{
 ci_oddsratio(x, probs = c(0.025, 0.975))
 }
 \arguments{
 \item{x}{A 2x2 \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.
@@ -23,7 +23,7 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates a confidence interval for the odds ratio in a 2x2 table/matrix or a data frame with two columns. The confidence interval is obtained through \code{stats::fisher.test}. Bootstrap confidence intervals are not available.
+This function calculates a confidence interval for the odds ratio in a 2x2 table/matrix or a data frame with two columns. The confidence interval is obtained through \code{stats::fisher.test()}. Bootstrap confidence intervals are not available.
 }
 \examples{
 x <- cbind(c(10, 5), c(4, 4))

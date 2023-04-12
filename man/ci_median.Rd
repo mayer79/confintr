@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_median.R
 \name{ci_median}
 \alias{ci_median}
-\title{Confidence Interval for the Population Median}
+\title{CI for the Population Median}
 \usage{
 ci_median(
   x,
@@ -17,7 +17,7 @@ ci_median(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
 \item{type}{Type of confidence interval. One of "binomial" (default), or "bootstrap".}
 
@@ -27,10 +27,10 @@ ci_median(
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

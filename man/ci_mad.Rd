@@ -32,7 +32,7 @@ equals the standard deviation for a theoretical normal distribution.}
 
 \item{seed}{An integer random seed.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
 An object of class "cint" containing these components:
@@ -47,7 +47,7 @@ An object of class "cint" containing these components:
 }
 \description{
 This function calculates bootstrap confidence intervals for the population median
-absolute deviation (MAD), see \code{stats::mad} for more information on this measure of scale.
+absolute deviation (MAD), see \code{stats::mad()} for more information on this measure of scale.
 }
 \details{
 Bootstrap confidence intervals are calculated by the package "boot", see references.
@@ -56,9 +56,8 @@ property of being second order accurate as well as transformation respecting
 (see Efron, p. 188).
 }
 \examples{
-set.seed(1)
 x <- rnorm(100)
-ci_mad(x, R = 999)
+ci_mad(x, R = 999)  # In practice, use larger R
 }
 \references{
 \enumerate{

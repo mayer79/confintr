@@ -30,7 +30,7 @@ Only used for \code{type = "bootstrap"}.}
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
 An object of class "cint" containing these components:
@@ -60,7 +60,7 @@ of the sample variance given in Wilks.
 \examples{
 x <- 1:100
 ci_var(x)
-ci_var(x, type = "bootstrap", R = 999)
+ci_var(x, type = "bootstrap", R = 999)  # In practice, use larger R
 }
 \references{
 \enumerate{

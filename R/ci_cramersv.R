@@ -1,4 +1,4 @@
-#' Confidence Interval for the Population Cramer's V
+#' CI for the Population Cramer's V
 #'
 #' This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on the non-centrality parameter (ncp) of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available, also by boostrapping confidence intervals for the ncp.
 #'
@@ -6,15 +6,15 @@
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' Note that no continuity correction is applied for 2x2 tables. Further note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
 #' @importFrom stats chisq.test
-#' @param x The result of \code{stats::chisq.test}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param x The result of \code{stats::chisq.test()}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "chi-squared" (default) or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
 #' @param test_adjustment Adjustment to allow for test of association, see Details. The default is \code{TRUE}.
-#' @param ... Further arguments passed to \code{resample::CI.boot_type}.
-#' @return A list with class \code{cint} containing these components:
+#' @param ... Further arguments passed to \code{boot::boot()}.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.

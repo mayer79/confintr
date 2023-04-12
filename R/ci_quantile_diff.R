@@ -1,4 +1,4 @@
-#' Confidence Interval for the Population Quantile Difference of two Samples
+#' CI for the Population Quantile Difference of two Samples
 #'
 #' This function calculates bootstrap confidence intervals for the population value of q quantile(x) - q quantile(y).
 #'
@@ -9,13 +9,13 @@
 #' @param x A numeric vector.
 #' @param y A numeric vector.
 #' @param q A single probability value determining the quantile. Set to 0.5 for the median (default).
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. Currently, "bootstrap" is the only option.
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot}.
-#' @return A list with class \code{cint} containing these components:
+#' @param ... Further arguments passed to \code{boot::boot()}.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -63,11 +63,16 @@ ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "boo
 
   # Organize output
   cint <- check_output(cint, probs, c(-Inf, Inf))
-  out <- list(parameter = sprintf("population value of %s quantile(x) - %s quantile(y)",
-                                  format_p(q), format_p(q)),
-              interval = cint, estimate = estimate,
-              probs = probs, type = type,
-              info = boot_info(type, boot_type, R))
+  out <- list(
+    parameter = sprintf(
+      "population value of %s quantile(x) - %s quantile(y)", format_p(q), format_p(q)
+    ),
+    interval = cint,
+    estimate = estimate,
+    probs = probs,
+    type = type,
+    info = boot_info(type, boot_type, R)
+  )
   class(out) <- "cint"
   out
 }

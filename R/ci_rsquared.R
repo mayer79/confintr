@@ -1,4 +1,4 @@
-#' Confidence Interval for the Population R-Squared
+#' CI for the Population R-Squared
 #'
 #' This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. A positive lower (1-alpha)*100%-confidence limit for the R-squared goes hand-in-hand with a significant F test at level alpha.
 #'
@@ -7,8 +7,8 @@
 #' @param x The result of \code{stats::lm} or the F test statistic.
 #' @param df1 The numerator degree of freedom. Only used if \code{x} is a test statistic.
 #' @param df2 The denominator degree of freedom. Only used if \code{x} is a test statistic.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @return A list with class \code{cint} containing these components:
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -54,9 +54,14 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
 
   # Organize output
   cint <- check_output(cint, probs, c(0, 1))
-  out <- list(interval = cint, estimate = f_to_r2(stat, df1, df2),
-              parameter = "population R-squared",
-              probs = probs, type = "F", info = "")
+  out <- list(
+    interval = cint,
+    estimate = f_to_r2(stat, df1, df2),
+    parameter = "population R-squared",
+    probs = probs,
+    type = "F",
+    info = ""
+  )
   class(out) <- "cint"
   out
 }

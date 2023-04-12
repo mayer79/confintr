@@ -1,6 +1,6 @@
-#' Confidence Interval for Correlation Coefficients
+#' CI for Correlation Coefficients
 #'
-#' This function calculates confidence intervals for a population correlation coefficient. For Pearson correlation, "normal" confidence intervals are available (by \code{stats::cor.test}). Also bootstrap confidence intervals are supported and are the only option for rank correlations.
+#' This function calculates confidence intervals for a population correlation coefficient. For Pearson correlation, "normal" confidence intervals are available (by \code{stats::cor.test()}). Also bootstrap confidence intervals are supported and are the only option for rank correlations.
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' @importFrom stats qnorm cor cor.test complete.cases
@@ -8,13 +8,13 @@
 #' @param x A numeric vector or a \code{matrix/data.frame} with exactly two numeric columns.
 #' @param y A numeric vector (only used if \code{x} is a vector).
 #' @param method Type of correlation coefficient, one of "pearson" (default), "kendall", or "spearman". For the latter two, only bootstrap confidence intervals are supported. The names can be abbreviated.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "normal" (the default) or "bootstrap" (the only option for rank-correlations).
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot}.
-#' @return A list with class \code{cint} containing these components:
+#' @param ... Further arguments passed to \code{boot::boot()}.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -73,10 +73,14 @@ ci_cor <- function(x, y = NULL, probs = c(0.025, 0.975),
 
   # Organize output
   cint <- check_output(cint, probs, c(-1, 1))
-  out <- list(parameter = sprintf("true %s correlation coefficient", title_case1(method)),
-              interval = cint, estimate = estimate,
-              probs = probs, type = type,
-              info = boot_info(type, boot_type, R))
+  out <- list(
+    parameter = sprintf("true %s correlation coefficient", title_case1(method)),
+    interval = cint,
+    estimate = estimate,
+    probs = probs,
+    type = type,
+    info = boot_info(type, boot_type, R)
+  )
   class(out) <- "cint"
   out
 }

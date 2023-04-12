@@ -1,6 +1,6 @@
-#' Confidence Interval for a Population Proportion
+#' CI for a Population Proportion
 #'
-#' This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (mainly added for consistency and didactic purposes).
+#' This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test()}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (mainly added for consistency and didactic purposes).
 #'
 #' Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
 #' Note that we use the formula in \url{https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval} which does not simplify the 0.975 quantile of the normal by 2 as sometimes in other references.
@@ -8,13 +8,13 @@
 #' @importFrom boot boot
 #' @param x A numeric vector of 0 and 1 or the number of successes.
 #' @param n The sample size. Only needed if \code{x} is a vector of length 1.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "Clopper-Pearson" (the default), "Agresti–Coull", "Wilson", "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "stud", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot}.
-#' @return A list with class \code{cint} containing these components:
+#' @param ... Further arguments passed to \code{boot::boot()}.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -87,16 +87,22 @@ ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
     x <- rep(0:1, times = c(n - x, x))
     check_bca(boot_type, n, R)
     set_seed(seed)
-    S <- boot(x, statistic = function(x, id) c(mean(x[id]), se_proportion(x[id])^2), R = R, ...)
+    S <- boot(
+      x, statistic = function(x, id) c(mean(x[id]), se_proportion(x[id])^2), R = R, ...
+    )
     cint <- ci_boot(S, boot_type, probs)
   }
 
   # Organize output
   cint <- check_output(cint, probs, c(0, 1))
-  out <- list(parameter = "true proportion",
-              interval = cint, estimate = estimate,
-              probs = probs, type = type,
-              info = boot_info(type, boot_type, R))
+  out <- list(
+    parameter = "true proportion",
+    interval = cint,
+    estimate = estimate,
+    probs = probs,
+    type = type,
+    info = boot_info(type, boot_type, R)
+  )
   class(out) <- "cint"
   out
 }

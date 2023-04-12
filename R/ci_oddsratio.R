@@ -1,10 +1,10 @@
-#' Confidence Interval for the Odds Ratio
+#' CI for the Odds Ratio
 #'
-#' This function calculates a confidence interval for the odds ratio in a 2x2 table/matrix or a data frame with two columns. The confidence interval is obtained through \code{stats::fisher.test}. Bootstrap confidence intervals are not available.
+#' This function calculates a confidence interval for the odds ratio in a 2x2 table/matrix or a data frame with two columns. The confidence interval is obtained through \code{stats::fisher.test()}. Bootstrap confidence intervals are not available.
 #' @importFrom stats fisher.test
 #' @param x A 2x2 \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @return A list with class \code{cint} containing these components:
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -37,9 +37,14 @@ ci_oddsratio <- function(x, probs = c(0.025, 0.975)) {
 
   # Organize output
   cint <- check_output(cint, probs, c(0, Inf))
-  out <- list(parameter = "true odds ratio",
-              interval = cint, estimate = oddsratio(x),
-              probs = probs, type = "exact", info = "")
+  out <- list(
+    parameter = "true odds ratio",
+    interval = cint,
+    estimate = oddsratio(x),
+    probs = probs,
+    type = "exact",
+    info = ""
+  )
   class(out) <- "cint"
   out
 }

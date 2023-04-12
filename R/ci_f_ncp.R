@@ -1,4 +1,4 @@
-#' Confidence Interval for the Non-Centrality Parameter of the F Distribution
+#' CI for the Non-Centrality Parameter of the F Distribution
 #'
 #' Based on the inversion principle, parametric confidence intervals for the non-centrality parameter Delta of the F distribution are calculated. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple. A positive lower (1-alpha)*100%-confidence limit for the ncp goes hand-in-hand with a significant F test at level alpha.
 #'
@@ -7,8 +7,8 @@
 #' @param x The result of \code{lm} or the F test statistic.
 #' @param df1 The numerator degree of freedom, e.g. the number of parameters (including the intercept) of a linear regression. Only used if \code{x} is a test statistic.
 #' @param df2 The denominator degree of freedom, e.g. n - df1 - 1 in a linear regression. Only used if \code{x} is a test statistic.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @return A list with class \code{cint} containing these components:
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -79,9 +79,14 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
 
   # Organize output
   cint <- check_output(c(lci, uci), probs, limits)
-  out <- list(parameter = "non-centrality parameter of the F-distribution",
-              interval = cint, estimate = estimate,
-              probs = probs, type = "F", info = "")
+  out <- list(
+    parameter = "non-centrality parameter of the F-distribution",
+    interval = cint,
+    estimate = estimate,
+    probs = probs,
+    type = "F",
+    info = ""
+  )
   class(out) <- "cint"
   out
 }

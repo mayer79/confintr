@@ -1,4 +1,4 @@
-#' Confidence Interval for the Population Mean
+#' CI for the Population Mean
 #'
 #' This function calculates confidence intervals for the population mean. By default, Student's t method is used. Alternatively, Wald and bootstrap confidence intervals are available.
 #'
@@ -6,13 +6,13 @@
 #' @importFrom stats qt qnorm sd
 #' @importFrom boot boot
 #' @param x A numeric vector.
-#' @param probs Error probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
 #' @param type Type of confidence interval. One of "t" (default), "Wald", or "bootstrap".
 #' @param boot_type Type of bootstrap confidence interval ("stud", "bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.
 #' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
 #' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot}.
-#' @return A list with class \code{cint} containing these components:
+#' @param ... Further arguments passed to \code{boot::boot()}.
+#' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
 #'   \item \code{interval}: The confidence interval for the parameter.
@@ -64,10 +64,14 @@ ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap
 
   # Organize output
   cint <- check_output(cint, probs, c(-Inf, Inf))
-  out <- list(parameter = "population mean",
-              interval = cint, estimate = estimate,
-              probs = probs, type = type,
-              info = boot_info(type, boot_type, R))
+  out <- list(
+    parameter = "population mean",
+    interval = cint,
+    estimate = estimate,
+    probs = probs,
+    type = type,
+    info = boot_info(type, boot_type, R)
+  )
   class(out) <- "cint"
   out
 }

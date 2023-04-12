@@ -2,9 +2,9 @@
 #'
 #' This function calculates Cramer's V, a measure of association between two categorical variables. It is a scaled version of the chi-squared test statistic and lies between 0 and 1. Cramer's V is calculated as sqrt(chi-squared / (n * (k - 1))), where n is the number of observations and k is the smaller of the number of levels of the two variables.
 #'
-#' Yates continuity correction is never applied. So in the 2x2 case, if \code{x} is the result of \code{stats::chisq.test}, make sure no continuity correction was applied. Otherwise, results can be inconsistent.
+#' Yates continuity correction is never applied. So in the 2x2 case, if \code{x} is the result of \code{stats::chisq.test()}, make sure no continuity correction was applied. Otherwise, results can be inconsistent.
 #' @importFrom stats chisq.test
-#' @param x The result of \code{stats::chisq.test}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.
+#' @param x The result of \code{stats::chisq.test()}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.
 #' @return A numeric vector of length one.
 #' @export
 #' @examples

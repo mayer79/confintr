@@ -46,9 +46,7 @@ se_mean_diff <- function(z, y, na.rm = TRUE, var.equal = FALSE, ...) {
 #' @rdname se
 #' @export
 se_var <- function(z, na.rm = TRUE, ...) {
-  # https://stats.stackexchange.com/questions/29905/
-  # reference-for-mathrmvars2-sigma4-left-frac2n-1-frac-kappan
-  # -> Casella-Berger Exercise
+  # S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons.
   if (na.rm) {
     z <- z[!is.na(z)]
   }

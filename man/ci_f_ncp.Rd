@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_f_ncp.R
 \name{ci_f_ncp}
 \alias{ci_f_ncp}
-\title{Confidence Interval for the Non-Centrality Parameter of the F Distribution}
+\title{CI for the Non-Centrality Parameter of the F Distribution}
 \usage{
 ci_f_ncp(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 }
@@ -13,10 +13,10 @@ ci_f_ncp(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 
 \item{df2}{The denominator degree of freedom, e.g. n - df1 - 1 in a linear regression. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

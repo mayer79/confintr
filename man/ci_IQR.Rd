@@ -28,7 +28,7 @@ ci_IQR(
 
 \item{seed}{An integer random seed.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
 An object of class "cint" containing these components:
@@ -52,9 +52,8 @@ property of being second order accurate as well as transformation respecting
 (see Efron, p. 188).
 }
 \examples{
-set.seed(1)
 x <- rnorm(100)
-ci_IQR(x, R = 999)
+ci_IQR(x, R = 999)  # In practice, use larger R
 }
 \references{
 \enumerate{

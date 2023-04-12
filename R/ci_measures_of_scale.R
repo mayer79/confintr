@@ -53,7 +53,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 
   # Remove NAs and calculate estimate
   x <- x[!is.na(x)]
-  estimate <- var(x)
+  estimate <- stats::var(x)
   n <- length(x)
 
   # Calculate CI

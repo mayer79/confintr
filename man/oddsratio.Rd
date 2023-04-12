@@ -13,7 +13,7 @@ oddsratio(x)
 A numeric vector of length one.
 }
 \description{
-This function calculates the odds ratio in a 2x2 table/matrix or a data frame with two columns. The numerator equals the ratio of the top left entry and the bottom left entry, while the denonimator equals the ratio of the top right entry and the bottom right entry. This is usually slightly different from the calculation by \code{stats::fisher.test} which is based on the ML estimate of the odds ratio.
+This function calculates the odds ratio in a 2x2 table/matrix or a data frame with two columns. The numerator equals the ratio of the top left entry and the bottom left entry, while the denonimator equals the ratio of the top right entry and the bottom right entry. This is usually slightly different from the calculation by \code{stats::fisher.test()} which is based on the ML estimate of the odds ratio.
 }
 \examples{
 tab <- cbind(c(10, 5), c(4, 4))

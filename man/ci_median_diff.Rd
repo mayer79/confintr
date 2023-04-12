@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_median_diff.R
 \name{ci_median_diff}
 \alias{ci_median_diff}
-\title{Confidence Interval for the Population Median Difference of two Samples}
+\title{CI for the Population Median Difference of two Samples}
 \usage{
 ci_median_diff(
   x,
@@ -20,7 +20,7 @@ ci_median_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
 \item{type}{Type of confidence interval. Currently, "bootstrap" is the only option.}
 
@@ -30,10 +30,10 @@ ci_median_diff(
 
 \item{seed}{An integer random seed.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

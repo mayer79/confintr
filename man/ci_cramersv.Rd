@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_cramersv.R
 \name{ci_cramersv}
 \alias{ci_cramersv}
-\title{Confidence Interval for the Population Cramer's V}
+\title{CI for the Population Cramer's V}
 \usage{
 ci_cramersv(
   x,
@@ -16,9 +16,9 @@ ci_cramersv(
 )
 }
 \arguments{
-\item{x}{The result of \code{stats::chisq.test}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.}
+\item{x}{The result of \code{stats::chisq.test()}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
 \item{type}{Type of confidence interval. One of "chi-squared" (default) or "bootstrap".}
 
@@ -30,10 +30,10 @@ ci_cramersv(
 
 \item{test_adjustment}{Adjustment to allow for test of association, see Details. The default is \code{TRUE}.}
 
-\item{...}{Further arguments passed to \code{resample::CI.boot_type}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

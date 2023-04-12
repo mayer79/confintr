@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_proportion.R
 \name{ci_proportion}
 \alias{ci_proportion}
-\title{Confidence Interval for a Population Proportion}
+\title{CI for a Population Proportion}
 \usage{
 ci_proportion(
   x,
@@ -20,7 +20,7 @@ ci_proportion(
 
 \item{n}{The sample size. Only needed if \code{x} is a vector of length 1.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
 \item{type}{Type of confidence interval. One of "Clopper-Pearson" (the default), "Agresti–Coull", "Wilson", "bootstrap".}
 
@@ -30,10 +30,10 @@ ci_proportion(
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.
@@ -44,7 +44,7 @@ A list with class \code{cint} containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (mainly added for consistency and didactic purposes).
+This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test()}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (mainly added for consistency and didactic purposes).
 }
 \details{
 Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).

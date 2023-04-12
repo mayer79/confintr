@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_rsquared.R
 \name{ci_rsquared}
 \alias{ci_rsquared}
-\title{Confidence Interval for the Population R-Squared}
+\title{CI for the Population R-Squared}
 \usage{
 ci_rsquared(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 }
@@ -13,10 +13,10 @@ ci_rsquared(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 
 \item{df2}{The denominator degree of freedom. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

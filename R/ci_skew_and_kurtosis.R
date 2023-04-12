@@ -28,7 +28,7 @@ moment <- function(z, p = 1, central = TRUE, na.rm = TRUE) {
 #'
 #' Calculates sample skewness, i.e., the third central moment. A value of 0 refers to
 #' a perfectly symmetric empirical distribution.
-#' @param x A numeric vector.
+#' @param z A numeric vector.
 #' @param na.rm Logical flag indicating whether to remove missing values or not.
 #' Default is \code{TRUE}.
 #' @return Numeric vector of length 1.
@@ -45,7 +45,7 @@ skewness <- function(z, na.rm = TRUE) {
 #'
 #' Defined as the ratio of the 4th central moment and the squared
 #' second central moment. Under perfect normality, the kurtosis equals 3.
-#' @param x A numeric vector.
+#' @param z A numeric vector.
 #' @param na.rm Logical flag indicating whether to remove missing values or not.
 #' Default is \code{TRUE}.
 #' @return Numeric vector of length 1.
@@ -87,7 +87,7 @@ kurtosis <- function(z, na.rm = TRUE) {
 #' @examples
 #' x <- 1:20
 #' ci_skewness(x, R = 999)  # In practice, use larger R
-#' @seealso \code{\link{moments}}, \code{\link{kurtosis}}.
+#' @seealso \code{\link{kurtosis}}
 #' @references
 #' \enumerate{
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
@@ -153,7 +153,7 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' @examples
 #' x <- 1:20
 #' ci_kurtosis(x, R = 999)  # In practice, use larger R
-#' @seealso \code{\link{moments}}, \code{\link{skewness}}.
+#' @seealso \code{\link{skewness}}
 #' @references
 #' \enumerate{
 #'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_mean_diff.R
 \name{ci_mean_diff}
 \alias{ci_mean_diff}
-\title{Confidence Interval for the Population Mean Difference}
+\title{CI for the Population Mean Difference}
 \usage{
 ci_mean_diff(
   x,
@@ -21,7 +21,7 @@ ci_mean_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
 \item{var.equal}{Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.}
 
@@ -33,10 +33,10 @@ ci_mean_diff(
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

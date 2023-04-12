@@ -2,7 +2,7 @@
 % Please edit documentation in R/ci_chisq_ncp.R
 \name{ci_chisq_ncp}
 \alias{ci_chisq_ncp}
-\title{Confidence Interval for the Non-Centrality Parameter of the Chi-Squared Distribution}
+\title{CI for the Non-Centrality Parameter of the Chi-Squared Distribution}
 \usage{
 ci_chisq_ncp(
   x,
@@ -16,9 +16,9 @@ ci_chisq_ncp(
 )
 }
 \arguments{
-\item{x}{The result of \code{stats::chisq.test}, a \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.}
+\item{x}{The result of \code{stats::chisq.test()}, a \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
 
 \item{correct}{Should Yates continuity correction be applied to the 2x2 case? The default is \code{TRUE} (also used in the bootstrap).}
 
@@ -30,10 +30,10 @@ ci_chisq_ncp(
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
 \item \code{interval}: The confidence interval for the parameter.

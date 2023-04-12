@@ -14,8 +14,10 @@ oddsratio <- function(x) {
     stopifnot(ncol(x) == 2L)
     x <- table(x[, 1], x[, 2])
   }
-  stopifnot(all(x >= 0),
-            dim(x) == c(2L, 2L))
+  stopifnot(
+    all(x >= 0),
+    dim(x) == c(2L, 2L)
+  )
 
   # Odds ratio
   x[1, 1] / x[2, 1] / (x[1, 2] / x[2, 2])

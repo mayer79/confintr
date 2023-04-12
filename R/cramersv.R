@@ -23,7 +23,7 @@ cramersv <- function(x) {
   } else {
     if (is.data.frame(x)) {
       stopifnot(ncol(x) == 2L)
-      x <- table(x[, 1], x[, 2])
+      x <- table(x[, 1L], x[, 2L])
     }
     stopifnot(all(x >= 0))
     x <- chisq.test(x, correct = FALSE)

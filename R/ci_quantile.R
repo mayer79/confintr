@@ -56,17 +56,21 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
     k <- qbinom(probs, n, q) + 0:1
     x <- sort(x)
     cint <- limits
-    if (k[1] >= 1) {
-      cint[1] <- x[k[1]]
+    if (k[1L] >= 1) {
+      cint[1L] <- x[k[1L]]
     }
-    if (k[2] <= n) {
-      cint[2] <- x[k[2]]
+    if (k[2L] <= n) {
+      cint[2L] <- x[k[2L]]
     }
   } else { # Bootstrap
     check_bca(boot_type, n, R)
     set_seed(seed)
-    S <- boot(x, statistic = function(x, id) quantile(x[id], probs = q, names = FALSE),
-              R = R, ...)
+    S <- boot(
+      x,
+      statistic = function(x, id) quantile(x[id], probs = q, names = FALSE),
+      R = R,
+      ...
+    )
     cint <- ci_boot(S, boot_type, probs)
   }
 

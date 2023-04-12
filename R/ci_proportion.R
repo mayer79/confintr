@@ -66,8 +66,9 @@ ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
   if (type != "bootstrap") {
     alpha <- 1 - diff(probs)
     if (type == "Clopper-Pearson") {
-      cint <- binom.test(x, n = n, alternative = probs2alternative(probs),
-                        conf.level = 1 - alpha)$conf.int
+      cint <- binom.test(
+        x, n = n, alternative = probs2alternative(probs), conf.level = 1 - alpha
+      )$conf.int
     } else if (type %in% c("Wilson", "Agresti-Coull")) {
       if (is_onesided(probs)) {
         alpha <- 2 * alpha
@@ -83,7 +84,7 @@ ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
         cint <- pt + c(-1, 1) * z * sqrt(pt / nt * (1 - pt))
       }
     }
-  } else { # bootstrap
+  } else {  # bootstrap
     x <- rep(0:1, times = c(n - x, x))
     check_bca(boot_type, n, R)
     set_seed(seed)

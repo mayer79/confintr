@@ -49,23 +49,34 @@ ci_mean_diff <- function(x, y, probs = c(0.025, 0.975), var.equal = FALSE,
   # Remove NAs and calculate estimate
   x <- x[!is.na(x)]
   y <- y[!is.na(y)]
-  stopifnot(length(x) >= 1L,
-            length(y) >= 1L)
+  stopifnot(
+    length(x) >= 1L,
+    length(y) >= 1L
+  )
   estimate <- mean(x) - mean(y)
 
   # Calculate CI
   if (type == "t") {
-    cint <- t.test(x, y, var.equal = var.equal,
-                   alternative = probs2alternative(probs),
-                   conf.level = diff(probs))$conf.int
+    cint <- t.test(
+      x,
+      y,
+      var.equal = var.equal,
+      alternative = probs2alternative(probs),
+      conf.level = diff(probs)
+    )$conf.int
   } else if (type == "bootstrap") {
-    X <- data.frame(v = c(x, y),
-                    g = rep(1:2, times = c(length(x), length(y))))
+    X <- data.frame(v = c(x, y), g = rep(1:2, times = c(length(x), length(y))))
     check_bca(boot_type, nrow(X), R)
     set_seed(seed)
-    S <- boot(X, statistic = function(X, id) boot_two_means(X, id,
-                se = (boot_type == "stud"), var.equal = var.equal),
-              strata = X[["g"]], R = R, ...)
+    S <- boot(
+      X,
+      statistic = function(X, id) boot_two_means(
+        X, id, se = (boot_type == "stud"), var.equal = var.equal
+      ),
+      strata = X[["g"]],
+      R = R,
+      ...
+    )
     cint <- ci_boot(S, boot_type, probs)
   }
 

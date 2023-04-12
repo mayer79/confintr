@@ -2,33 +2,38 @@
 
 # Input check
 check_probs <- function(probs) {
-  stopifnot(length(probs) == 2L,
-            is.numeric(probs),
-            probs >= 0, probs <= 1,
-            probs[1] < probs[2],
-            probs[1] + 1 - probs[2] > 0)
+  stopifnot(
+    length(probs) == 2L,
+    is.numeric(probs),
+    probs >= 0, probs <= 1,
+    probs[1L] < probs[2L],
+    probs[1L] + 1 - probs[2L] > 0
+  )
   TRUE
 }
 
 # Output Check
 check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
-  stopifnot(length(ci) == 2L,
-            length(probs) == 2L,
-            length(parameter_range) == 2L)
+  stopifnot(
+    length(ci) == 2L,
+    length(probs) == 2L,
+    length(parameter_range) == 2L
+  )
   ci <- as.numeric(ci)
   w <- which(probs %in% 0:1)
   if (length(w)) {
     ci[w] <- parameter_range[w]
   }
-  out <- pmin(pmax(ci, parameter_range[1]), parameter_range[2])
+  out <- pmin(pmax(ci, parameter_range[1L]), parameter_range[2L])
   stopifnot(out[1] <= out[2])
   out
 }
 
 # Map boot type to a nice name and also to the output of boot.ci
 map_boot_type <- function(ty) {
-  out <- c(norm = "normal", basic = "basic", stud = "student",
-           perc = "percent", bca = "bca")[ty]
+  out <- c(
+    norm = "normal", basic = "basic", stud = "student", perc = "percent", bca = "bca"
+  )[ty]
   if (anyNA(out)) {
     stop("Wrong boot_type.")
   }
@@ -50,13 +55,17 @@ format_p <- function(z, digits = max(2L, getOption("digits"))) {
 # Pastes together some info on bootstrap
 boot_info <- function(type, boot_type, R) {
   if (type == "bootstrap") {
-    sprintf("based on %s bootstrap replications and the %s method", R, map_boot_type(boot_type))
+    sprintf(
+      "based on %s bootstrap replications and the %s method",
+      R,
+      map_boot_type(boot_type)
+    )
   }
 }
 
 # Checks if CI is symmetric
 is_symmetric <- function(probs) {
-  isTRUE(all.equal(probs[1], 1 - probs[2]))
+  isTRUE(all.equal(probs[1L], 1 - probs[2L]))
 }
 
 # Checks if CI is one-sided
@@ -81,7 +90,7 @@ probs2alternative <- function(p) {
   if (is_symmetric(p)) {
     return("two.sided")
   } else if (is_onesided(p)) {
-    if (p[1] > 0) {
+    if (p[1L] > 0) {
       return("greater")
     } else {
       return("less")

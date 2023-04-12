@@ -42,9 +42,11 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
     df2 <- fstat[["dendf"]]
   }
   if (is.numeric(x)) {
-    stopifnot(length(x) == 1L,
-              !is.null(df1),
-              !is.null(df2))
+    stopifnot(
+      length(x) == 1L,
+      !is.null(df1),
+      !is.null(df2)
+    )
     stat <- x
   }
 

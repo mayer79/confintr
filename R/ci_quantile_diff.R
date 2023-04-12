@@ -47,18 +47,26 @@ ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "boo
   # Remove NAs and calculate estimate
   x <- x[!is.na(x)]
   y <- y[!is.na(y)]
-  stopifnot(length(x) >= 1L,
-            length(y) >= 1L)
-  estimate <- quantile(x, probs = q, names = FALSE) - quantile(y, probs = q, names = FALSE)
+  stopifnot(
+    length(x) >= 1L,
+    length(y) >= 1L
+  )
+  estimate <- quantile(x, probs = q, names = FALSE) -
+    quantile(y, probs = q, names = FALSE)
 
   # Calculate CI
-  X <- data.frame(v = c(x, y),
-                  g = rep(1:2, times = c(length(x), length(y))))
+  X <- data.frame(v = c(x, y), g = rep(1:2, times = c(length(x), length(y))))
   check_bca(boot_type, nrow(X), R)
   set_seed(seed)
-  S <- boot(X, statistic = function(X, id) boot_two_stats(X, id, FUN = quantile,
-                                                          probs = q, names = FALSE),
-            strata = X[["g"]], R = R, ...)
+  S <- boot(
+    X,
+    statistic = function(X, id) boot_two_stats(
+      X, id, FUN = quantile, probs = q, names = FALSE
+    ),
+    strata = X[["g"]],
+    R = R,
+    ...
+  )
   cint <- ci_boot(S, boot_type, probs)
 
   # Organize output

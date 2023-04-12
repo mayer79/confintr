@@ -26,14 +26,17 @@ ci_oddsratio <- function(x, probs = c(0.025, 0.975)) {
   # Turn input into matrix/table
   if (is.data.frame(x)) {
     stopifnot(ncol(x) == 2L)
-    x <- table(x[, 1], x[, 2])
+    x <- table(x[, 1L], x[, 2L])
   }
-  stopifnot(all(x >= 0),
-            dim(x) == c(2L, 2L))
+  stopifnot(
+    all(x >= 0),
+    dim(x) == c(2L, 2L)
+  )
 
   # Calculate ci
-  cint <- fisher.test(x, alternative = probs2alternative(probs),
-                      conf.level = diff(probs))$conf.int
+  cint <- fisher.test(
+    x, alternative = probs2alternative(probs), conf.level = diff(probs)
+  )$conf.int
 
   # Organize output
   cint <- check_output(cint, probs, c(0, Inf))

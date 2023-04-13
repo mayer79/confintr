@@ -65,6 +65,9 @@ use_github_action("check-standard")
 use_github_action("test-coverage")
 use_github_action("pkgdown")
 
+# Revdep
+use_revdep()
+
 #=============================================================================
 # Finish package building (can use fresh session)
 #=============================================================================
@@ -82,6 +85,9 @@ install()
 if (FALSE) {
   check_win_devel()
   check_rhub()
+
+  # Takes long
+  revdepcheck::revdep_check(num_workers = 4L)
 
   # Wait until above checks are passed without relevant notes/warnings
   # then submit to CRAN

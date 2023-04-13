@@ -19,14 +19,14 @@ ci_mad(
 \item{x}{A numeric vector.}
 
 \item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric
-95\% confidence interval.}
+95\% CI.}
 
 \item{constant}{Scaling factor applied. The default (1.4826) ensures that the MAD
 equals the standard deviation for a theoretical normal distribution.}
 
-\item{type}{Type of confidence interval. Currently not used as the only type is "bootstrap".}
+\item{type}{Type of CI. Currently not used as the only type is "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval c("bca", "perc", "norm", "basic").}
+\item{boot_type}{Type of bootstrap CI c("bca", "perc", "norm", "basic").}
 
 \item{R}{The number of bootstrap resamples.}
 
@@ -38,7 +38,7 @@ equals the standard deviation for a theoretical normal distribution.}
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -46,22 +46,10 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates bootstrap confidence intervals for the population median
+This function calculates bootstrap CIs (default: "bca") for the population median
 absolute deviation (MAD), see \code{stats::mad()} for more information on this measure of scale.
-}
-\details{
-Bootstrap confidence intervals are calculated by the package "boot", see references.
-The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the
-property of being second order accurate as well as transformation respecting
-(see Efron, p. 188).
 }
 \examples{
 x <- rnorm(100)
-ci_mad(x, R = 999)  # In practice, use larger R
-}
-\references{
-\enumerate{
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
-}
+ci_mad(x, R = 999)  # Use larger R
 }

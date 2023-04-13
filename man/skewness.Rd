@@ -16,8 +16,7 @@ Default is \code{TRUE}.}
 Numeric vector of length 1.
 }
 \description{
-Calculates sample skewness, i.e., the third central moment. A value of 0 refers to
-a perfectly symmetric empirical distribution.
+Calculates sample skewness. A value of 0 refers to a perfectly symmetric distribution.
 }
 \examples{
 skewness(1:10)

@@ -20,11 +20,13 @@ ci_proportion(
 
 \item{n}{The sample size. Only needed if \code{x} is a vector of length 1.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. One of "Clopper-Pearson" (the default), "Agresti–Coull", "Wilson", "bootstrap".}
+\item{type}{Type of CI. One of "Clopper-Pearson" (the default), "Agresti–Coull",
+"Wilson", "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "stud", "norm", "basic"). Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
+Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
@@ -36,7 +38,7 @@ ci_proportion(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -44,25 +46,21 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for a population proportion. By default, "Clopper-Pearson" confidence intervals are calculated (via \code{stats::binom.test()}). Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap" (mainly added for consistency and didactic purposes).
-}
-\details{
-Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the proportion is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
-Note that we use the formula in \url{https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval} which does not simplify the 0.975 quantile of the normal by 2 as sometimes in other references.
+This function calculates CIs for a population proportion. By default,
+"Clopper-Pearson" CIs are calculated (via \code{stats::binom.test()}).
+Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap"
+(not recommended; by default "bca").
 }
 \examples{
 x <- rep(0:1, times = c(50, 100))
 ci_proportion(x)
 ci_proportion(x, type = "Wilson")
 ci_proportion(x, type = "Agresti-Coull")
-ci_proportion(x, type = "bootstrap", R = 999)
 }
 \references{
 \enumerate{
 \item Clopper, C. and Pearson, E. S. (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. Biometrika. 26 (4).
 \item Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. Journal of the American Statistical Association, 22 (158).
 \item Agresti, A. and Coull, B. A. (1998). Approximate is better than 'exact' for interval estimation of binomial proportions. The American Statistician, 52 (2).
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 }
 }

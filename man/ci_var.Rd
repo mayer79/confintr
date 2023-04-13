@@ -18,12 +18,12 @@ ci_var(
 \item{x}{A numeric vector.}
 
 \item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric
-95\% confidence interval.}
+95\% CI.}
 
-\item{type}{Type of confidence interval. One of \code{"chi-squared"} (default) or
+\item{type}{Type of CI. One of \code{"chi-squared"} (default) or
 \code{"bootstrap"}.}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "stud", "norm", "basic").
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
 Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
@@ -36,7 +36,7 @@ Only used for \code{type = "bootstrap"}.}
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -44,30 +44,25 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the population variance.
-By default, classic confidence intervals are calculated based on the chi-squared
+This function calculates CIs for the population variance.
+By default, classic CIs are calculated based on the chi-squared
 distribution, assuming normal distribution (see Smithson).
-Bootstrap confidence intervals are also available. We recommend them for the non-normal case.
+Bootstrap CIs are also available (default: "bca").
+We recommend them for the non-normal case.
 }
 \details{
-Bootstrap confidence intervals are calculated by the package "boot", see references.
-The default bootstrap type is \code{bca} (bias-corrected accelerated) as it enjoys
-the property of being second order accurate as well as transformation respecting
-(see Efron, p. 188).
-The \code{stud} (bootstrap t) bootstrap uses a general formula for the standard error
+The \code{stud} (bootstrap t) bootstrap uses the standard error
 of the sample variance given in Wilks.
 }
 \examples{
 x <- 1:100
 ci_var(x)
-ci_var(x, type = "bootstrap", R = 999)  # In practice, use larger R
+ci_var(x, type = "bootstrap", R = 999)  # Use larger R
 }
 \references{
 \enumerate{
 \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 \item S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons.
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 }
 }
 \seealso{

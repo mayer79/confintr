@@ -20,11 +20,11 @@ ci_median_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. Currently, "bootstrap" is the only option.}
+\item{type}{Type of CI. Currently, "bootstrap" is the only option.}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "norm", "basic").}
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").}
 
 \item{R}{The number of bootstrap resamples.}
 
@@ -36,7 +36,7 @@ ci_median_diff(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -44,12 +44,14 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates bootstrap confidence intervals for the population value of median(x) - median(y) by calling ci_quantile_diff(, q = 0.5). See \code{\link{ci_quantile_diff}} for details.
+This function calculates bootstrap CIs for the population value of
+median(x) - median(y) by calling ci_quantile_diff(, q = 0.5).
+See \code{\link{ci_quantile_diff}} for details.
 }
 \examples{
 x <- 10:30
 y <- 1:30
-ci_median_diff(x, y, R = 999)
+ci_median_diff(x, y, R = 999)  # Use higher value for R
 }
 \seealso{
 \code{\link{ci_quantile_diff}}.

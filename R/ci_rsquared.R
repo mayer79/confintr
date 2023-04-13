@@ -1,17 +1,24 @@
 #' CI for the Population R-Squared
 #'
-#' This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. A positive lower (1-alpha)*100%-confidence limit for the R-squared goes hand-in-hand with a significant F test at level alpha.
+#' This function calculates parametric CIs for the population R-squared.
+#' It is based on CIs for the non-centrality parameter Delta of the F distribution,
+#' found by test inversion. Delta values are mapped to R-squared by
+#' R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees
+#' of freedom (df) of the F test statistic.
+#' A positive lower (1-alpha)*100%-confidence limit for the R-squared goes
+#' hand-in-hand with a significant F test at level alpha.
 #'
-#' According to \code{?pf}, the results might be unreliable for very large F values. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
-#' @importFrom stats lm pf
-#' @param x The result of \code{stats::lm} or the F test statistic.
-#' @param df1 The numerator degree of freedom. Only used if \code{x} is a test statistic.
-#' @param df2 The denominator degree of freedom. Only used if \code{x} is a test statistic.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
+#' According to \code{?stats::pf}, the results might be unreliable for very large F values.
+#' Note that we do not provide bootstrap CIs here to keep the input interface simple.
+#'
+#' @param x The result of \code{stats::lm()} or the F test statistic.
+#' @param df1 The numerator df. Only used if \code{x} is a test statistic.
+#' @param df2 The denominator df. Only used if \code{x} is a test statistic.
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{interval}: The CI for the parameter.
 #'   \item \code{estimate}: The estimate for the parameter.
 #'   \item \code{probs}: A vector of error probabilities.
 #'   \item \code{type}: The type of the interval.
@@ -19,12 +26,10 @@
 #' }
 #' @export
 #' @examples
-#' fit <- lm(Sepal.Length ~ ., data = iris)
+#' fit <- stats::lm(Sepal.Length ~ ., data = iris)
 #' summary(fit)$r.squared
 #' ci_rsquared(fit)
 #' ci_rsquared(fit, probs = c(0.05, 1))
-#' ci_rsquared(fit, probs = c(0, 0.95))
-#' ci_rsquared(188.251, 5, 144)
 #' @references
 #' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_f_ncp}}.
@@ -52,13 +57,13 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
 
   # Calculate limits for ncp
   ncp <- ci_f_ncp(stat, df1 = df1, df2 = df2, probs = probs)[["interval"]]
-  cint <- ncp_to_r2(ncp, df1, df2)
+  cint <- ncp_to_r2(ncp, df1 = df1, df2 = df2)
 
   # Organize output
-  cint <- check_output(cint, probs, c(0, 1))
+  cint <- check_output(cint, probs = probs, parameter_range = c(0, 1))
   out <- list(
     interval = cint,
-    estimate = f_to_r2(stat, df1, df2),
+    estimate = f_to_r2(stat, df1 = df1, df2 = df2),
     parameter = "population R-squared",
     probs = probs,
     type = "F",
@@ -67,5 +72,3 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   class(out) <- "cint"
   out
 }
-
-

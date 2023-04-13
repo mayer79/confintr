@@ -21,13 +21,17 @@ ci_mean_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{var.equal}{Should the two variances be treated as being equal? The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the variance of the mean difference. Otherweise, Welch's approach is used. This also applies to the "stud" boostrap.}
+\item{var.equal}{Should the two variances be treated as being equal?
+The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate
+the variance of the mean difference. Otherweise, Welch's approach is used.
+This also applies to the "stud" bootstrap.}
 
-\item{type}{Type of confidence interval. One of "t" (default), or "bootstrap".}
+\item{type}{Type of CI. One of "t" (default), or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval ("stud", "bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
+Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
@@ -39,7 +43,7 @@ ci_mean_diff(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -47,23 +51,23 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the population value of mean(x) - mean(y). The default is Student's method with Welch's correction for unequal variances, but also bootstrap confidence intervals are available.
-}
-\details{
-Bootstrap confidence intervals are calculated by the package "boot". The default bootstrap type for the mean difference is "stud" (bootstrap t) as it enjoys the property of being second order accurate and has a stable variance estimator (see Efron, p. 188).
-The resampling is done within sample. If \code{boot_type = "stud"}, the standard error is estimated by Welch's method if \code{var.equal = FALSE} (the default) and by pooling otherwise.
-Thus, \code{var.equal} has not only an effect for the classic Student approach (\code{type = "t"}) but also for \code{boot_type = "stud"}.
+This function calculates CIs for the population value of mean(x) - mean(y).
+The default is Student's method with Welch's correction for unequal variances,
+but also bootstrap CIs are available. The default bootstrap type is "stud"
+(bootstrap t) as it has a stable variance estimator (see Efron, p. 188).
+Resampling is done within sample. If \code{boot_type = "stud"},
+the standard error is estimated by Welch's method if \code{var.equal = FALSE}
+(the default), and by pooling otherwise.
+Thus, \code{var.equal} not only has an effect for the classic Student approach
+(\code{type = "t"}) but also for \code{boot_type = "stud"}.
 }
 \examples{
 x <- 10:30
 y <- 1:30
 ci_mean_diff(x, y)
 t.test(x, y)$conf.int
-ci_mean_diff(x, y, type = "bootstrap", R = 999)
+ci_mean_diff(x, y, type = "bootstrap", R = 999)  # Use larger R
 }
 \references{
-\enumerate{
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
-}
+Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
 }

@@ -7,19 +7,19 @@
 ci_rsquared(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 }
 \arguments{
-\item{x}{The result of \code{stats::lm} or the F test statistic.}
+\item{x}{The result of \code{stats::lm()} or the F test statistic.}
 
-\item{df1}{The numerator degree of freedom. Only used if \code{x} is a test statistic.}
+\item{df1}{The numerator df. Only used if \code{x} is a test statistic.}
 
-\item{df2}{The denominator degree of freedom. Only used if \code{x} is a test statistic.}
+\item{df2}{The denominator df. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 }
 \value{
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -27,18 +27,23 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates parametric confidence intervals for the population R-squared. It is based on confidence intervals for the non-centrality parameter Delta of the F distribution, found by test inversion. Delta values are mapped to R-squared by R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees of freedom of the F test statistic. A positive lower (1-alpha)*100\%-confidence limit for the R-squared goes hand-in-hand with a significant F test at level alpha.
+This function calculates parametric CIs for the population R-squared.
+It is based on CIs for the non-centrality parameter Delta of the F distribution,
+found by test inversion. Delta values are mapped to R-squared by
+R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees
+of freedom (df) of the F test statistic.
+A positive lower (1-alpha)*100\%-confidence limit for the R-squared goes
+hand-in-hand with a significant F test at level alpha.
 }
 \details{
-According to \code{?pf}, the results might be unreliable for very large F values. Note that we do not provide bootstrap confidence intervals here to keep the input interface simple.
+According to \code{?stats::pf}, the results might be unreliable for very large F values.
+Note that we do not provide bootstrap CIs here to keep the input interface simple.
 }
 \examples{
-fit <- lm(Sepal.Length ~ ., data = iris)
+fit <- stats::lm(Sepal.Length ~ ., data = iris)
 summary(fit)$r.squared
 ci_rsquared(fit)
 ci_rsquared(fit, probs = c(0.05, 1))
-ci_rsquared(fit, probs = c(0, 0.95))
-ci_rsquared(188.251, 5, 144)
 }
 \references{
 Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.

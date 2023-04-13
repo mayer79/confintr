@@ -21,13 +21,14 @@ ci_quantile_diff(
 
 \item{y}{A numeric vector.}
 
-\item{q}{A single probability value determining the quantile. Set to 0.5 for the median (default).}
+\item{q}{A single probability value determining the quantile.
+Set to 0.5 for the median (default).}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. Currently, "bootstrap" is the only option.}
+\item{type}{Type of CI. Currently, "bootstrap" is the only option.}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "norm", "basic").}
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").}
 
 \item{R}{The number of bootstrap resamples.}
 
@@ -39,7 +40,7 @@ ci_quantile_diff(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -47,22 +48,14 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates bootstrap confidence intervals for the population value of q quantile(x) - q quantile(y).
-}
-\details{
-Bootstrap confidence intervals are calculated by the package "boot". The default bootstrap type is "bca" (bias-corrected & accelerated) as it enjoys the property of being second order accurate and is transformation respecting (see Efron, p. 188).
-The sampling is done within sample.
+This function calculates bootstrap CIs for the population value of
+q quantile(x) - q quantile(y), by default using "bca" bootstrap.
+Resampling is done within sample.
 }
 \examples{
 x <- 10:30
 y <- 1:30
-ci_quantile_diff(x, y, R = 999)
-}
-\references{
-\enumerate{
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
-}
+ci_quantile_diff(x, y, R = 999)  # Use larger R
 }
 \seealso{
 \code{\link{ci_median_diff}}.

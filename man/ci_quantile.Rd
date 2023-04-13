@@ -18,13 +18,15 @@ ci_quantile(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{q}{A single probability value determining the quantile. Set to 0.5 for the median (the default).}
+\item{q}{A single probability value determining the quantile.
+Set to 0.5 for the median (the default).}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. One of "binomial" (default), or "bootstrap".}
+\item{type}{Type of CI. One of "binomial" (default), or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").
+Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
@@ -36,7 +38,7 @@ ci_quantile(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -44,23 +46,16 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for a population quantile. By default, distribution-free confidence intervals based on the binomial distribution are formed, see Hahn and Meeker. Alternatively, bootstrap confidence intervals are available.
-}
-\details{
-Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
+This function calculates CIs for a population quantile. By default, distribution-free
+CIs based on the binomial distribution are calculated, see Hahn and Meeker.
+Alternatively, bootstrap CIs are available (by default "bca").
 }
 \examples{
 x <- 1:100
-ci_quantile(x)
 ci_quantile(x, q = 0.25)
-ci_quantile(x, q = 0.25, type = "bootstrap", R = 999)
 }
 \references{
-\enumerate{
-\item Hahn, G. and Meeker, W. (1991). Statistical Intervals. Wiley 1991.
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
-}
+Hahn, G. and Meeker, W. (1991). Statistical Intervals. Wiley 1991.
 }
 \seealso{
 \code{\link{ci_quantile}}.

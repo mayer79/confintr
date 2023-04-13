@@ -17,11 +17,12 @@ ci_median(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. One of "binomial" (default), or "bootstrap".}
+\item{type}{Type of CI. One of "binomial" (default), or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").
+Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
@@ -33,7 +34,7 @@ ci_median(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -41,11 +42,11 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the population median by calling \code{ci_quantile(..., q = 0.5)}. See \code{\link{ci_quantile}} for details.
+This function calculates CIs for the population median by calling
+\code{ci_quantile(..., q = 0.5)}. See \code{\link{ci_quantile}} for details.
 }
 \examples{
 ci_median(1:100)
-ci_quantile(1:100)
 }
 \seealso{
 \code{\link{ci_quantile}}.

@@ -7,15 +7,16 @@
 ci_oddsratio(x, probs = c(0.025, 0.975))
 }
 \arguments{
-\item{x}{A 2x2 \code{table/matrix} of frequencies, or a \code{data.frame} with exactly two columns.}
+\item{x}{A 2x2 \code{table/matrix} of frequencies,
+or a \code{data.frame} with exactly two columns.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 }
 \value{
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -23,7 +24,9 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates a confidence interval for the odds ratio in a 2x2 table/matrix or a data frame with two columns. The confidence interval is obtained through \code{stats::fisher.test()}. Bootstrap confidence intervals are not available.
+This function calculates a CI for the odds ratio in a 2x2 table/matrix or a
+data frame with two columns. The CI is obtained through \code{stats::fisher.test()}.
+Bootstrap CIs are not available.
 }
 \examples{
 x <- cbind(c(10, 5), c(4, 4))

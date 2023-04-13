@@ -17,11 +17,12 @@ ci_mean(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. One of "t" (default), "Wald", or "bootstrap".}
+\item{type}{Type of CI. One of "t" (default), "Wald", or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval ("stud", "bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
+Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
@@ -33,7 +34,7 @@ ci_mean(
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -41,17 +42,20 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the population mean. By default, Student's t method is used. Alternatively, Wald and bootstrap confidence intervals are available.
+This function calculates CIs for the population mean.
+By default, Student's t method is used.
+Alternatively, Wald and bootstrap CIs are available.
 }
 \details{
-Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type for the mean is "stud" (bootstrap t) as it enjoys the property of being second order accurate and has a stable variance estimator (see Efron, p. 188).
+Bootstrap CIs are calculated by the package "boot", see references.
+The default bootstrap type for the mean is "stud" (bootstrap t) as it enjoys the
+property of being second order accurate and has a stable variance estimator
+(see Efron, p. 188).
 }
 \examples{
 x <- 1:100
 ci_mean(x)
-ci_mean(x, type = "bootstrap", R = 999, seed = 1)
-ci_mean(x, type = "bootstrap", R = 999, probs = c(0.025, 1), seed = 1)
-ci_mean(x, type = "bootstrap", R = 999, probs = c(0, 0.975), seed = 1)
+ci_mean(x, type = "bootstrap", R = 999, seed = 1)  # Use higher R
 }
 \references{
 \enumerate{

@@ -17,12 +17,12 @@ ci_sd(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
 
-\item{type}{Type of confidence interval. One of \code{"chi-squared"} (default)
+\item{type}{Type of CI. One of \code{"chi-squared"} (default)
 or \code{"bootstrap"}.}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "stud", "norm", "basic").
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
 Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
@@ -35,7 +35,7 @@ Only used for \code{type = "bootstrap"}.}
 An object of class "cint" containing these components:
 \itemize{
 \item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
+\item \code{interval}: The CI for the parameter.
 \item \code{estimate}: The estimate for the parameter.
 \item \code{probs}: A vector of error probabilities.
 \item \code{type}: The type of the interval.
@@ -43,14 +43,14 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates confidence intervals for the population standard deviation.
-They are derived from confidence intervals for the variance by taking the square-root.
+This function calculates CIs for the population standard deviation.
+They are derived from CIs for the variance by taking the square-root.
 For details, see \code{\link{ci_var}}.
 }
 \examples{
 x <- 1:100
 ci_sd(x)
-ci_sd(x, type = "bootstrap", R = 999)  # In practice, use larger R
+ci_sd(x, type = "bootstrap", R = 999)  # Use larger R
 }
 \seealso{
 \code{\link{ci_var}}.

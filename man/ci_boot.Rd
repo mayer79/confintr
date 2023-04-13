@@ -2,22 +2,20 @@
 % Please edit documentation in R/ci_boot.R
 \name{ci_boot}
 \alias{ci_boot}
-\title{Bootstrap Confidence Interval}
+\title{Bootstrap CI}
 \usage{
-ci_boot(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs, ...)
+ci_boot(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs)
 }
 \arguments{
-\item{S}{Result of \code{boot}.}
+\item{S}{Result of \code{boot::boot()}.}
 
-\item{boot_type}{Confidence interval type passed to \code{boot::boot.ci}.}
+\item{boot_type}{CI type passed to \code{boot::boot.ci()}.}
 
-\item{probs}{Probability cuts for the confidence intervals.}
-
-\item{...}{Further arguments passed to \code{boot::boot.ci}.}
+\item{probs}{Probability cuts for the CIs.}
 }
 \value{
 A numeric vector of length two.
 }
 \description{
-Internel wrapper to \code{boot::boot.ci}. Contains the logic for one-sided and asymmetric confidence intervals.
+Internal wrapper to \code{boot::boot.ci()}. Contains the logic for one-sided and asymmetric CIs.
 }

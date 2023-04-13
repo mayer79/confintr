@@ -12,9 +12,20 @@
 print.cint <- function(x, digits = getOption("digits"), ...) {
   # Method info
   cat("\n")
-  cat(strwrap(paste(props2text(x$probs), format_p(diff(x$probs), digits = digits),
-              x$type, "confidence interval for the", x$parameter, x$info),
-      prefix = "\t"), sep = "\n")
+  cat(
+    strwrap(
+      paste(
+        props2text(x$probs),
+        format_p(diff(x$probs), digits = digits),
+        x$type,
+        "confidence interval for the",
+        x$parameter,
+        x$info
+      ),
+      prefix = "\t"
+    ),
+    sep = "\n"
+  )
   cat("\n")
 
   # Estimate

@@ -1,18 +1,21 @@
 #' CI for the Population Median Difference of two Samples
 #'
-#' This function calculates bootstrap confidence intervals for the population value of median(x) - median(y) by calling ci_quantile_diff(, q = 0.5). See \code{\link{ci_quantile_diff}} for details.
+#' This function calculates bootstrap CIs for the population value of
+#' median(x) - median(y) by calling ci_quantile_diff(, q = 0.5).
+#' See \code{\link{ci_quantile_diff}} for details.
+#'
 #' @param x A numeric vector.
 #' @param y A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% confidence interval.
-#' @param type Type of confidence interval. Currently, "bootstrap" is the only option.
-#' @param boot_type Type of bootstrap confidence interval ("bca", "perc", "norm", "basic").
+#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param type Type of CI. Currently, "bootstrap" is the only option.
+#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
 #' @param seed An integer random seed.
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
 #'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The confidence interval for the parameter.
+#'   \item \code{interval}: The CI for the parameter.
 #'   \item \code{estimate}: The estimate for the parameter.
 #'   \item \code{probs}: A vector of error probabilities.
 #'   \item \code{type}: The type of the interval.
@@ -22,7 +25,7 @@
 #' @examples
 #' x <- 10:30
 #' y <- 1:30
-#' ci_median_diff(x, y, R = 999)
+#' ci_median_diff(x, y, R = 999)  # Use higher value for R
 #' @seealso \code{\link{ci_quantile_diff}}.
 ci_median_diff <- function(x, y, probs = c(0.025, 0.975), type = "bootstrap",
                            boot_type = c("bca", "perc", "norm", "basic"),

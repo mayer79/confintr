@@ -1,12 +1,10 @@
 ---
-title: "Using confintr"
-author: "Michael Mayer"
-date: "`r Sys.Date()`"
+title: "Using {confintr}"
 bibliography: "biblio.bib"
 link-citations: true
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using confintr}
+  %\VignetteIndexEntry{Using {confintr}}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,11 +18,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
+## Overview
 
-The aim of this vignette is to introduce the R package `confintr` for calculating one- and two-sided classic and bootstrap confidence intervals.
+This vignette introduces the R package {confintr} for calculating classic and/or bootstrap confidence intervals (CI).
 
-Confidence intervals for the following parameters are available:
+CIs for the following parameters are available:
 
 - mean (Student, Wald, bootstrap),
 
@@ -48,21 +46,21 @@ Confidence intervals for the following parameters are available:
 
 - Mean, quantile and median differences of two samples (for quantile/median only bootstrap).
 
-Many of the classic confidence intervals on this list are discussed in [@smithson2003]. 
+Many of the classic CIs on this list are discussed in @smithson2003. 
 
-We offer different types of bootstrap intervals:
+In line with the {boot} backend, the following bootstrap CIs are (usually) available:
 
-1. Normal ("norm") bootstrap confidence interval: This is the Wald/Student confidence interval using as standard error the standard deviation of the bootstrap distribution plus a bootstrap bias correction. Simple, but only first-order accurate and not transformation respecting.
+1. Normal ("norm") bootstrap CI: This is the Wald/Student CI using as standard error the standard deviation of the bootstrap distribution plus a bootstrap bias correction. Simple, but only first-order accurate and not transformation respecting.
 
-2. Percentile ("perc") bootstrap confidence interval: Uses quantiles of the bootstrap distribution as confidence limits. Simple, but only first order accurate. Transformation respecting.
+2. Percentile ("perc") bootstrap CI: Uses quantiles of the bootstrap distribution as confidence limits. Simple, but only first-order accurate. Transformation respecting.
 
-3. Basic ("basic") or reverse bootstrap confidence interval: Flipped version of the percentile approach, dealing with bias but at the price of having very unnaturally tailed sampling distributions. Only first order accurate.
+3. Basic ("basic") or reverse bootstrap CI: Flipped version of the percentile approach, dealing with bias but at the price of having very unnaturally tailed sampling distributions. Only first-order accurate.
 
-4. Bias-corrected and accelerated ("bca") confidence interval: Refined version of the percentile bootstrap which is second order accurate and transformation respecting. Needs more replications than observations. **Usually our default.**
+4. Bias-corrected and accelerated ("bca") CI: Refined version of the percentile bootstrap which is second-order accurate and transformation respecting. Needs more replications than observations. **Usually the default.**
 
-5. Student-t ("stud") bootstrap confidence interval: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the variance of the bootstrapped statistic. Second order accurate but not transformation respecting. Requires a formula for the variance of the estimator, which `confintr` provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
+5. Student-t ("stud") bootstrap CI: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the variance of the bootstrapped statistic. second-order accurate but not transformation respecting. Requires a formula for the variance of the estimator, which `confintr` provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
 
-For details on bootstrap confidence intervals, we refer to [@efron1993]. We provide them through the widely used `boot` package [@ripley2019]. 
+For details on bootstrap CIs, we refer to @efron1993.
 
 ## Installation
 
@@ -77,7 +75,7 @@ library(devtools)
 install_github("mayer79/confintr")
 ```
 
-## Examples
+## Usage
 
 ```{r}
 library(confintr)
@@ -86,19 +84,21 @@ set.seed(1)
 
 # Mean
 ci_mean(1:100)
+
 ci_mean(1:100, type = "bootstrap")
 
 # 95% value at risk
 ci_quantile(rexp(1000), q = 0.95)
 
 # IQR
-ci_IQR(rexp(100), R = 999)
+ci_IQR(rexp(100), R = 999)  # In practice, use higher R
 
 # Correlation
-ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 999)
+ci_cor(iris[1:2], method = "spearman", type = "bootstrap", R = 999)  # In practice, use higher R
 
 # Proportions
 ci_proportion(10, n = 100, type = "Wilson")
+
 ci_proportion(10, n = 100, type = "Clopper-Pearson")
 
 # R-squared
@@ -110,10 +110,11 @@ ci_kurtosis(1:100)
 
 # Mean difference
 ci_mean_diff(10:30, 1:15)
-ci_mean_diff(10:30, 1:15, type = "bootstrap", R  = 999)
+
+ci_mean_diff(10:30, 1:15, type = "bootstrap", R  = 999)  # In practice, use higher R
 
 # Median difference
-ci_median_diff(10:30, 1:15, R  = 999)
+ci_median_diff(10:30, 1:15, R = 999)  # In practice, use higher R
 ```
 
 ## References

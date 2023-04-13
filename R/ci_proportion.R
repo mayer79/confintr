@@ -3,11 +3,11 @@
 #' This function calculates CIs for a population proportion. By default,
 #' "Clopper-Pearson" CIs are calculated (via \code{stats::binom.test()}).
 #' Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap"
-#' (not recommended; by default "bca").
+#' (by default "bca").
 #'
 #' @param x A numeric vector of 0 and 1 or the number of successes.
 #' @param n The sample size. Only needed if \code{x} is a vector of length 1.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. One of "Clopper-Pearson" (the default), "Agresti–Coull",
 #' "Wilson", "bootstrap".
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
@@ -17,12 +17,12 @@
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples

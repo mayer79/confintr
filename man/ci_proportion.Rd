@@ -20,7 +20,7 @@ ci_proportion(
 
 \item{n}{The sample size. Only needed if \code{x} is a vector of length 1.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
+\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
 
 \item{type}{Type of CI. One of "Clopper-Pearson" (the default), "Agresti–Coull",
 "Wilson", "bootstrap".}
@@ -37,19 +37,19 @@ Only used for \code{type = "bootstrap"}.}
 \value{
 An object of class "cint" containing these components:
 \itemize{
-\item \code{parameter}: The parameter in question.
-\item \code{interval}: The CI for the parameter.
-\item \code{estimate}: The estimate for the parameter.
-\item \code{probs}: A vector of error probabilities.
-\item \code{type}: The type of the interval.
-\item \code{info}: An additional description text for the interval.
+\item \code{parameter}: Parameter specification.
+\item \code{interval}: CI for the parameter.
+\item \code{estimate}: Parameter estimate.
+\item \code{probs}: Lower and upper probabilities.
+\item \code{type}: Type of interval.
+\item \code{info}: Additional description.
 }
 }
 \description{
 This function calculates CIs for a population proportion. By default,
 "Clopper-Pearson" CIs are calculated (via \code{stats::binom.test()}).
 Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap"
-(not recommended; by default "bca").
+(by default "bca").
 }
 \examples{
 x <- rep(0:1, times = c(50, 100))

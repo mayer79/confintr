@@ -10,8 +10,7 @@
 #' of the sample variance given in Wilks.
 #'
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric
-#' 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. One of \code{"chi-squared"} (default) or
 #' \code{"bootstrap"}.
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
@@ -21,12 +20,12 @@
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples
@@ -85,7 +84,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' For details, see \code{\link{ci_var}}.
 #'
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. One of \code{"chi-squared"} (default)
 #' or \code{"bootstrap"}.
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
@@ -95,12 +94,12 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples
@@ -126,8 +125,7 @@ ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap
 #' population interquartile range (IQR), i.e., the difference between first and third quartile.
 #'
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric
-#' 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. Currently not used as the only type is \code{"bootstrap"}.
 #' @param boot_type Type of bootstrap CI c("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
@@ -135,12 +133,12 @@ ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples
@@ -181,8 +179,7 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' absolute deviation (MAD), see \code{stats::mad()} for more information on this measure of scale.
 #'
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric
-#' 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param constant Scaling factor applied. The default (1.4826) ensures that the MAD
 #' equals the standard deviation for a theoretical normal distribution.
 #' @param type Type of CI. Currently not used as the only type is "bootstrap".
@@ -192,12 +189,12 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples

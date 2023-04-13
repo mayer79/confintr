@@ -29,7 +29,7 @@
 
 Both one- and two-sided intervals are supported.
 
-Different types of bootstrap intervals are possible through argument `boot_type`, see vignette.
+Different types of bootstrap intervals are available via {boot}, see vignette.
 
 ## Installation
 

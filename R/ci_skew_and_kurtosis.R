@@ -65,7 +65,7 @@ kurtosis <- function(z, na.rm = TRUE) {
 #' By default, bootstrap type "bca" is used.
 #'
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. Currently not used as the only type is \code{"bootstrap"}.
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
@@ -73,17 +73,17 @@ kurtosis <- function(z, na.rm = TRUE) {
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples
 #' x <- 1:20
-#' ci_skewness(x, R = 999)  # In practice, use larger R
+#' ci_skewness(x, R = 999)  # Use larger R
 #' @seealso \code{\link{kurtosis}}
 ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),
@@ -121,7 +121,7 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' normal distribution. By default, bootstrap type "bca" is used.
 #'
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. Currently not used as the only type is \code{"bootstrap"}.
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
 #' @param R The number of bootstrap resamples.
@@ -129,17 +129,17 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples
 #' x <- 1:20
-#' ci_kurtosis(x, R = 999)  # In practice, use larger R
+#' ci_kurtosis(x, R = 999)  # Use larger R
 #' @seealso \code{\link{skewness}}
 ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),

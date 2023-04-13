@@ -9,7 +9,7 @@
 #' @param method Type of correlation coefficient, one of "pearson" (default), "kendall",
 #' or "spearman". For the latter two, only bootstrap CIs are supported.
 #' The names can be abbreviated.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. One of "normal" (the default) or "bootstrap"
 #' (the only option for rank-correlations).
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
@@ -19,12 +19,12 @@
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples

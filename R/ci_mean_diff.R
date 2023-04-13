@@ -12,7 +12,7 @@
 #'
 #' @param x A numeric vector.
 #' @param y A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param var.equal Should the two variances be treated as being equal?
 #' The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate
 #' the variance of the mean difference. Otherweise, Welch's approach is used.
@@ -25,12 +25,12 @@
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples

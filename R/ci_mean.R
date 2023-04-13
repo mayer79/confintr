@@ -9,7 +9,7 @@
 #' property of being second order accurate and has a stable variance estimator
 #' (see Efron, p. 188).
 #' @param x A numeric vector.
-#' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. One of "t" (default), "Wald", or "bootstrap".
 #' @param boot_type Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
 #' Only used for \code{type = "bootstrap"}.
@@ -18,18 +18,18 @@
 #' @param ... Further arguments passed to \code{boot::boot()}.
 #' @return An object of class "cint" containing these components:
 #' \itemize{
-#'   \item \code{parameter}: The parameter in question.
-#'   \item \code{interval}: The CI for the parameter.
-#'   \item \code{estimate}: The estimate for the parameter.
-#'   \item \code{probs}: A vector of error probabilities.
-#'   \item \code{type}: The type of the interval.
-#'   \item \code{info}: An additional description text for the interval.
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
 #' }
 #' @export
 #' @examples
 #' x <- 1:100
 #' ci_mean(x)
-#' ci_mean(x, type = "bootstrap", R = 999, seed = 1)  # Use higher R
+#' ci_mean(x, type = "bootstrap", R = 999, seed = 1)  # Use larger R
 #' @references
 #' \enumerate{
 #'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.

@@ -17,8 +17,7 @@ ci_var(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric
-95\% CI.}
+\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
 
 \item{type}{Type of CI. One of \code{"chi-squared"} (default) or
 \code{"bootstrap"}.}
@@ -35,12 +34,12 @@ Only used for \code{type = "bootstrap"}.}
 \value{
 An object of class "cint" containing these components:
 \itemize{
-\item \code{parameter}: The parameter in question.
-\item \code{interval}: The CI for the parameter.
-\item \code{estimate}: The estimate for the parameter.
-\item \code{probs}: A vector of error probabilities.
-\item \code{type}: The type of the interval.
-\item \code{info}: An additional description text for the interval.
+\item \code{parameter}: Parameter specification.
+\item \code{interval}: CI for the parameter.
+\item \code{estimate}: Parameter estimate.
+\item \code{probs}: Lower and upper probabilities.
+\item \code{type}: Type of interval.
+\item \code{info}: Additional description.
 }
 }
 \description{

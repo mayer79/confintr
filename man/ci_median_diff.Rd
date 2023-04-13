@@ -20,7 +20,7 @@ ci_median_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Probabilites. The default c(0.025, 0.975) gives a symmetric 95\% CI.}
+\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
 
 \item{type}{Type of CI. Currently, "bootstrap" is the only option.}
 
@@ -35,12 +35,12 @@ ci_median_diff(
 \value{
 An object of class "cint" containing these components:
 \itemize{
-\item \code{parameter}: The parameter in question.
-\item \code{interval}: The CI for the parameter.
-\item \code{estimate}: The estimate for the parameter.
-\item \code{probs}: A vector of error probabilities.
-\item \code{type}: The type of the interval.
-\item \code{info}: An additional description text for the interval.
+\item \code{parameter}: Parameter specification.
+\item \code{interval}: CI for the parameter.
+\item \code{estimate}: Parameter estimate.
+\item \code{probs}: Lower and upper probabilities.
+\item \code{type}: Type of interval.
+\item \code{info}: Additional description.
 }
 }
 \description{
@@ -51,7 +51,7 @@ See \code{\link{ci_quantile_diff}} for details.
 \examples{
 x <- 10:30
 y <- 1:30
-ci_median_diff(x, y, R = 999)  # Use higher value for R
+ci_median_diff(x, y, R = 999)  # Use larger value for R
 }
 \seealso{
 \code{\link{ci_quantile_diff}}.

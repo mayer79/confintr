@@ -1,40 +1,20 @@
 # New release
 
-Hi CRAN team
+This is a large maintenance update, bumping the package to stable version 1.0.0.
 
-This release fixes a mistake in the calculation of studentized boostrap confidence intervals.
+- Reorganisation of code files
+- Better help files
+- Rewritten unit tests
+- Modern code formatting
+- Using `package::function()` notation instead of `importFrom package function`
+- Introduction of Github actions
+- New [Gitpage](https://mayer79.github.io/confintr/)
 
 ## Checks
 
-### Local check seems fine
-
-`devtools::check()` result:
-
-❯ checking for unstated dependencies in examples ... OK
-   WARNING
-  'qpdf' is needed for checks on size reduction of PDFs
-
-❯ checking for future file timestamps ... NOTE
-  unable to verify current time
-
-0 errors ✔ | 1 warning ✖ | 1 note ✖
+### check()
 
 ### `check_rhub()`
 
-Ubuntu Linux (release)
+### check_win_devel()
 
-* checking for future file timestamps ... NOTE
-unable to verify current time
-
-Win (devel)
-
-* checking for detritus in the temp directory ... NOTE
-Found the following files/directories:
-  'lastMiKTeXException'
-
-Fedora Linux (devel)
-
-* checking for future file timestamps ... NOTE
-unable to verify current time
-* checking HTML version of manual ... NOTE
-Skipping checking HTML validation: no command 'tidy' found

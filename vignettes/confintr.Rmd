@@ -20,30 +20,18 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-This vignette introduces the R package {confintr} for calculating classic and/or bootstrap confidence intervals (CI).
-
-CIs for the following parameters are available:
+{confintr} is dedicated to classic and/or bootstrap confidence intervals (CI). The following parameters are covered:
 
 - mean (Student, Wald, bootstrap),
-
 - proportion (Wilson, Clopper-Pearson, Agresti-Coutts, bootstrap),
-
 - median and other quantiles (distribution-free binomial and bootstrap),
-
 - variance and standard deviation (chi-squared, bootstrap),
-
 - IQR and MAD (bootstrap only),
-
 - skewness and kurtosis (bootstrap only),
-
 - R-squared and the non-centrality parameter of the F distribution (parametric),
-
 - Cramér's V and the non-centrality parameter of the chi-squared distribution (parametric and bootstrap),
-
 - the odds ratio of a 2x2 table (exact),
-
 - Pearson-, Spearman-, Kendall correlation coefficients (normal for Pearson, bootstrap for any),
-
 - Mean, quantile and median differences of two samples (for quantile/median only bootstrap).
 
 Many of the classic CIs on this list are discussed in @smithson2003. 
@@ -56,7 +44,7 @@ In line with the {boot} backend, the following bootstrap CIs are (usually) avail
 
 3. Basic ("basic") or reverse bootstrap CI: Flipped version of the percentile approach, dealing with bias but at the price of having very unnaturally tailed sampling distributions. Only first-order accurate.
 
-4. Bias-corrected and accelerated ("bca") CI: Refined version of the percentile bootstrap which is second-order accurate and transformation respecting. Needs more replications than observations. **Usually the default.**
+4. Bias-corrected and accelerated ("bca") CI: Refined version of the percentile bootstrap which is second-order accurate and transformation respecting. Needs more replications than observations. **The default** (except for the mean and the mean difference, see below).
 
 5. Student-t ("stud") bootstrap CI: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the variance of the bootstrapped statistic. second-order accurate but not transformation respecting. Requires a formula for the variance of the estimator, which `confintr` provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
 
@@ -64,15 +52,12 @@ For details on bootstrap CIs, we refer to @efron1993.
 
 ## Installation
 
-From CRAN:
-```
+```r
+# From CRAN
 install.packages("confintr")
-```
 
-Latest version from github:
-```
-library(devtools)
-install_github("mayer79/confintr")
+# Development version
+devtools::install_github("mayer79/confintr")
 ```
 
 ## Usage

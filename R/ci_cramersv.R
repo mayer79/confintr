@@ -19,6 +19,7 @@
 #' Further note that no continuity correction is applied for 2x2 tables,
 #' and that large chi-squared test statistics might provide unreliable results with
 #' method "chi-squared" (see \code{?pchisq}).
+#'
 #' @param x The result of \code{stats::chisq.test()}, a matrix/table of counts,
 #' or a \code{data.frame} with exactly two columns representing the two variables.
 #' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.

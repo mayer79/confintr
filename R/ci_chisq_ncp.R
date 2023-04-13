@@ -5,6 +5,7 @@
 #' hand-in-hand with a significant association test at level alpha.
 #' By default, CIs are computed by Chi-squared test inversion. This can be unreliable
 #' for very large test statistics. The default bootstrap type is "bca".
+#'
 #' @param x The result of \code{stats::chisq.test()}, a \code{table/matrix} of frequencies,
 #' or a \code{data.frame} with exactly two columns.
 #' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.

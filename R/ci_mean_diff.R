@@ -9,6 +9,7 @@
 #' (the default), and by pooling otherwise.
 #' Thus, \code{var.equal} not only has an effect for the classic Student approach
 #' (\code{type = "t"}) but also for \code{boot_type = "stud"}.
+#'
 #' @param x A numeric vector.
 #' @param y A numeric vector.
 #' @param probs Probabilites. The default c(0.025, 0.975) gives a symmetric 95% CI.

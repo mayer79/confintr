@@ -151,8 +151,8 @@ ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
     } else if (type %in% c("Wilson", "Agresti-Coull")) {
       if (is_onesided(probs)) {
         alpha <- 2 * alpha
-      } else if (!is_symmetric(probs)) {
-        asymmetric_stop()
+      } else if (!is_equal_tailed(probs)) {
+        unequal_stop()
       }
       z <- stats::qnorm(1 - alpha / 2)
       nt <- n + z^2

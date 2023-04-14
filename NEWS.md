@@ -2,6 +2,11 @@
 
 This is a large maintenance update, bumping the package to stable version 1.0.0.
 
+## User visible changes
+
+- Replaced the term "symmetric" by the better "equal-tailed". Similarly, we now output "unequal-tailed" instead of "asymmetric". By "equal-tailed", we mean that the upper and
+lower error probabilies agree, not that the interval is symmetric around the estimate.
+
 ## Maintenance
 
 - Reorganisation of code files

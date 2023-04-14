@@ -15,8 +15,7 @@ S_t <- boot::boot(
 test_that("ci_boot() gives identical results if variance is passed", {
   for (t in in_nms[-3L]) {
     expect_equal(
-      ci_boot(S, boot_type = t, probs = p),
-      ci_boot(S_t, boot_type = t, probs = p)
+      ci_boot(S, boot_type = t, probs = p), ci_boot(S_t, boot_type = t, probs = p)
     )
   }
   expect_warning(ci_boot(S, boot_type = in_nms[3L], probs = p))
@@ -61,7 +60,7 @@ test_that("ci_boot() is consistent in the unequal-tailed case", {
   }
 })
 
-test_that("ci_boot() works in the one-tailed situation", {
+test_that("ci_boot() is consistent in the one-tailed situation", {
   p1 <- c(0.1, 1)
   p2 <- c(0, 0.9)
 
@@ -78,9 +77,9 @@ test_that("ci_boot() works in the one-tailed situation", {
   }
 })
 
-test_that("ci_boot() gives the same for the mean in specific example as boot:boot.ci()", {
+test_that("ci_boot() replicates specific example in ?boot:boot.ci", {
   data("aircondit", package = "boot")
-  # Copied from boot::boot.ci() example
+  # Copied with slight modification from ?boot::boot.ci help
   mean.fun <- function(d, i) {
     m <- mean(d$hours[i])
     n <- length(i)

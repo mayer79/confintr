@@ -75,8 +75,7 @@ check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
   stopifnot(
     length(ci) == 2L,
     length(probs) == 2L,
-    length(parameter_range) == 2L,
-    all(!is.na(ci))
+    length(parameter_range) == 2L
   )
   ci <- as.numeric(ci)
 

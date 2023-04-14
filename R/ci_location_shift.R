@@ -226,3 +226,20 @@ ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "boo
   out
 }
 
+# Helper functions
+
+# Function to efficiently calculate the mean difference statistic in boot::boot
+boot_two_means <- function(X, id, se = FALSE, var.equal = FALSE) {
+  X <- X[id, ]
+  x <- X[X[["g"]] == 1, "v"]
+  y <- X[X[["g"]] == 2, "v"]
+  c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal)^2)
+}
+
+# Function to efficiently calculate the median difference statistic in boot::boot
+boot_two_stats <- function(X, id, FUN = mean, ...) {
+  X <- X[id, ]
+  x <- X[X[["g"]] == 1, "v"]
+  y <- X[X[["g"]] == 2, "v"]
+  FUN(x, ...) - FUN(y, ...)
+}

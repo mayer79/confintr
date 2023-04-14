@@ -12,6 +12,7 @@ ci_boot <- function(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), pr
   boot_type <- match.arg(boot_type)
   conf <- if (probs[1L] == 0) b else if (probs[2L] == 1) a else c(a, b)
   cint <- boot::boot.ci(S, conf = conf, type = boot_type)[[map_boot_type(boot_type)]]
+  cint <- unname(cint)
   m <- ncol(cint)
   if (probs[1L] == 0) {
     return(c(-Inf, cint[1L, m]))
@@ -19,22 +20,6 @@ ci_boot <- function(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), pr
     return(c(cint[1L, m - 1L], Inf))
   }
   c(cint[1L, m - 1L], cint[2L, m])
-}
-
-# Function to efficiently calculate the mean difference statistic in boot
-boot_two_means <- function(X, id, se = FALSE, var.equal = FALSE) {
-  X <- X[id, ]
-  x <- X[X[["g"]] == 1, "v"]
-  y <- X[X[["g"]] == 2, "v"]
-  c(mean(x) - mean(y), if (se) se_mean_diff(x, y, var.equal = var.equal)^2)
-}
-
-# Function to efficiently calculate the median difference statistic in boot
-boot_two_stats <- function(X, id, FUN = mean, ...) {
-  X <- X[id, ]
-  x <- X[X[["g"]] == 1, "v"]
-  y <- X[X[["g"]] == 2, "v"]
-  FUN(x, ...) - FUN(y, ...)
 }
 
 # Error if R < n for bca bootstrap
@@ -64,5 +49,7 @@ boot_info <- function(type, boot_type, R) {
       R,
       map_boot_type(boot_type)
     )
+  } else {
+    NULL
   }
 }

@@ -54,6 +54,7 @@ is.cint <- function(x) {
   inherits(x, "cint")
 }
 
+
 # Helper functions
 
 # Input check
@@ -78,17 +79,20 @@ check_output <- function(ci, probs, parameter_range = c(-Inf, Inf)) {
     all(!is.na(ci))
   )
   ci <- as.numeric(ci)
+
+  # Seems unnecessary
   w <- which(probs %in% 0:1)
   if (length(w) >= 1L) {
     ci[w] <- parameter_range[w]
   }
+
   out <- pmin(pmax(ci, parameter_range[1L]), parameter_range[2L])
   stopifnot(out[1] <= out[2])
   out
 }
 
 # Sets seed (or not) -> could be placed in a withr::with_seed()
-set_seed <- function(s) {
+set_seed <- function(s = NULL) {
   if (!is.null(s)) {
     set.seed(s)
   }
@@ -140,7 +144,7 @@ unequal_stop <- function() {
   stop("Unequal-tailed two-sided case not supported in this case.")
 }
 
-# Title case
+# Title case (used in ci_cor())
 title_case1 <- function(s) {
-  paste0(toupper(substring(s, 1, 1)), substring(s, 2))
+  paste0(toupper(substring(s, 1L, 1L)), substring(s, 2L))
 }

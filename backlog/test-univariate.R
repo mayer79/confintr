@@ -13,33 +13,6 @@ test_that("ci_quantile works", {
                ci_quantile(x, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
 })
 
-test_that("ci_median works", {
-  x <- 1:27
-  expect_equal(ci_median(x)$estimate, median(x))
-  expect_equal(ci_median(x)$interval, ci_quantile(x)$interval)
-  expect_equal(ci_median(x)$interval, c(8, 20))
-  expect_equal(ci_median(x, type = "bootstrap", R = 249, seed = 2)$interval, c(7.758812, 17.000000), tolerance = 0.0001)
-  expect_equal(ci_median(x)$interval[2], ci_median(x, probs = c(0, 0.975))$interval[2])
-  expect_equal(ci_median(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
-               ci_median(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
-  expect_equal(ci_median(x, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
-               ci_median(x, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
-})
-
-test_that("ci_mean works", {
-  x <- 1:27
-  expect_equal(ci_mean(x)$estimate, mean(x))
-  expect_equal(ci_mean(x)$interval, as.numeric(t.test(x)$conf.int))
-  expect_equal(ci_mean(x)$interval, c(10.86013, 17.13987), tolerance = 0.001)
-  expect_equal(c(ci_mean(x, probs = c(0.025, 1))$interval[1], ci_mean(x, probs = c(0, 0.975))$interval[2]),
-               c(10.86013, 17.13987), tolerance = 0.001)
-  expect_equal(ci_mean(x, type = "bootstrap", R = 249, seed = 2)$interval, c(11.09861, 16.99854), tolerance = 0.0001)
-  expect_equal(ci_mean(x)$interval[2], ci_mean(x, probs = c(0, 0.975))$interval[2])
-  expect_equal(ci_mean(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
-               ci_mean(x, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
-  expect_equal(ci_mean(x, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
-               ci_mean(x, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
-})
 
 
 test_that("ci_proportion works", {

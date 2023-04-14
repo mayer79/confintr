@@ -44,7 +44,7 @@
 ci_mean_diff <- function(x, y, probs = c(0.025, 0.975), var.equal = FALSE,
                          type = c("t", "bootstrap"),
                          boot_type = c("stud", "bca", "perc", "norm", "basic"),
-                         R = 9999, seed = NULL, ...) {
+                         R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -129,7 +129,7 @@ ci_mean_diff <- function(x, y, probs = c(0.025, 0.975), var.equal = FALSE,
 #' @seealso \code{\link{ci_quantile_diff}}.
 ci_median_diff <- function(x, y, probs = c(0.025, 0.975), type = "bootstrap",
                            boot_type = c("bca", "perc", "norm", "basic"),
-                           R = 9999, seed = NULL, ...) {
+                           R = 9999L, seed = NULL, ...) {
   out <- ci_quantile_diff(
     x,
     y,
@@ -178,7 +178,7 @@ ci_median_diff <- function(x, y, probs = c(0.025, 0.975), type = "bootstrap",
 #' @seealso \code{\link{ci_median_diff}}.
 ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "bootstrap",
                              boot_type = c("bca", "perc", "norm", "basic"),
-                             R = 9999, seed = NULL, ...) {
+                             R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

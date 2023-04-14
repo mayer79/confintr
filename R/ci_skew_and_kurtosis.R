@@ -87,7 +87,7 @@ kurtosis <- function(z, na.rm = TRUE) {
 #' @seealso \code{\link{kurtosis}}
 ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 9999, seed = NULL, ...) {
+                        R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -143,7 +143,7 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' @seealso \code{\link{skewness}}
 ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 9999, seed = NULL, ...) {
+                        R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

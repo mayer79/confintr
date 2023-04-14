@@ -10,13 +10,14 @@ ci_proportion(
   probs = c(0.025, 0.975),
   type = c("Clopper-Pearson", "Agresti-Coull", "Wilson", "bootstrap"),
   boot_type = c("bca", "perc", "stud", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )
 }
 \arguments{
-\item{x}{A numeric vector of 0 and 1 or the number of successes.}
+\item{x}{A numeric vector with one value (0/1) per observation,
+or the number of successes.}
 
 \item{n}{The sample size. Only needed if \code{x} is a vector of length 1.}
 

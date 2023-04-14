@@ -10,7 +10,7 @@ ci_chisq_ncp(
   correct = TRUE,
   type = c("chi-squared", "bootstrap"),
   boot_type = c("bca", "perc", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )

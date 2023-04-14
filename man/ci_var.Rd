@@ -9,7 +9,7 @@ ci_var(
   probs = c(0.025, 0.975),
   type = c("chi-squared", "bootstrap"),
   boot_type = c("bca", "perc", "stud", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )

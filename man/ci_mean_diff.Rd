@@ -11,7 +11,7 @@ ci_mean_diff(
   var.equal = FALSE,
   type = c("t", "bootstrap"),
   boot_type = c("stud", "bca", "perc", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )

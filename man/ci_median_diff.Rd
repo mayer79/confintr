@@ -10,7 +10,7 @@ ci_median_diff(
   probs = c(0.025, 0.975),
   type = "bootstrap",
   boot_type = c("bca", "perc", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )

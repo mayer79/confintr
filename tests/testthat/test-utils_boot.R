@@ -122,7 +122,7 @@ test_that("map_boot_type() works in line with in- and output of boot::boot.ci()"
 })
 
 test_that("boot_info() makes sense", {
-  expect_equal(boot_info("some_parametric_method", boot_type = "bca", R = 99L), NULL)
+  expect_equal(boot_info("some_parametric_method", boot_type = "bca", R = 99L), "")
 
   expect_equal(
     boot_info("bootstrap", boot_type = "bca", R = 99L),

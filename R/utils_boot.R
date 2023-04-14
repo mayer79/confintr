@@ -50,6 +50,6 @@ boot_info <- function(type, boot_type, R) {
       map_boot_type(boot_type)
     )
   } else {
-    NULL
+    ""
   }
 }

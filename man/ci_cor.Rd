@@ -11,7 +11,7 @@ ci_cor(
   method = c("pearson", "kendall", "spearman"),
   type = c("normal", "bootstrap"),
   boot_type = c("bca", "perc", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )

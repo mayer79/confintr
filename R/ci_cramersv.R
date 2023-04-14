@@ -90,7 +90,7 @@ cramersv <- function(x) {
 #' @seealso \code{\link{ci_chisq_ncp}}.
 ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 9999, seed = NULL, test_adjustment = TRUE, ...) {
+                        R = 9999L, seed = NULL, test_adjustment = TRUE, ...) {
   # Input check and initialization
   check_probs(probs)
   stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
@@ -172,7 +172,7 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "boo
 ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
                          type = c("chi-squared", "bootstrap"),
                          boot_type = c("bca", "perc", "norm", "basic"),
-                         R = 9999, seed = NULL, ...) {
+                         R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

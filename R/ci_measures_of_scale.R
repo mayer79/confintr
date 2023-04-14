@@ -40,7 +40,7 @@
 #' @seealso \code{\link{ci_sd}}.
 ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                    boot_type = c("bca", "perc", "stud", "norm", "basic"),
-                   R = 9999, seed = NULL, ...) {
+                   R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -109,7 +109,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' @seealso \code{\link{ci_var}}.
 ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                   boot_type = c("bca", "perc", "stud", "norm", "basic"),
-                  R = 9999, seed = NULL, ...) {
+                  R = 9999L, seed = NULL, ...) {
   out <- ci_var(
     x = x, probs = probs, type = type, boot_type = boot_type, R = R, seed = seed, ...
   )
@@ -146,7 +146,7 @@ ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap
 #' ci_IQR(x, R = 999)  # Use larger R
 ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                    boot_type = c("bca", "perc", "norm", "basic"),
-                   R = 9999, seed = NULL, ...) {
+                   R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -202,7 +202,7 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' ci_mad(x, R = 999)  # Use larger R
 ci_mad <- function(x, probs = c(0.025, 0.975), constant = 1.4826,
                    type = "bootstrap", boot_type = c("bca", "perc", "norm", "basic"),
-                   R = 9999, seed = NULL, ...) {
+                   R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

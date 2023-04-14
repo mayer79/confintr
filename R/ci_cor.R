@@ -35,7 +35,7 @@ ci_cor <- function(x, y = NULL, probs = c(0.025, 0.975),
                    method = c("pearson", "kendall", "spearman"),
                    type = c("normal", "bootstrap"),
                    boot_type = c("bca", "perc", "norm", "basic"),
-                   R = 9999, seed = NULL, ...) {
+                   R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   method <- match.arg(method)
   type <- match.arg(type)

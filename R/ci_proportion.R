@@ -5,7 +5,8 @@
 #' Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap"
 #' (by default "bca").
 #'
-#' @param x A numeric vector of 0 and 1 or the number of successes.
+#' @param x A numeric vector with one value (0/1) per observation,
+#' or the number of successes.
 #' @param n The sample size. Only needed if \code{x} is a vector of length 1.
 #' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param type Type of CI. One of "Clopper-Pearson" (the default), "Agresti–Coull",
@@ -39,7 +40,7 @@
 ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
                           type = c("Clopper-Pearson", "Agresti-Coull", "Wilson", "bootstrap"),
                           boot_type = c("bca", "perc", "stud", "norm", "basic"),
-                          R = 9999, seed = NULL, ...) {
+                          R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

@@ -15,25 +15,25 @@ res <- c(58.12406, 184.49901)  # See weblink above
 test_that("ci_var() works", {
   expect_equal(ci_var(x)$estimate, stats::var(x))
   expect_equal(ci_var(x)$interval, res, tolerance = 1e-5)
-  expect_no_error(ci_var(x, type = "bootstrap", boot_type = "perc", R = 99))
+  expect_no_error(ci_var(x, type = "bootstrap", boot_type = "perc", R = 99L))
 })
 
 test_that("ci_sd() works", {
   expect_equal(ci_sd(x)$estimate, stats::sd(x))
   expect_equal(ci_sd(x)$interval, sqrt(res), tolerance = 1e-5)
-  expect_no_error(ci_sd(x, type = "bootstrap", boot_type = "perc", R = 99))
+  expect_no_error(ci_sd(x, type = "bootstrap", boot_type = "perc", R = 99L))
 })
 
 test_that("ci_iqr() works", {
-  expect_no_error(out <- ci_IQR(x, R = 449, boot_type = "perc"))
+  expect_no_error(out <- ci_IQR(x, R = 449L, boot_type = "perc"))
   expect_equal(out$estimate, stats::IQR(x))
 })
 
 test_that("ci_mad() works", {
-  expect_no_error(out <- ci_mad(x, R = 449, boot_type = "perc"))
+  expect_no_error(out <- ci_mad(x, R = 449L, boot_type = "perc"))
   expect_equal(out$estimate, stats::mad(x)  )
   expect_equal(
-    ci_mad(x, R = 449, constant = 1, boot_type = "perc")$estimate,
+    ci_mad(x, R = 449L, constant = 1, boot_type = "perc")$estimate,
     stats::mad(x, constant = 1)
   )
 })
@@ -42,6 +42,6 @@ test_that("resulting object is complete", {
   comps <- c("parameter", "interval", "estimate", "probs", "type", "info")
   expect_equal(names(ci_var(x)), comps)
   expect_equal(names(ci_sd(x)), comps)
-  expect_equal(names(ci_IQR(x, boot_type = "perc", R = 99)), comps)
-  expect_equal(names(ci_mad(x, boot_type = "perc", R = 99)), comps)
+  expect_equal(names(ci_IQR(x, boot_type = "perc", R = 99L)), comps)
+  expect_equal(names(ci_mad(x, boot_type = "perc", R = 99L)), comps)
 })

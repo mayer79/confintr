@@ -26,17 +26,17 @@ test_that("kurtosis() works", {
 })
 
 test_that("ci_skewness() works", {
-  expect_no_error(out <- ci_skewness(x, R = 99, boot_type = "perc"))
+  expect_no_error(out <- ci_skewness(x, R = 99L, boot_type = "perc"))
   expect_equal(out$estimate, skewness(x))
 })
 
 test_that("ci_kurtosis() works", {
-  expect_no_error(out <- ci_kurtosis(x, R = 99, boot_type = "perc"))
+  expect_no_error(out <- ci_kurtosis(x, R = 99L, boot_type = "perc"))
   expect_equal(out$estimate, kurtosis(x))
 })
 
 test_that("resulting object is complete", {
   comps <- c("parameter", "interval", "estimate", "probs", "type", "info")
-  expect_equal(names(ci_skewness(x, boot_type = "perc", R = 99)), comps)
-  expect_equal(names(ci_kurtosis(x, boot_type = "perc", R = 99)), comps)
+  expect_equal(names(ci_skewness(x, boot_type = "perc", R = 99L)), comps)
+  expect_equal(names(ci_kurtosis(x, boot_type = "perc", R = 99L)), comps)
 })

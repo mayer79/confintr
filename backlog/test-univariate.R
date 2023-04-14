@@ -15,25 +15,6 @@ test_that("ci_quantile works", {
 
 
 
-test_that("ci_proportion works", {
-  x <- 10
-  n <- 40
-  expect_equal(ci_proportion(x, n)$estimate, as.numeric(binom.test(x, n)$estimate))
-  expect_equal(ci_proportion(x, n)$interval, as.numeric(binom.test(x, n)$conf.int))
-  expect_equal(ci_proportion(x, n, probs = c(0.05, 1))$interval,
-               as.numeric(binom.test(x, n, alternative = "greater")$conf.int))
-  expect_equal(ci_proportion(x, n, probs = c(0, 0.9))$interval,
-               as.numeric(binom.test(x, n, conf.level = 0.9, alternative = "less")$conf.int))
-  expect_equal(ci_proportion(x, n, type = "bootstrap", R = 249, seed = 2)$interval, c(0.1115616, 0.35), tolerance = 0.0001)
-  expect_equal(ci_proportion(x, n, type = "Wilson")$interval, c(0.1418712, 0.4019396), tolerance = 0.0001)
-  expect_equal(ci_proportion(x, n, type = "Agresti-Coull")$interval, c(0.1401985, 0.4036123), tolerance = 0.0001)
-  expect_equal(ci_proportion(x, n, type = "Wilson")$interval[2],
-               ci_proportion(x, n, type = "Wilson", probs = c(0, 0.975))$interval[2])
-  expect_equal(ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", boot_type = "perc")$interval[1],
-               ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", boot_type = "perc", probs = c(0.025, 1))$interval[1])
-  expect_equal(ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", boot_type = "norm")$interval[1],
-               ci_proportion(x, n, R = 249, seed = 1, type = "bootstrap", probs = c(0.025, 1), boot_type = "norm")$interval[1])
-  expect_equal(ci_proportion(45, n = 50, probs = c(0, 0.95), type = "Wilson")$interval[2], 0.95047, tolerance = 0.001)
-})
+
 
 

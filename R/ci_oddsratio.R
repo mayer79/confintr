@@ -14,18 +14,7 @@
 #' tab <- cbind(c(10, 5), c(4, 4))
 #' oddsratio(tab)
 oddsratio <- function(x) {
-  # Input check and initialization
-  stopifnot(is.matrix(x) || is.data.frame(x))
-  if (is.data.frame(x)) {
-    stopifnot(ncol(x) == 2L)
-    x <- table(x[, 1L], x[, 2L])
-  }
-  stopifnot(
-    all(x >= 0),
-    dim(x) == c(2L, 2L)
-  )
-
-  # Odds ratio
+  x <- or_align_input(x)
   x[1L, 1L] / x[2L, 1L] / (x[1L, 2L] / x[2L, 2L])
 }
 
@@ -55,19 +44,9 @@ oddsratio <- function(x) {
 ci_oddsratio <- function(x, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_probs(probs)
-  stopifnot(is.matrix(x) || is.data.frame(x))
+  x <- or_align_input(x)
 
-  # Turn input into matrix/table
-  if (is.data.frame(x)) {
-    stopifnot(ncol(x) == 2L)
-    x <- table(x[, 1L], x[, 2L])
-  }
-  stopifnot(
-    all(x >= 0),
-    dim(x) == c(2L, 2L)
-  )
-
-  # Calculate ci
+  # Calculate CI
   cint <- stats::fisher.test(
     x, alternative = probs2alternative(probs), conf.level = diff(probs)
   )$conf.int
@@ -85,3 +64,21 @@ ci_oddsratio <- function(x, probs = c(0.025, 0.975)) {
   class(out) <- "cint"
   out
 }
+
+# Helper functions
+
+# Checks input and turns df into table/matrix
+or_align_input <- function(x) {
+  stopifnot(is.matrix(x) || is.data.frame(x))
+  if (is.data.frame(x)) {
+    stopifnot(ncol(x) == 2L)
+    x <- table(x[, 1L], x[, 2L])
+    x <- matrix(x, ncol = ncol(x), dimnames = NULL)
+  }
+  stopifnot(
+    all(x >= 0),
+    dim(x) == c(2L, 2L)
+  )
+  x
+}
+

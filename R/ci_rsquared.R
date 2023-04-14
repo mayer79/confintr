@@ -72,3 +72,133 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   class(out) <- "cint"
   out
 }
+
+#' CI for the Non-Centrality Parameter of the F Distribution
+#'
+#' Based on the inversion principle, parametric CIs for the non-centrality parameter
+#' (NCP) Delta of the F distribution are calculated.
+#' To keep the input interface simple, we do not provide bootstrap CIs here.
+#' A positive lower (1-alpha)*100%-confidence limit for the NCP goes hand-in-hand with
+#' a significant F test at level alpha.
+#' According to \code{?stats::pf}, the results might be unreliable for very large F values.
+#'
+#' @param x The result of \code{stats::lm()} or the F test statistic.
+#' @param df1 The numerator degree of freedom (df), e.g. the number of parameters
+#' (including the intercept) of a linear regression.
+#' Only used if \code{x} is a test statistic.
+#' @param df2 The denominator df, e.g. n - df1 - 1 in a linear regression.
+#' Only used if \code{x} is a test statistic.
+#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @return An object of class "cint" containing these components:
+#' \itemize{
+#'   \item \code{parameter}: Parameter specification.
+#'   \item \code{interval}: CI for the parameter.
+#'   \item \code{estimate}: Parameter estimate.
+#'   \item \code{probs}: Lower and upper probabilities.
+#'   \item \code{type}: Type of interval.
+#'   \item \code{info}: Additional description.
+#' }
+#' @export
+#' @examples
+#' fit <- stats::lm(Sepal.Length ~ ., data = iris)
+#' ci_f_ncp(fit)
+#' ci_f_ncp(fit, probs = c(0.05, 1))
+#' @references
+#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+#' @seealso \code{\link{ci_rsquared}}.
+ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
+  # Input checks and initialization
+  check_probs(probs)
+  iprobs <- 1 - probs
+  limits <- c(0, Inf)
+  stopifnot(inherits(x, "lm") || is.numeric(x))
+
+  # Distinguish input
+  if (inherits(x, "lm")) {
+    sx <- summary(x)
+    stopifnot("fstatistic" %in% names(sx))
+    fstat <- sx[["fstatistic"]]
+    stat <- fstat[["value"]]
+    df1 <- fstat[["numdf"]]
+    df2 <- fstat[["dendf"]]
+  }
+  if (is.numeric(x)) {
+    stopifnot(
+      length(x) == 1L,
+      !is.null(df1),
+      !is.null(df2)
+    )
+    stat <- x
+  }
+
+  # Estimate
+  estimate <- f_to_ncp(stat, df1 = df1, df2 = df2)
+
+  # Calculate limits
+  if (probs[1L] == 0) {
+    lci <- limits[1L]
+  } else {
+    lci <- try(
+      stats::uniroot(
+        function(ncp) stats::pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1L],
+        interval = c(0, estimate)
+      )$root,
+      silent = TRUE
+    )
+    if (inherits(lci, "try-error")) {
+      lci <- limits[1L]
+    }
+  }
+  if (probs[2L] == 1) {
+    uci <- limits[2L]
+  } else {
+    # Upper limit might be improved
+    upper_limit <- pmax(4 * estimate, stat * df1 * 4, df1 * 100)
+    uci <- try(
+      stats::uniroot(
+        function(ncp) stats::pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2L],
+        interval = c(estimate, upper_limit)
+      )$root,
+      silent = TRUE
+    )
+    if (inherits(uci, "try-error")) {
+      warning("Upper limit outside search range. Set to the maximum of the parameter range.")
+      uci <- limits[2L]
+    }
+  }
+
+  # Organize output
+  cint <- check_output(c(lci, uci), probs = probs, parameter_range = limits)
+  out <- list(
+    parameter = "non-centrality parameter of the F-distribution",
+    interval = cint,
+    estimate = estimate,
+    probs = probs,
+    type = "F",
+    info = ""
+  )
+  class(out) <- "cint"
+  out
+}
+
+# Helper functions
+
+# Map F test statistic to non-centrality parameter
+f_to_ncp <- function(f, df1, df2) {
+  df1 * f * (df1 + df2 + 1) / df2
+}
+
+# Map F test statistic to R-squared
+f_to_r2 <- function(f, df1, df2) {
+  f / (f + df2 / df1)
+}
+
+# Map non-centrality parameter of the F distribution to the R-squared
+ncp_to_r2 <- function(ncp, df1, df2) {
+  ncp / (ncp + df1 + df2 + 1)
+}
+
+# Map R-squared to F test statistic
+#r2_to_f <- function(r2, df1, df2) {
+#  r2 / (1 - r2) * df2 / df1
+#}

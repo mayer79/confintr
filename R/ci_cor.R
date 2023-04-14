@@ -89,3 +89,10 @@ ci_cor <- function(x, y = NULL, probs = c(0.025, 0.975),
   class(out) <- "cint"
   out
 }
+
+# Helper functions
+
+# Title case
+title_case1 <- function(s) {
+  paste0(toupper(substring(s, 1L, 1L)), substring(s, 2L))
+}

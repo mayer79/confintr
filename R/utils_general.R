@@ -142,8 +142,3 @@ probs2alternative <- function(p) {
 unequal_stop <- function() {
   stop("Unequal-tailed two-sided case not supported in this case.")
 }
-
-# Title case (used in ci_cor())
-title_case1 <- function(s) {
-  paste0(toupper(substring(s, 1L, 1L)), substring(s, 2L))
-}

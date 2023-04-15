@@ -12,9 +12,18 @@ This is a large maintenance update, bumping the package to stable version 1.0.0.
 
 ## Checks
 
-### check()
+### Local check()
 
-### `check_rhub()`
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+### check_rhub()
+
+OK
 
 ### check_win_devel()
 
+OK
+
+### RevDep
+
+ggpmisc -> all green

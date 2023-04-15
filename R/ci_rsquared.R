@@ -138,13 +138,8 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   if (probs[1L] == 0) {
     lci <- limits[1L]
   } else {
-    lci <- try(
-      stats::uniroot(
-        function(ncp) stats::pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1L],
-        interval = c(0, estimate)
-      )$root,
-      silent = TRUE
-    )
+    f1 <- function(ncp) stats::pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[1L]
+    lci <- try(stats::uniroot(f1, interval = c(0, estimate))$root, silent = TRUE)
     if (inherits(lci, "try-error")) {
       lci <- limits[1L]
     }
@@ -154,12 +149,9 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   } else {
     # Upper limit might be improved
     upper_limit <- pmax(4 * estimate, stat * df1 * 4, df1 * 100)
+    f2 <- function(ncp) stats::pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2L]
     uci <- try(
-      stats::uniroot(
-        function(ncp) stats::pf(stat, df1 = df1, df2 = df2, ncp = ncp) - iprobs[2L],
-        interval = c(estimate, upper_limit)
-      )$root,
-      silent = TRUE
+      stats::uniroot(f2, interval = c(estimate, upper_limit))$root, silent = TRUE
     )
     if (inherits(uci, "try-error")) {
       warning("Upper limit outside search range. Set to the maximum of the parameter range.")

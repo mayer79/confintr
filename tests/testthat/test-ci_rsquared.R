@@ -14,8 +14,8 @@ test_that("the input must make sense", {
 
 test_that("the two APIs give identical output", {
   expect_equal(r2_align_input(fit), r2_align_input(stat, df1, df2))
-  expect_equal(ci_rsquared(fit), ci_rsquared(stat, df1, df2))  # Implied by first check
-  expect_equal(ci_f_ncp(fit), ci_f_ncp(stat, df1, df2))        # Implied by first check
+  expect_equal(ci_rsquared(fit), ci_rsquared(stat, df1, df2))
+  expect_equal(ci_f_ncp(fit), ci_f_ncp(stat, df1, df2))
 })
 
 test_that("estimate of R2 obtained via ci_rsquared() agrees with usual estimates", {

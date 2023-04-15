@@ -68,9 +68,9 @@ test_that("ci_kurtosis() agrees with DescTools::Kurt(method = 1L) up to excess 3
 
 test_that("CIs give consistent one- and two-sided intervals", {
   for (ci in c(ci_skewness, ci_kurtosis)) {
-    out <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 0.8))$interval
-    outl <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 1))$interval[1L]
-    outr <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0, 0.8))$interval[2L]
+    out <- ci(x, boot_type = "bca", R = 99L, seed = 1L, probs = c(0.1, 0.8))$interval
+    outl <- ci(x, boot_type = "bca", R = 99L, seed = 1L, probs = c(0.1, 1))$interval[1L]
+    outr <- ci(x, boot_type = "bca", R = 99L, seed = 1L, probs = c(0, 0.8))$interval[2L]
 
     expect_equal(out[1L], outl)
     expect_equal(out[2L], outr)

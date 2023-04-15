@@ -30,15 +30,15 @@ cramersv <- function(x) {
 #' By default, a parametric approach based on the non-centrality parameter (NCP)
 #' of the chi-squared distribution is utilized.
 #' Alternatively, bootstrap CIs are available (by default "bca"),
-#' also by boostrapping CIs for the NCP.
+#' also by boostrapping CIs for the NCP and then mapping the result back to Cramer's V.
 #'
 #' A positive lower (1-alpha)*100%-confidence limit for the NCP goes hand-in-hand with a
 #' significant association test at level alpha. In order to allow such test approach
 #' also with Cramer's V, if the lower bound for the NCP is 0,
-#' we round down to 0 also the lower bound for Cramer's V.
+#' we round down to 0 the lower bound for Cramer's V as well.
 #' Without this slightly conservative adjustment, the lower limit for V would always be
-#' positive since ci for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
-#' number of levels in the two variables (see Smithson for this formula).
+#' positive since the CI for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
+#' number of levels in the two variables (see Smithson p40).
 #' Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is
 #' also a reason to bootstrap V via NCP instead of directly bootstrapping V.
 #'
@@ -68,11 +68,20 @@ cramersv <- function(x) {
 #' }
 #' @export
 #' @examples
-#' ci_cramersv(mtcars[c("am", "vs")])
+#' # Example from Smithson, M., page 41
+#' test_scores <- as.table(
+#'   rbind(
+#'     Private = c(6, 14, 17, 9),
+#'     Public = c(30, 32, 17, 3)
+#'   )
+#' )
+#' suppressWarnings(X2 <- stats::chisq.test(test_scores))
+#' ci_cramersv(X2)
 #' @references
 #' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 #' @seealso \code{\link{ci_chisq_ncp}}.
-ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
+ci_cramersv <- function(x, probs = c(0.025, 0.975),
+                        type = c("chi-squared", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
                         R = 9999L, seed = NULL, test_adjustment = TRUE, ...) {
   # Input check and initialization
@@ -94,7 +103,7 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "boo
     correct = FALSE,
     ...
   )
-  ci <- sqrt((out$interval + df) / (n * (k - 1)))
+  ci <- sqrt((out$interval + df) / (n * (k - 1)))  # Smithson p40
 
   # Modification to allow hypothesis test of association
   if (test_adjustment && out$interval[1L] == 0) {
@@ -120,7 +129,8 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "boo
 #' or a \code{data.frame} with exactly two columns.
 #' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param correct Should Yates continuity correction be applied to the 2x2 case?
-#' The default is \code{TRUE} (also used in the bootstrap).
+#' The default is \code{TRUE} (also used in the bootstrap), which differs from
+#' \code{ci_cramersv()}.
 #' @param type Type of CI. One of "chi-squared" (default) or "bootstrap".
 #' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
 #' Only used for \code{type = "bootstrap"}.

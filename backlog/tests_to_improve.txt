@@ -17,11 +17,15 @@ love to see better/more
 
 - ci_IQR/ci_mad are not explicitly tested with other implementation (Bootstrap)
 
-## Test-ci_location_shift
+## test-ci_location_shift
 
 - ci_quantile_diff: only tested by keeping one vector constant 3 (Bootstrap)
 
-## Test-ci_rsquared()
+## test-ci_rsquared()
 
 - There is no test that the estimated NCP of the F distribution is correct, i.e.,
-that f_to_ncp() does the right thing. Reference (probably) is Smithson.
+that f_to_ncp() does the right thing. Reference for the formula is Smithson, p 38.
+
+## test-ci_cramersv()
+
+- No explicit check that Bootstrap CIs of ci_cramersv() and ci_chisq_ncp() are correct

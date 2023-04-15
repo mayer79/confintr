@@ -84,13 +84,13 @@ test_that("bootstrap agrees with bootstrap CI for the mean (not such a good chec
 test_that("CIs give consistent one- and two-sided intervals", {
   for (t in c("Wilson", "Agresti-Coull", "bootstrap")) {
     out <- ci_proportion(
-      X, type = t, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 0.9)
+      X, type = t, boot_type = "basic", R = 99L, seed = 1L, probs = c(0.1, 0.9)
     )$interval
     outl <- ci_proportion(
-      X, type = t, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 1)
+      X, type = t, boot_type = "basic", R = 99L, seed = 1L, probs = c(0.1, 1)
     )$interval[1L]
     outr <- ci_proportion(
-      X, type = t, boot_type = "perc", R = 99L, seed = 1L, probs = c(0, 0.9)
+      X, type = t, boot_type = "basic", R = 99L, seed = 1L, probs = c(0, 0.9)
     )$interval[2L]
 
     expect_equal(out[1L], outl)

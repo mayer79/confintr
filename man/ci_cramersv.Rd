@@ -51,16 +51,16 @@ This function calculates CIs for the population Cramer's V.
 By default, a parametric approach based on the non-centrality parameter (NCP)
 of the chi-squared distribution is utilized.
 Alternatively, bootstrap CIs are available (by default "bca"),
-also by boostrapping CIs for the NCP.
+also by boostrapping CIs for the NCP and then mapping the result back to Cramer's V.
 }
 \details{
 A positive lower (1-alpha)*100\%-confidence limit for the NCP goes hand-in-hand with a
 significant association test at level alpha. In order to allow such test approach
 also with Cramer's V, if the lower bound for the NCP is 0,
-we round down to 0 also the lower bound for Cramer's V.
+we round down to 0 the lower bound for Cramer's V as well.
 Without this slightly conservative adjustment, the lower limit for V would always be
-positive since ci for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
-number of levels in the two variables (see Smithson for this formula).
+positive since the CI for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
+number of levels in the two variables (see Smithson p40).
 Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is
 also a reason to bootstrap V via NCP instead of directly bootstrapping V.
 
@@ -69,7 +69,15 @@ and that large chi-squared test statistics might provide unreliable results with
 method "chi-squared" (see \code{?pchisq}).
 }
 \examples{
-ci_cramersv(mtcars[c("am", "vs")])
+# Example from Smithson, M., page 41
+test_scores <- as.table(
+  rbind(
+    Private = c(6, 14, 17, 9),
+    Public = c(30, 32, 17, 3)
+  )
+)
+suppressWarnings(X2 <- stats::chisq.test(test_scores))
+ci_cramersv(X2)
 }
 \references{
 Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.

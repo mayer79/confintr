@@ -22,7 +22,8 @@ or a \code{data.frame} with exactly two columns.}
 \item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
 
 \item{correct}{Should Yates continuity correction be applied to the 2x2 case?
-The default is \code{TRUE} (also used in the bootstrap).}
+The default is \code{TRUE} (also used in the bootstrap), which differs from
+\code{ci_cramersv()}.}
 
 \item{type}{Type of CI. One of "chi-squared" (default) or "bootstrap".}
 

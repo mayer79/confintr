@@ -168,12 +168,12 @@ r2_align_input <- function(x, df1, df2) {
   return(list(stat = stat, df1 = df1, df2 = df2))
 }
 
-# Map F test statistic to non-centrality parameter
+# Map F test statistic to non-centrality parameter (Smithson p38)
 f_to_ncp <- function(f, df1, df2) {
   df1 * f * (df1 + df2 + 1) / df2
 }
 
-# Map F test statistic to R-squared
+# Map F test statistic to R-squared (inverting r2_to_f() below)
 f_to_r2 <- function(f, df1, df2) {
   f / (f + df2 / df1)
 }
@@ -183,7 +183,7 @@ ncp_to_r2 <- function(ncp, df1, df2) {
   ncp / (ncp + df1 + df2 + 1)
 }
 
-# Map R-squared to F test statistic
+# Map R-squared to F test statistic (Smithson p38)
 #r2_to_f <- function(r2, df1, df2) {
 #  r2 / (1 - r2) * df2 / df1
 #}

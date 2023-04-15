@@ -91,7 +91,10 @@
     <loc>/reference/is.cint.html</loc>
   </url>
   <url>
-    <loc>/reference/moments.html</loc>
+    <loc>/reference/kurtosis.html</loc>
+  </url>
+  <url>
+    <loc>/reference/moment.html</loc>
   </url>
   <url>
     <loc>/reference/oddsratio.html</loc>
@@ -101,5 +104,8 @@
   </url>
   <url>
     <loc>/reference/se.html</loc>
+  </url>
+  <url>
+    <loc>/reference/skewness.html</loc>
   </url>
 </urlset>

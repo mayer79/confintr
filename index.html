@@ -48,7 +48,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">confintr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="confintr-">confintr <a href="https://github.com/mayer79/confintr" class="external-link"><img src="reference/figures/logo.png" align="right" height="139"></a>
+<div class="page-header"><h1 id="confintr-">{confintr} <a href="https://github.com/mayer79/confintr" class="external-link"><img src="reference/figures/logo.png" align="right" height="139"></a>
 <a class="anchor" aria-label="anchor" href="#confintr-"></a>
 </h1></div>
 <!-- badges: start -->
@@ -94,22 +94,22 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>{confintr} offers classic and/or bootstrap confidence intervals for the following parameters:</p>
+<p>{confintr} offers classic and/or bootstrap confidence intervals (CI) for the following parameters:</p>
 <ul>
-<li><p>mean,</p></li>
-<li><p>quantiles incl. median,</p></li>
-<li><p>proportion,</p></li>
-<li><p>variance and standard deviation,</p></li>
-<li><p>IQR and MAD,</p></li>
-<li><p>skewness and kurtosis,</p></li>
-<li><p>R-squared and the non-centrality parameter of the F distribution,</p></li>
-<li><p>Cramér’s V and the non-centrality parameter of the chi-squared distribution,</p></li>
-<li><p>the odds ratio of a 2x2 table,</p></li>
-<li><p>Pearson-, Spearman-, Kendall correlation coefficients,</p></li>
-<li><p>mean, quantile and median differences.</p></li>
+<li>mean,</li>
+<li>quantiles incl. median,</li>
+<li>proportion,</li>
+<li>variance and standard deviation,</li>
+<li>IQR and MAD,</li>
+<li>skewness and kurtosis,</li>
+<li>R-squared and the non-centrality parameter of the F distribution,</li>
+<li>Cramér’s V and the non-centrality parameter of the chi-squared distribution,</li>
+<li>odds ratio of a 2x2 table,</li>
+<li>Pearson-, Spearman-, Kendall correlation coefficients,</li>
+<li>mean differences, quantile and median differences.</li>
 </ul>
 <p>Both one- and two-sided intervals are supported.</p>
-<p>Different types of bootstrap intervals are possible through argument <code>boot_type</code>, see vignette.</p>
+<p>Different types of bootstrap intervals are available via {boot}, see vignette.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -198,10 +198,10 @@
 <span></span>
 <span><span class="co"># Mean difference</span></span>
 <span><span class="fu"><a href="reference/ci_mean_diff.html">ci_mean_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/ci_mean_diff.html">ci_mean_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span>, R  <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/ci_mean_diff.html">ci_mean_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Median difference</span></span>
-<span><span class="fu"><a href="reference/ci_median_diff.html">ci_median_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, R  <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/ci_median_diff.html">ci_median_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>

@@ -21,22 +21,10 @@
 #' @references
 #' Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
 cramersv <- function(x) {
-  stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
-  if (inherits(x, "htest")) {
-    stopifnot("X-squared" %in% names(x[["statistic"]]))
-  } else {
-    if (is.data.frame(x)) {
-      stopifnot(ncol(x) == 2L)
-      x <- table(x[, 1L], x[, 2L])
-    }
-    stopifnot(all(x >= 0))
-    x <- stats::chisq.test(x, correct = FALSE)
-  }
+  x <- cramersv_align_input(x)
   stat <- as.numeric(x[["statistic"]])
   n <- sum(x[["observed"]])
   k <- min(dim(x[["observed"]]))
-
-  # Cramer's V
   sqrt(stat / (n * (k - 1)))
 }
 
@@ -93,17 +81,7 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "boo
                         R = 9999L, seed = NULL, test_adjustment = TRUE, ...) {
   # Input check and initialization
   check_probs(probs)
-  stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
-  if (inherits(x, "htest")) {
-    stopifnot("X-squared" %in% names(x[["statistic"]]))
-  } else {
-    if (is.data.frame(x)) {
-      stopifnot(ncol(x) == 2L)
-      x <- table(x[, 1L], x[, 2L])
-    }
-    stopifnot(all(x >= 0))
-    x <- stats::chisq.test(x, correct = FALSE)
-  }
+  x <- cramersv_align_input(x)
   stat <- as.numeric(x[["statistic"]])
   n <- sum(x[["observed"]])
   k <- min(dim(x[["observed"]]))
@@ -178,21 +156,7 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
   boot_type <- match.arg(boot_type)
   check_probs(probs)
   limits <- c(0, Inf)
-  stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
-  if (inherits(x, "htest")) {
-    stopifnot("X-squared" %in% names(x[["statistic"]]))
-  }
-
-  # Turn input into stat & df
-  if (is.data.frame(x)) {
-    stopifnot(ncol(x) == 2L)
-    x <- table(x[, 1], x[, 2])
-  }
-  if (is.matrix(x)) { # a table is a matrix
-    stopifnot(all(x >= 0))
-    x <- stats::chisq.test(x, correct = correct)
-  }
-
+  x <- cramersv_align_input(x, correct = correct)
   stat <- x[["statistic"]]
   df <- x[["parameter"]]
   estimate <- chi2_to_ncp(stat, df = df)
@@ -203,12 +167,8 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
     if (probs[1L] == 0) {
       lci <- limits[1L]
     } else {
-      lci <- try(
-        stats::uniroot(
-          function(ncp) stats::pchisq(stat, df = df, ncp = ncp) - iprobs[1L],
-          interval = c(0, estimate)
-        )$root,
-        silent = TRUE)
+      f1 <- function(ncp) stats::pchisq(stat, df = df, ncp = ncp) - iprobs[1L]
+      lci <- try(stats::uniroot(f1, interval = c(0, estimate))$root, silent = TRUE)
       if (inherits(lci, "try-error")) {
         lci <- limits[1L]
       }
@@ -220,12 +180,9 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
       n <- sum(x[["observed"]])
       k <- min(dim(x[["observed"]]))
       upper_limit <- pmax(4 * estimate, df + n * (k - 1), 100)
+      f2 <- function(ncp) stats::pchisq(stat, df = df, ncp = ncp) - iprobs[2L]
       uci <- try(
-        stats::uniroot(
-          function(ncp) stats::pchisq(stat, df = df, ncp = ncp) - iprobs[2L],
-          interval = c(estimate, upper_limit)
-        )$root,
-        silent = TRUE
+        stats::uniroot(f2, interval = c(estimate, upper_limit))$root, silent = TRUE
       )
       if (inherits(uci, "try-error")) {
         warning("Upper limit outside search range. Set to the maximum of the parameter range.")
@@ -274,4 +231,20 @@ ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
 # Map chi-squared statistic to non-centrality parameter
 chi2_to_ncp <- function(stat, df) {
   pmax(0, stat - df)
+}
+
+# Checks input and turns df into table/matrix
+cramersv_align_input <- function(x, correct = FALSE) {
+  stopifnot(inherits(x, "htest") || is.matrix(x) || is.data.frame(x))
+  if (inherits(x, "htest")) {
+    stopifnot("X-squared" %in% names(x[["statistic"]]))
+  } else {
+    if (is.data.frame(x)) {
+      stopifnot(ncol(x) == 2L)
+      x <- table(x[, 1L], x[, 2L])
+    }
+    stopifnot(all(x >= 0))
+    x <- stats::chisq.test(x, correct = correct)
+  }
+  return(x)
 }

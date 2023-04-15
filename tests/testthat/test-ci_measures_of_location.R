@@ -1,11 +1,17 @@
 x <- exp(seq(0, 1, by = 0.01))
 
+test_that("estimates agree with usual estimates", {
+  expect_equal(ci_mean(x)$estimate, mean(x))
+  expect_equal(
+    ci_quantile(x, q = 0.4)$estimate,
+    stats::quantile(x, probs = 0.4, names = FALSE)
+  )
+  expect_equal(ci_median(x)$estimate, stats::median(x))
+})
+
 test_that("ci_mean() (Student method) gives same as stats::t.test()", {
   out <- ci_mean(x)
 
-  expect_equal(out$estimate, mean(x))
-
-  # Unequal variance
   expect_equal(out$interval, c(stats::t.test(x)$conf.int))
   expect_equal(
     ci_mean(x, probs = c(0.05, 0.95))$interval,
@@ -21,8 +27,18 @@ test_that("ci_mean() (Student method) gives same as stats::t.test()", {
   )
 })
 
-test_that("ci_mean() (Student method) error when data is constant", {
-  expect_error(ci_mean(rep(1, 100L)))
+test_that("ci_mean() gives error when data is constant", {
+  bad_x <- rep(1, 100L)
+  expect_error(ci_mean(bad_x))
+  expect_error(ci_mean(bad_x, type = "Wald"))
+})
+
+test_that("Wald CI agree with classic formula", {
+  out <- ci_mean(x, type = "Wald")
+  expect_equal(
+    out$interval,
+    mean(x) + c(-1, 1) * stats::sd(x) / sqrt(length(x)) * stats::qnorm(0.975)
+  )
 })
 
 test_that("ci_mean() gives consistent one- and two-sided intervals for all types", {
@@ -34,13 +50,6 @@ test_that("ci_mean() gives consistent one- and two-sided intervals for all types
     expect_equal(out[1L], outl)
     expect_equal(out[2L], outr)
   }
-})
-
-test_that("Wald CI are contained in t", {
-  out <- ci_mean(x)
-
-  expect_true(out$interval[1L] < ci_mean(x, type = "Wald")$interval[1L])
-  expect_true(out$interval[2L] > ci_mean(x, type = "Wald")$interval[2L])
 })
 
 test_that("Bootstrap CIs (all types) correspond with example in boot::boot.ci()", {
@@ -98,10 +107,6 @@ test_that("ci_quantile() gives consistent one- and two-sided intervals for all t
     expect_equal(out[1L], outl)
     expect_equal(out[2L], outr)
   }
-})
-
-test_that("ci_median() has correct estimate", {
-  expect_equal(ci_median(x)$estimate, stats::median(x))
 })
 
 test_that("ci_median() is consistent with ci_quantile()", {

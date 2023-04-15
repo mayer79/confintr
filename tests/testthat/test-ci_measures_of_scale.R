@@ -12,29 +12,33 @@ x <- unlist(
 )
 res <- c(58.12406, 184.49901)  # See weblink above
 
-test_that("ci_var() works", {
-  expect_equal(ci_var(x)$estimate, stats::var(x))
+test_that("CIs give consistent estimates", {
+  expect_equal(ci_var(x, boot_type = "perc", R = 99L)$estimate, stats::var(x))
+  expect_equal(ci_sd(x, boot_type = "perc", R = 99L)$estimate, stats::sd(x))
+  expect_equal(ci_IQR(x, boot_type = "perc", R = 99L)$estimate, stats::IQR(x))
+  expect_equal(ci_mad(x, boot_type = "perc", R = 99L)$estimate, stats::mad(x))
+})
+
+test_that("ci_var() gives identical result as web example", {
   expect_equal(ci_var(x)$interval, res, tolerance = 1e-5)
-  expect_no_error(ci_var(x, type = "bootstrap", boot_type = "perc", R = 99L))
 })
 
-test_that("ci_sd() works", {
-  expect_equal(ci_sd(x)$estimate, stats::sd(x))
-  expect_equal(ci_sd(x)$interval, sqrt(res), tolerance = 1e-5)
-  expect_no_error(ci_sd(x, type = "bootstrap", boot_type = "perc", R = 99L))
+test_that("ci_IQR/mad/var() gives consistent one- and two-sided intervals", {
+  for (ci in c(ci_IQR, ci_mad, ci_var)) {
+    out <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 0.8))$interval
+    outl <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 1))$interval[1L]
+    outr <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0, 0.8))$interval[2L]
+
+    expect_equal(out[1L], outl)
+    expect_equal(out[2L], outr)
+  }
 })
 
-test_that("ci_iqr() works", {
-  expect_no_error(out <- ci_IQR(x, R = 449L, boot_type = "perc"))
-  expect_equal(out$estimate, stats::IQR(x))
-})
-
-test_that("ci_mad() works", {
-  expect_no_error(out <- ci_mad(x, R = 449L, boot_type = "perc"))
-  expect_equal(out$estimate, stats::mad(x)  )
+test_that("ci_sd() is consistent with ci_var()", {
+  expect_equal(ci_sd(x)$interval^2, ci_var(x)$interval)
   expect_equal(
-    ci_mad(x, R = 449L, constant = 1, boot_type = "perc")$estimate,
-    stats::mad(x, constant = 1)
+    ci_sd(x, type = "bootstrap", boot_type = "perc", seed = 1L, R = 99L)$interval^2,
+    ci_var(x, type = "bootstrap", boot_type = "perc", seed = 1L, R = 99L)$interval
   )
 })
 

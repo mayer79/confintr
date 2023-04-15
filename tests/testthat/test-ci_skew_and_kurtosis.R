@@ -14,6 +14,7 @@ test_that("The first moments agree with usual statistics", {
 })
 
 test_that("skewness() agrees with DescTools::Skew(method = 1L)", {
+  # DescTools version: ‘0.99.48’
   expect_equal(skewness(x), 0)
   expect_equal(skewness(c(x, NA), na.rm = TRUE), skewness(x))
   expect_equal(skewness(c(x, NA), na.rm = FALSE), NA_real_)
@@ -27,6 +28,7 @@ test_that("skewness() agrees with DescTools::Skew(method = 1L)", {
 })
 
 test_that("kurtosis() agrees with DescTools::Kurt() up to excess 3", {
+  # DescTools version: ‘0.99.48’
   expect_true(kurtosis(x) < 3)
   expect_equal(kurtosis(c(x, NA), na.rm = TRUE), kurtosis(x))
   expect_equal(kurtosis(c(x, NA), na.rm = FALSE), NA_real_)
@@ -42,6 +44,26 @@ test_that("kurtosis() agrees with DescTools::Kurt() up to excess 3", {
 test_that("ci_skewness/kurtosis() give consistent estimates", {
   expect_equal(ci_skewness(x, boot_type = "perc", R = 99L)$estimate, skewness(x))
   expect_equal(ci_kurtosis(x, boot_type = "perc", R = 99L)$estimate, kurtosis(x))
+})
+
+test_that("ci_skewness() agrees with DescTools::Skew(method = 1L)", {
+  # DescTools version: ‘0.99.48’
+  # set.seed(1L); DescTools::Skew(x, conf.level = 0.95, R = 199L, method = 1L)
+  expect_equal(
+    ci_skewness(x, R = 199L, seed = 1L)$interval,
+    c(-0.6908712, 0.7018862),
+    tolerance = 1e-5
+  )
+})
+
+test_that("ci_kurtosis() agrees with DescTools::Kurt(method = 1L) up to excess 3", {
+  # set.seed(1L); DescTools::Kurt(x, conf.level = 0.95, R = 299L, method = 1L)
+  # DescTools version: ‘0.99.48’
+  expect_equal(
+    ci_kurtosis(x, R = 299L, seed = 1L)$interval - 3,
+    c(-1.633316, -0.469931),
+    tolerance = 1e-5
+  )
 })
 
 test_that("CIs give consistent one- and two-sided intervals", {

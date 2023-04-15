@@ -10,9 +10,7 @@ test_that("estimates agree with usual estimates", {
 })
 
 test_that("ci_mean() (Student method) gives same as stats::t.test()", {
-  out <- ci_mean(x)
-
-  expect_equal(out$interval, c(stats::t.test(x)$conf.int))
+  expect_equal(ci_mean(x)$interval, c(stats::t.test(x)$conf.int))
   expect_equal(
     ci_mean(x, probs = c(0.05, 0.95))$interval,
     c(stats::t.test(x, conf.level = 0.9)$conf.int)
@@ -77,7 +75,25 @@ test_that("Bootstrap CIs (all types) correspond with example in boot::boot.ci()"
   }
 })
 
-test_that("ci_quantile (non-parametric) is consistent with other implementations", {
+test_that("Bootstrap CI for the mean agrees with DescTools::MeanCI()", {
+  # set.seed(1L); DescTools::MeanCI(x, method = "boot", R = 199L, type = "stud")
+  # DescTools version: ‘0.99.48’
+  expect_equal(
+    ci_mean(x, type = "boot", R = 199L, seed = 1L, boot_type = "stud")$interval,
+    c(1.631183, 1.811673),
+    tolerance = 1e-5
+  )
+
+  # set.seed(1L); DescTools::MeanCI(x, method = "boot", R = 199L, type = "bca")
+  expect_equal(
+    ci_mean(x, type = "boot", R = 199L, seed = 1L, boot_type = "bca")$interval,
+    c(1.642692, 1.815686),
+    tolerance = 1e-5
+  )
+})
+
+test_that("ci_quantile() (non-parametric) is consistent with jmuOutlier::quantileCI", {
+  # jmuOutlier ‘2.2’
   expect_equal(
     ci_quantile(x, q = 0.4)$interval,
     c(1.349859, 1.648721),  # jmuOutlier::quantileCI(x, probs = 0.4, conf.level = 0.95)
@@ -86,6 +102,18 @@ test_that("ci_quantile (non-parametric) is consistent with other implementations
   expect_equal(
     ci_quantile(x, q = 0.5, probs = c(0.05, 0.95))$interval,
     c(1.506818, 1.803988),  # jmuOutlier::quantileCI(x, probs = 0.5, conf.level = 0.9)
+    tolerance = 1e-5
+  )
+})
+
+test_that("ci_quantile() (bootstrap) is consistent with DescTools::QuantileCI()", {
+  # set.seed(1L); DescTools::QuantileCI(x, probs = 0.4, method = "boot", R = 99L)
+  # DescTools version: ‘0.99.48’
+  expect_equal(
+    ci_quantile(
+      x, q = 0.4, type = "boot", R = 99L, seed = 1L, boot_type = "basic"
+    )$interval,
+    c(1.345046, 1.619004),
     tolerance = 1e-5
   )
 })

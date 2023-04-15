@@ -23,6 +23,19 @@ test_that("ci_var() gives identical result as web example", {
   expect_equal(ci_var(x)$interval, res, tolerance = 1e-5)
 })
 
+test_that("ci_var() (classic, bootstrap) is consistent with DescTools::VarCI()", {
+  # DescTools version: ‘0.99.48’
+  # DescTools::VarCI(x)
+  expect_equal(ci_var(x)$interval, c(58.12406, 184.49902), tolerance = 1e-5)
+
+  # set.seed(1L); DescTools::VarCI(x, method = "bca", R = 99L)
+  expect_equal(
+    ci_var(x, type = "boot", R = 99L, seed = 1L, boot_type = "bca")$interval,
+    c(60.84690, 141.02359),
+    tolerance = 1e-5
+  )
+})
+
 test_that("ci_IQR/mad/var() gives consistent one- and two-sided intervals", {
   for (ci in c(ci_IQR, ci_mad, ci_var)) {
     out <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 0.8))$interval

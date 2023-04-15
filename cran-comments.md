@@ -26,4 +26,6 @@ OK
 
 ### RevDep
 
-ggpmisc -> all green
+✔ ggpmisc 0.5.2                          ── E: 0     | W: 0     | N: 0                                                                             
+OK: 1                                                                                                                                            
+BROKEN: 0

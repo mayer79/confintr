@@ -51,17 +51,6 @@ test_that("Wilson's score CI agrees with binom::(..., method = 'wilson')", {
   )
 })
 
-test_that("Wilson's score CI has consistent one-sided versions", {
-  out <- ci_proportion(x, n, type = "Wilson", probs = c(0.1, 0.9))$interval
-  expect_equal(
-    ci_proportion(x, n, type = "Wilson", probs = c(0.1, 1))$interval[1L], out[1L]
-  )
-  expect_equal(
-    ci_proportion(x, n, type = "Wilson", probs = c(0, 0.9))$interval[2L], out[2L]
-  )
-  expect_error(ci_proportion(X, probs = c(0.05, 0.9), type = "Wilson"))
-})
-
 test_that("Agresti-Coull agrees with binom::(..., method = 'ac')", {
   expect_equal(
     ci_proportion(x, n, type = "Agresti-Coull")$interval,
@@ -76,17 +65,6 @@ test_that("Agresti-Coull agrees with binom::(..., method = 'ac')", {
   )
 })
 
-test_that("Agresti-Coull CI has consistent one-sided versions", {
-  out <- ci_proportion(x, n, type = "Agresti-Coull", probs = c(0.1, 0.9))$interval
-  expect_equal(
-    ci_proportion(x, n, type = "Agresti-Coull", probs = c(0.1, 1))$interval[1L], out[1L]
-  )
-  expect_equal(
-    ci_proportion(x, n, type = "Agresti-Coull", probs = c(0, 0.9))$interval[2L], out[2L]
-  )
-  expect_error(ci_proportion(X, probs = c(0.05, 0.9), type = "Agresti-Coull"))
-})
-
 test_that("bootstrap agrees with bootstrap CI for the mean (not such a good check)", {
   expect_no_error(
     out <- ci_proportion(
@@ -99,6 +77,28 @@ test_that("bootstrap agrees with bootstrap CI for the mean (not such a good chec
       X, probs = c(0.05, 0.9), type = "boot", boot_type = "perc", R = 99, seed = 1L
     )$interval
   )
+})
+
+test_that("CIs give consistent one- and two-sided intervals", {
+  for (t in c("Wilson", "Agresti-Coull", "bootstrap")) {
+    out <- ci_proportion(
+      X, type = t, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 0.9)
+    )$interval
+    outl <- ci_proportion(
+      X, type = t, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 1)
+    )$interval[1L]
+    outr <- ci_proportion(
+      X, type = t, boot_type = "perc", R = 99L, seed = 1L, probs = c(0, 0.9)
+    )$interval[2L]
+
+    expect_equal(out[1L], outl)
+    expect_equal(out[2L], outr)
+  }
+})
+
+test_that("Parametric CI cannot deal with unequal-tailed probs", {
+  expect_error(ci_proportion(X, probs = c(0.05, 0.9), type = "Wilson"))
+  expect_error(ci_proportion(X, probs = c(0.05, 0.9), type = "Agresti-Coull"))
 })
 
 test_that("resulting object is complete", {

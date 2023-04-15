@@ -44,7 +44,7 @@ test_that("ci_skewness/kurtosis() give consistent estimates", {
   expect_equal(ci_kurtosis(x, boot_type = "perc", R = 99L)$estimate, kurtosis(x))
 })
 
-test_that("ci_skewness/kurtosis() gives consistent one- and two-sided intervals", {
+test_that("CIs give consistent one- and two-sided intervals", {
   for (ci in c(ci_skewness, ci_kurtosis)) {
     out <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 0.8))$interval
     outl <- ci(x, boot_type = "perc", R = 99L, seed = 1L, probs = c(0.1, 1))$interval[1L]

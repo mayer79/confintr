@@ -31,7 +31,7 @@ test_that("ci_boot() is deterministic given S", {
   }
 })
 
-test_that("ci_boot() is monotonic in the probs", {
+test_that("ci_boot() is monotonic in probs", {
   p1 <- c(0.05, 0.95)
 
   for (t in in_nms) {
@@ -43,7 +43,7 @@ test_that("ci_boot() is monotonic in the probs", {
   }
 })
 
-test_that("ci_boot() is consistent in the unequal-tailed case", {
+test_that("ci_boot() is consistent in unequal-tailed case", {
   p1 <- c(0.1, 0.95)
   p2 <- c(0.05, 0.9)
 
@@ -60,7 +60,7 @@ test_that("ci_boot() is consistent in the unequal-tailed case", {
   }
 })
 
-test_that("ci_boot() is consistent in the one-tailed situation", {
+test_that("ci_boot() is consistent in one-tailed situation", {
   p1 <- c(0.1, 1)
   p2 <- c(0, 0.9)
 

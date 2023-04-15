@@ -37,23 +37,10 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   # Input checks and initialization
   check_probs(probs)
   iprobs <- 1 - probs
-  stopifnot(inherits(x, "lm") || is.numeric(x))
-
-  # Distinguish input
-  if (inherits(x, "lm")) {
-    fstat <- summary(x)[["fstatistic"]]
-    stat <- fstat[["value"]]
-    df1 <- fstat[["numdf"]]
-    df2 <- fstat[["dendf"]]
-  }
-  if (is.numeric(x)) {
-    stopifnot(
-      length(x) == 1L,
-      !is.null(df1),
-      !is.null(df2)
-    )
-    stat <- x
-  }
+  input <- r2_align_input(x, df1 = df1, df2 = df2)
+  stat <- input$stat
+  df1 <- input$df1
+  df2 <- input$df2
 
   # Calculate limits for ncp
   ncp <- ci_f_ncp(stat, df1 = df1, df2 = df2, probs = probs)[["interval"]]
@@ -62,9 +49,9 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   # Organize output
   cint <- check_output(cint, probs = probs, parameter_range = c(0, 1))
   out <- list(
+    parameter = "population R-squared",
     interval = cint,
     estimate = f_to_r2(stat, df1 = df1, df2 = df2),
-    parameter = "population R-squared",
     probs = probs,
     type = "F",
     info = ""
@@ -111,25 +98,10 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
   check_probs(probs)
   iprobs <- 1 - probs
   limits <- c(0, Inf)
-  stopifnot(inherits(x, "lm") || is.numeric(x))
-
-  # Distinguish input
-  if (inherits(x, "lm")) {
-    sx <- summary(x)
-    stopifnot("fstatistic" %in% names(sx))
-    fstat <- sx[["fstatistic"]]
-    stat <- fstat[["value"]]
-    df1 <- fstat[["numdf"]]
-    df2 <- fstat[["dendf"]]
-  }
-  if (is.numeric(x)) {
-    stopifnot(
-      length(x) == 1L,
-      !is.null(df1),
-      !is.null(df2)
-    )
-    stat <- x
-  }
+  input <- r2_align_input(x, df1 = df1, df2 = df2)
+  stat <- input$stat
+  df1 <- input$df1
+  df2 <- input$df2
 
   # Estimate
   estimate <- f_to_ncp(stat, df1 = df1, df2 = df2)
@@ -174,6 +146,27 @@ ci_f_ncp <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
 }
 
 # Helper functions
+
+# Combines the two input interfaces
+r2_align_input <- function(x, df1, df2) {
+  stopifnot(inherits(x, "lm") || is.numeric(x))
+
+  # Distinguish input
+  if (inherits(x, "lm")) {
+    fstat <- summary(x)[["fstatistic"]]
+    stat <- fstat[["value"]]
+    df1 <- fstat[["numdf"]]
+    df2 <- fstat[["dendf"]]
+  } else {
+    stopifnot(
+      length(x) == 1L,
+      !is.null(df1),
+      !is.null(df2)
+    )
+    stat <- x
+  }
+  return(list(stat = stat, df1 = df1, df2 = df2))
+}
 
 # Map F test statistic to non-centrality parameter
 f_to_ncp <- function(f, df1, df2) {

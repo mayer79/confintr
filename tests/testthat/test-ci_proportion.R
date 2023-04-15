@@ -38,6 +38,7 @@ test_that("Clopper-Pearson CI agrees with stats::binom.test()", {
 })
 
 test_that("Wilson's score CI agrees with binom::(..., method = 'wilson')", {
+  # binom Version ‘1.1.1.1’
   expect_equal(
     ci_proportion(x, n, type = "Wilson")$interval,
     c(0.4878005, 0.807695),  # binom::binom.confint(x, n, method = "wilson")
@@ -52,6 +53,7 @@ test_that("Wilson's score CI agrees with binom::(..., method = 'wilson')", {
 })
 
 test_that("Agresti-Coull agrees with binom::(..., method = 'ac')", {
+  # binom Version ‘1.1.1.1’
   expect_equal(
     ci_proportion(x, n, type = "Agresti-Coull")$interval,
     c(0.4868117, 0.8086838),  # binom::binom.confint(x, n, method = "ac")

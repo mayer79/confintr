@@ -1,0 +1,27 @@
+These unit tests should be improved
+
+## test-standard-errors
+
+- Standard error of variance
+
+## test-ci_cor
+
+- ci_cor(X, type = "boot"): There is a comparison with an online example, but I'd
+love to see better/more
+
+## test-ci_proportion
+
+- Bootstrap CI consistent with the one for the mean. No test for "stud" though (other formula for standard error used)
+
+## test-ci_measures_of_scale
+
+- ci_IQR/ci_mad are not explicitly tested with other implementation (Bootstrap)
+
+## Test-ci_location_shift
+
+- ci_quantile_diff: only tested by keeping one vector constant 3 (Bootstrap)
+
+## Test-ci_rsquared()
+
+- There is no test that the estimated NCP of the F distribution is correct, i.e.,
+that f_to_ncp() does the right thing. Reference (probably) is Smithson.

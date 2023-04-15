@@ -13,15 +13,11 @@
 #' @return A numeric vector of length one.
 #' @export
 #' @examples
-#' tab <- table(mtcars[c("am", "vs")])
-#' chi <- stats::chisq.test(tab, correct = FALSE)
 #' cramersv(mtcars[c("am", "vs")])
-#' cramersv(chi)
-#' cramersv(tab)
 #' @references
 #' Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
 cramersv <- function(x) {
-  x <- cramersv_align_input(x)
+  x <- cramersv_align_input(x, correct = FALSE)
   stat <- as.numeric(x[["statistic"]])
   n <- sum(x[["observed"]])
   k <- min(dim(x[["observed"]]))
@@ -81,7 +77,7 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "boo
                         R = 9999L, seed = NULL, test_adjustment = TRUE, ...) {
   # Input check and initialization
   check_probs(probs)
-  x <- cramersv_align_input(x)
+  x <- cramersv_align_input(x, correct = FALSE)
   stat <- as.numeric(x[["statistic"]])
   n <- sum(x[["observed"]])
   k <- min(dim(x[["observed"]]))

@@ -142,7 +142,6 @@ test_that("ci_cor() gives consistent one- and two-sided CIs", {
   }
 })
 
-
 test_that("resulting object is complete", {
   comps <- c("parameter", "interval", "estimate", "probs", "type", "info")
 

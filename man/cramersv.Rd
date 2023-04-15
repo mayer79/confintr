@@ -25,11 +25,7 @@ if \code{x} is the result of \code{stats::chisq.test()},
 make sure no continuity correction was applied. Otherwise, results can be inconsistent.
 }
 \examples{
-tab <- table(mtcars[c("am", "vs")])
-chi <- stats::chisq.test(tab, correct = FALSE)
 cramersv(mtcars[c("am", "vs")])
-cramersv(chi)
-cramersv(tab)
 }
 \references{
 Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).

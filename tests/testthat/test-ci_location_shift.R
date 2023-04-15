@@ -150,10 +150,6 @@ test_that("resulting object is complete", {
     names(ci_mean_diff(x, y, type = "boot", boot_type = "perc", R = 99L)),
     comps
   )
-  expect_equal(
-    names(ci_mean_diff(x, y, type = "boot", boot_type = "perc", R = 99L)),
-    comps
-  )
 
   expect_equal(
     names(ci_median_diff(x, y, type = "boot", boot_type = "perc", R = 99L)),

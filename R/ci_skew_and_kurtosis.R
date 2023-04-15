@@ -45,6 +45,7 @@ skewness <- function(z, na.rm = TRUE) {
 #'
 #' Defined as the ratio of the 4th central moment and the squared
 #' second central moment. Under perfect normality, the kurtosis equals 3.
+#' Put differently, we do not show "excess kurtosis" but rather kurtosis.
 #'
 #' @param z A numeric vector.
 #' @param na.rm Logical flag indicating whether to remove missing values or not.
@@ -118,7 +119,8 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #'
 #' This function calculates bootstrap CIs for the population kurtosis.
 #' Note that we use the version of the kurtosis that equals 3 under a
-#' normal distribution. By default, bootstrap type "bca" is used.
+#' normal distribution, i.e., we are not calculating the excess kurtosis.
+#' By default, bootstrap type "bca" is used.
 #'
 #' @param x A numeric vector.
 #' @param probs Lower and upper probabilities, by default c(0.025, 0.975).

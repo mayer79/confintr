@@ -9,7 +9,7 @@ ci_mean(
   probs = c(0.025, 0.975),
   type = c("t", "Wald", "bootstrap"),
   boot_type = c("stud", "bca", "perc", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   ...
 )

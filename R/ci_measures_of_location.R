@@ -38,7 +38,7 @@
 #' }
 ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap"),
                     boot_type = c("stud", "bca", "perc", "norm", "basic"),
-                    R = 9999, seed = NULL, ...) {
+                    R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)
@@ -108,7 +108,7 @@ ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap
 ci_median <- function(x, probs = c(0.025, 0.975),
                       type = c("binomial", "bootstrap"),
                       boot_type = c("bca", "perc", "norm", "basic"),
-                      R = 9999, seed = NULL, ...) {
+                      R = 9999L, seed = NULL, ...) {
   out <- ci_quantile(
     x,
     q = 0.5,
@@ -158,7 +158,7 @@ ci_median <- function(x, probs = c(0.025, 0.975),
 ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
                         type = c("binomial", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
-                        R = 9999, seed = NULL, ...) {
+                        R = 9999L, seed = NULL, ...) {
   # Input checks and initialization
   type <- match.arg(type)
   boot_type <- match.arg(boot_type)

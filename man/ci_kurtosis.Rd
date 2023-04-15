@@ -43,7 +43,8 @@ An object of class "cint" containing these components:
 \description{
 This function calculates bootstrap CIs for the population kurtosis.
 Note that we use the version of the kurtosis that equals 3 under a
-normal distribution. By default, bootstrap type "bca" is used.
+normal distribution, i.e., we are not calculating the excess kurtosis.
+By default, bootstrap type "bca" is used.
 }
 \examples{
 x <- 1:20

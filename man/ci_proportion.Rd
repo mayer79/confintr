@@ -49,8 +49,14 @@ An object of class "cint" containing these components:
 \description{
 This function calculates CIs for a population proportion. By default,
 "Clopper-Pearson" CIs are calculated (via \code{stats::binom.test()}).
-Further possibilities are "Wilson", "Agresti-Coull", and "bootstrap"
-(by default "bca").
+Further possibilities are "Wilson" (without continuity correction),
+"Agresti-Coull" (using normal quantile instead of +2 correction),
+and "bootstrap" (by default "bca"). Note that the Agresti-Coull
+}
+\details{
+Note that we use the formulas for the Wilson and Agresti-Coull intervals in
+\url{https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval}.
+They agree with binom::binom.confint(x, n, method = "ac"/"wilson").
 }
 \examples{
 x <- rep(0:1, times = c(50, 100))

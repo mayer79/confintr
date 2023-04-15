@@ -38,15 +38,15 @@ Many of the classic CIs on this list are discussed in @smithson2003.
 
 In line with the {boot} backend, the following bootstrap CIs are (usually) available:
 
-1. Normal ("norm") bootstrap CI: This is the Wald/Student CI using as standard error the standard deviation of the bootstrap distribution plus a bootstrap bias correction. Simple, but only first-order accurate and not transformation respecting.
+1. Normal ("norm") bootstrap CI: This is the Wald/Student CI using bootstrap standard error and bootstrap bias correction. Simple, but only first-order accurate, and not transformation respecting.
 
 2. Percentile ("perc") bootstrap CI: Uses quantiles of the bootstrap distribution as confidence limits. Simple, but only first-order accurate. Transformation respecting.
 
 3. Basic ("basic") or reverse bootstrap CI: Flipped version of the percentile approach, dealing with bias but at the price of having very unnaturally tailed sampling distributions. Only first-order accurate.
 
-4. Bias-corrected and accelerated ("bca") CI: Refined version of the percentile bootstrap which is second-order accurate and transformation respecting. Needs more replications than observations. **The default** (except for the mean and the mean difference, see below).
+4. Bias-corrected and accelerated ("bca") CI: Refined version of the percentile bootstrap. Second-order accurate and transformation respecting. Needs more replications than observations. **The default** (except for the mean and the mean difference, see below).
 
-5. Student-t ("stud") bootstrap CI: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the variance of the bootstrapped statistic. second-order accurate but not transformation respecting. Requires a formula for the variance of the estimator, which `confintr` provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
+5. Student-t ("stud") bootstrap CI: Refined version of the normal bootstrap that replaces the Student quantile by a custom quantile obtained from bootstrapping the variance of the statistic. second-order accurate but not transformation respecting. Requires a formula for the variance of the estimator, which {confintr} provides for the mean, the mean difference, the variance (and standard deviation) as well as for the proportion. **Used as the default for the mean and the mean difference.**
 
 For details on bootstrap CIs, we refer to @efron1993.
 
@@ -96,7 +96,7 @@ ci_kurtosis(1:100)
 # Mean difference
 ci_mean_diff(10:30, 1:15)
 
-ci_mean_diff(10:30, 1:15, type = "bootstrap", R  = 999)  # In practice, use larger R
+ci_mean_diff(10:30, 1:15, type = "bootstrap", R = 999)  # In practice, use larger R
 
 # Median difference
 ci_median_diff(10:30, 1:15, R = 999)  # In practice, use larger R

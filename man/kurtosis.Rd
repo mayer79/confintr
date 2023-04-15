@@ -18,6 +18,7 @@ Numeric vector of length 1.
 \description{
 Defined as the ratio of the 4th central moment and the squared
 second central moment. Under perfect normality, the kurtosis equals 3.
+Put differently, we do not show "excess kurtosis" but rather kurtosis.
 }
 \examples{
 kurtosis(1:10)

@@ -104,7 +104,6 @@ test_that("ci_boot() replicates specific example in ?boot:boot.ci", {
       unname(utils::tail(boot_out[[map_boot_type(t)]][1L, ], 2L))
     )
   }
-  # ci_mean(aircondit, type = "bootstrap", boot_type = "norm", R = 999L, seed = 1L)
 })
 
 test_that("check_bca() works", {

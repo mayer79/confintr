@@ -2,70 +2,85 @@
 % Please edit documentation in R/ci_cramersv.R
 \name{ci_cramersv}
 \alias{ci_cramersv}
-\title{Confidence Interval for the Population Cramer's V}
+\title{CI for the Population Cramer's V}
 \usage{
 ci_cramersv(
   x,
   probs = c(0.025, 0.975),
   type = c("chi-squared", "bootstrap"),
   boot_type = c("bca", "perc", "norm", "basic"),
-  R = 9999,
+  R = 9999L,
   seed = NULL,
   test_adjustment = TRUE,
   ...
 )
 }
 \arguments{
-\item{x}{The result of \code{stats::chisq.test}, a matrix/table of counts or a \code{data.frame} with exactly two columns representing the two variables.}
+\item{x}{The result of \code{stats::chisq.test()}, a matrix/table of counts,
+or a \code{data.frame} with exactly two columns representing the two variables.}
 
-\item{probs}{Error probabilites. The default c(0.025, 0.975) gives a symmetric 95\% confidence interval.}
+\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
 
-\item{type}{Type of confidence interval. One of "chi-squared" (default) or "bootstrap".}
+\item{type}{Type of CI. One of "chi-squared" (default) or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap confidence interval ("bca", "perc", "norm", "basic"). Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").
+Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{test_adjustment}{Adjustment to allow for test of association, see Details. The default is \code{TRUE}.}
+\item{test_adjustment}{Adjustment to allow for test of association, see Details.
+The default is \code{TRUE}.}
 
-\item{...}{Further arguments passed to \code{resample::CI.boot_type}.}
+\item{...}{Further arguments passed to \code{boot::boot()}.}
 }
 \value{
-A list with class \code{cint} containing these components:
+An object of class "cint" containing these components:
 \itemize{
-\item \code{parameter}: The parameter in question.
-\item \code{interval}: The confidence interval for the parameter.
-\item \code{estimate}: The estimate for the parameter.
-\item \code{probs}: A vector of error probabilities.
-\item \code{type}: The type of the interval.
-\item \code{info}: An additional description text for the interval.
+\item \code{parameter}: Parameter specification.
+\item \code{interval}: CI for the parameter.
+\item \code{estimate}: Parameter estimate.
+\item \code{probs}: Lower and upper probabilities.
+\item \code{type}: Type of interval.
+\item \code{info}: Additional description.
 }
 }
 \description{
-This function calculates confidence intervals for the population Cramer's V. By default, a parametric approach based on the non-centrality parameter (ncp) of the chi-squared distribution is utilized. Alternatively, bootstrap confidence intervals are available, also by boostrapping confidence intervals for the ncp.
+This function calculates CIs for the population Cramer's V.
+By default, a parametric approach based on the non-centrality parameter (NCP)
+of the chi-squared distribution is utilized.
+Alternatively, bootstrap CIs are available (by default "bca"),
+also by boostrapping CIs for the NCP and then mapping the result back to Cramer's V.
 }
 \details{
-A positive lower (1-alpha)*100\%-confidence limit for the ncp goes hand-in-hand with a significant association test at level alpha. In order to allow such test approach also with Cramer's V, if the lower bound for the ncp is 0, we round down to 0 also the lower bound for Cramer's V. Without this slightly conservative adjustment, the lower limit for V would always be positive since ci for V = sqrt((ci for ncp + df)/(n (k - 1))), where k is the smaller number of levels in the two variables (see Smithson for this formula). Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is also a reason to bootstrap V via ncp instead of directly bootstrapping V.
-Bootstrap confidence intervals are calculated by the package "boot", see references. The default bootstrap type is "bca" (bias-corrected accelerated) as it enjoys the property of being second order accurate as well as transformation respecting (see Efron, p. 188).
-Note that no continuity correction is applied for 2x2 tables. Further note that large chi-squared test statistics might provide unreliable results with method "chi-squared" (see \code{?pchisq}).
+A positive lower (1-alpha)*100\%-confidence limit for the NCP goes hand-in-hand with a
+significant association test at level alpha. In order to allow such test approach
+also with Cramer's V, if the lower bound for the NCP is 0,
+we round down to 0 the lower bound for Cramer's V as well.
+Without this slightly conservative adjustment, the lower limit for V would always be
+positive since the CI for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
+number of levels in the two variables (see Smithson p40).
+Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is
+also a reason to bootstrap V via NCP instead of directly bootstrapping V.
+
+Further note that no continuity correction is applied for 2x2 tables,
+and that large chi-squared test statistics might provide unreliable results with
+method "chi-squared" (see \code{?pchisq}).
 }
 \examples{
-ir <- iris
-ir$PL <- ir$Petal.Width > 1
-ci_cramersv(ir[, c("Species", "PL")])
-ci_cramersv(ir[, c("Species", "PL")], type = "bootstrap", R = 999)
-ci_cramersv(ir[, c("Species", "PL")], probs = c(0.05, 1))
-ci_cramersv(mtcars[c("am", "vs")])
-ci_cramersv(mtcars[c("am", "vs")], test_adjustment = FALSE)
+# Example from Smithson, M., page 41
+test_scores <- as.table(
+  rbind(
+    Private = c(6, 14, 17, 9),
+    Public = c(30, 32, 17, 3)
+  )
+)
+suppressWarnings(X2 <- stats::chisq.test(test_scores))
+ci_cramersv(X2)
 }
 \references{
-\enumerate{
-\item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
-\item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
-}
+Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
 }
 \seealso{
 \code{\link{ci_chisq_ncp}}.

@@ -1,10 +1,21 @@
-# confintr 0.2.1
+# confintr 1.0.0
+
+This is a large maintenance update, bumping the package to stable version 1.0.0.
+
+## User visible changes
+
+- Replaced the term "symmetric" by the better "equal-tailed". Similarly, we now output "unequal-tailed" instead of "asymmetric". By "equal-tailed", we mean that the upper and
+lower error probabilies agree, not that the interval is symmetric around the estimate. This has no impact on the resulting numbers, only on the text (if you ever used unequal-tailed intervals).
 
 ## Maintenance
 
-- Better readme
-- Github actions
-- Gitpage
+- Reorganisation of code files
+- More compact help files
+- Greatly improved unit tests
+- Modern code formatting style
+- Using `package::function()` notation instead of `importFrom package function`
+- Introduction of Github actions
+- New [Gitpage](https://mayer79.github.io/confintr/)
 
 # confintr 0.2.0
 

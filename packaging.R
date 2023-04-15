@@ -15,7 +15,7 @@ library(usethis)
 use_description(
   fields = list(
     Title = "Confidence Intervals",
-    Version = "0.2.1",
+    Version = "1.0.0",
     Description = "Calculates classic and/or bootstrap confidence intervals for many parameters such as the population mean, variance, interquartile range (IQR), median absolute deviation (MAD), skewness, kurtosis, Cramer's V, odds ratio, R-squared, quantiles (incl. median), proportions, different types of correlation measures, difference in means, quantiles and medians. Many of the classic confidence intervals are described in Smithson, M. (2003, ISBN: 978-0761924999). Bootstrap confidence intervals are calculated with the R package 'boot'. Both one- and two-sided intervals are supported.",
     `Authors@R` = "person('Michael', 'Mayer', email = 'mayermichael79@gmail.com', role = c('aut', 'cre'))",
     Depends = "R (>= 3.1.0)",
@@ -61,10 +61,12 @@ use_github_links() # use this if this project is on github
 use_cran_comments()
 
 # Github actions
-use_github_action("document")
 use_github_action("check-standard")
 use_github_action("test-coverage")
 use_github_action("pkgdown")
+
+# Revdep
+use_revdep()
 
 #=============================================================================
 # Finish package building (can use fresh session)
@@ -74,8 +76,7 @@ library(devtools)
 
 document()
 test()
-build_vignettes()
-check(manual = TRUE, cran = TRUE)
+check(manual = TRUE, cran = TRUE, vignettes = FALSE)
 build()
 # build(binary = TRUE)
 install()
@@ -84,6 +85,9 @@ install()
 if (FALSE) {
   check_win_devel()
   check_rhub()
+
+  # Takes long
+  revdepcheck::revdep_check(num_workers = 4L)
 
   # Wait until above checks are passed without relevant notes/warnings
   # then submit to CRAN

@@ -17,7 +17,7 @@ ci_sd(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. One of \code{"chi-squared"} (default) or \code{"bootstrap"}.}
 
@@ -34,7 +34,7 @@ An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 This function calculates CIs for the population standard deviation.
-They are derived from CIs for the variance by taking the square-root, see\code{\link[=ci_var]{ci_var()}}.
+They are derived from CIs for the variance by taking the square-root, see \code{\link[=ci_var]{ci_var()}}.
 }
 \examples{
 x <- 1:100

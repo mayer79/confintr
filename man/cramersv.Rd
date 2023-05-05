@@ -18,10 +18,10 @@ This function calculates Cramer's V, a measure of association between two catego
 variables.
 }
 \details{
-Cramer's V is a scaled version of the chi-squared test statistic and takes values in
-the unit interval. It is calculated as \eqn{\sqrt{\chi^2 / (n * (k - 1))}},
-where \eqn{n} is the number of observations, and \eqn{k} is the smaller of the number
-of levels of the two variables.
+Cramer's V is a scaled version of the chi-squared test statistic \eqn{\chi^2} and
+takes values in \eqn{[0, 1]}. It is calculated as
+\eqn{\sqrt{\chi^2 / (n \cdot (k - 1))}}, where \eqn{n} is the number of observations,
+and \eqn{k} is the smaller of the number of levels of the two variables.
 
 Yates continuity correction is never applied. So in the 2x2 case, if \code{x} is the
 result of \code{\link[stats:chisq.test]{stats::chisq.test()}}, make sure no continuity correction was applied.
@@ -31,5 +31,9 @@ Otherwise, results can be inconsistent.
 cramersv(mtcars[c("am", "vs")])
 }
 \references{
-Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
+Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton
+University Press, page 282 (Chapter 21. The two-dimensional case).
+}
+\seealso{
+\code{\link[=ci_cramersv]{ci_cramersv()}}
 }

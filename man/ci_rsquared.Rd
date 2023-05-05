@@ -13,19 +13,19 @@ ci_rsquared(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 
 \item{df2}{The denominator df. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 }
 \value{
 An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 This function calculates parametric CIs for the population \eqn{R^2}.
-It is based on CIs for the non-centrality parameter Delta of the F distribution,
-found by test inversion. Delta values are mapped to \eqn{R^2} by
-\eqn{R^2 = \Delta / (\Delta + \text{df}_1 + \text{df}_2 + 1)},
-where the \eqn{\text{df}_j} are the degrees of freedom (df) of the F test statistic.
+It is based on CIs for the non-centrality parameter \eqn{\Delta} of the F
+distribution found by test inversion. Values of \eqn{\Delta} are mapped to \eqn{R^2}
+by \eqn{R^2 = \Delta / (\Delta + \text{df}_1 + \text{df}_2 + 1)},
+where the \eqn{\text{df}_j} are the degrees of freedom of the F test statistic.
 A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the \eqn{R^2}
-goes hand-in-hand with a significant F test at level alpha.
+goes hand-in-hand with a significant F test at level \eqn{\alpha}.
 }
 \details{
 According to \code{\link[stats:Fdist]{stats::pf()}}, the results might be unreliable for very large F values.

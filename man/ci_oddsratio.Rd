@@ -10,7 +10,7 @@ ci_oddsratio(x, probs = c(0.025, 0.975))
 \item{x}{A 2x2 matrix/table of counts, or a \code{data.frame} with exactly two columns
 representing the two binary variables.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 }
 \value{
 An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.

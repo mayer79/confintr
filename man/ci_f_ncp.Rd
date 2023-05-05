@@ -13,7 +13,7 @@ ci_f_ncp(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 
 \item{df2}{The denominator df. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 }
 \value{
 An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
@@ -25,7 +25,7 @@ To keep the input interface simple, we do not provide bootstrap CIs here.
 }
 \details{
 A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the NCP goes
-hand-in-hand with a significant F test at level alpha.
+hand-in-hand with a significant F test at level \eqn{\alpha}.
 According to \code{\link[stats:Fdist]{stats::pf()}}, the results might be unreliable for very large F values.
 }
 \examples{

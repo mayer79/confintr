@@ -19,7 +19,7 @@ ci_chisq_ncp(
 \item{x}{The result of \code{\link[stats:chisq.test]{stats::chisq.test()}}, a matrix/table of counts, or
 a \code{data.frame} with exactly two columns representing the two variables.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{correct}{Should Yates continuity correction be applied to the 2x2 case? The
 default is \code{TRUE} (also used in the bootstrap), which differs from \code{\link[=ci_cramersv]{ci_cramersv()}}.}
@@ -38,9 +38,10 @@ default is \code{TRUE} (also used in the bootstrap), which differs from \code{\l
 An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
-This function calculates CIs for the non-centrality parameter (NCP) of the chi-squared
-distribution. A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit
-for the NCP goes hand-in-hand with a significant association test at level alpha.
+This function calculates CIs for the non-centrality parameter (NCP) of the
+\eqn{\chi^2}-distribution. A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence
+limit for the NCP goes hand-in-hand with a significant association test at level
+\eqn{\alpha}.
 }
 \details{
 By default, CIs are computed by Chi-squared test inversion. This can be unreliable

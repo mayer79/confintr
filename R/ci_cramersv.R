@@ -3,10 +3,10 @@
 #' This function calculates Cramer's V, a measure of association between two categorical
 #' variables.
 #'
-#' Cramer's V is a scaled version of the chi-squared test statistic and takes values in
-#' the unit interval. It is calculated as \eqn{\sqrt{\chi^2 / (n * (k - 1))}},
-#' where \eqn{n} is the number of observations, and \eqn{k} is the smaller of the number
-#' of levels of the two variables.
+#' Cramer's V is a scaled version of the chi-squared test statistic \eqn{\chi^2} and
+#' takes values in \eqn{[0, 1]}. It is calculated as
+#' \eqn{\sqrt{\chi^2 / (n \cdot (k - 1))}}, where \eqn{n} is the number of observations,
+#' and \eqn{k} is the smaller of the number of levels of the two variables.
 #'
 #' Yates continuity correction is never applied. So in the 2x2 case, if `x` is the
 #' result of [stats::chisq.test()], make sure no continuity correction was applied.
@@ -19,7 +19,9 @@
 #' @examples
 #' cramersv(mtcars[c("am", "vs")])
 #' @references
-#' Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
+#'   Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton
+#'     University Press, page 282 (Chapter 21. The two-dimensional case).
+#' @seealso [ci_cramersv()]
 cramersv <- function(x) {
   x <- cramersv_align_input(x, correct = FALSE)
   stat <- as.numeric(x[["statistic"]])
@@ -32,18 +34,18 @@ cramersv <- function(x) {
 #'
 #' This function calculates CIs for the population Cramer's V.
 #' By default, a parametric approach based on the non-centrality parameter (NCP)
-#' of the chi-squared distribution is utilized.
-#' Alternatively, bootstrap CIs are available (default "bca"),
-#' also by boostrapping CIs for the NCP and then mapping the result back to Cramer's V.
+#' of the chi-squared distribution is utilized. Alternatively, bootstrap CIs are
+#' available (default "bca"), also by boostrapping CIs for the NCP and then mapping
+#' the result back to Cramer's V.
 #'
 #' A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the NCP goes
-#' hand-in-hand with a significant association test at level alpha. In order to allow
-#' such test approach also with Cramer's V, if the lower bound for the NCP is 0,
+#' hand-in-hand with a significant association test at level \eqn{\alpha}. In order to
+#' allow such test approach also with Cramer's V, if the lower bound for the NCP is 0,
 #' we round down to 0 the lower bound for Cramer's V as well.
 #' Without this slightly conservative adjustment, the lower limit for V would always be
-#' positive since the CI for \eqn{V = \sqrt{(\text{CI for NCP} + df)/(n (k - 1))}},
-#' where \eqn{k} is the smaller number of levels in the two variables
-#' (see Smithson, p40).
+#' positive since the CI for V is found by
+#' \eqn{\sqrt{(\text{CI for NCP} + \text{df})/(n \cdot (k - 1))}}, where \eqn{k} is the
+#' smaller number of levels in the two variables (see Smithson, p.40).
 #' Use `test_adjustment = FALSE` to switch off this behaviour. Note that this is
 #' also a reason to bootstrap V via NCP instead of directly bootstrapping V.
 #'
@@ -69,8 +71,9 @@ cramersv <- function(x) {
 #' suppressWarnings(X2 <- stats::chisq.test(test_scores))
 #' ci_cramersv(X2)
 #' @references
-#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
-#' @seealso \code{\link{ci_chisq_ncp}}.
+#'   Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the
+#'     Social Sciences. New York, NY: Sage Publications.
+#' @seealso [cramersv()], [ci_chisq_ncp()]
 ci_cramersv <- function(x, probs = c(0.025, 0.975),
                         type = c("chi-squared", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
@@ -110,9 +113,10 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975),
 
 #' CI for the NCP of the Chi-Squared Distribution
 #'
-#' This function calculates CIs for the non-centrality parameter (NCP) of the chi-squared
-#' distribution. A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit
-#' for the NCP goes hand-in-hand with a significant association test at level alpha.
+#' This function calculates CIs for the non-centrality parameter (NCP) of the
+#' \eqn{\chi^2}-distribution. A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence
+#' limit for the NCP goes hand-in-hand with a significant association test at level
+#' \eqn{\alpha}.
 #'
 #' By default, CIs are computed by Chi-squared test inversion. This can be unreliable
 #' for very large test statistics. The default bootstrap type is "bca".

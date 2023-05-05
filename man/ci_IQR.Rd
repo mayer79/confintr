@@ -17,7 +17,7 @@ ci_IQR(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. Currently not used as the only type is \code{"bootstrap"}.}
 

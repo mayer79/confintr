@@ -21,7 +21,7 @@ ci_mean_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{var.equal}{Should the two variances be treated as being equal?
 The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate

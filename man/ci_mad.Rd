@@ -18,7 +18,7 @@ ci_mad(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{constant}{Scaling factor applied. The default (1.4826) ensures that the MAD
 equals the standard deviation for a theoretical normal distribution.}

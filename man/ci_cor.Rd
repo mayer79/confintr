@@ -21,7 +21,7 @@ ci_cor(
 
 \item{y}{A numeric vector (only used if \code{x} is a vector).}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{method}{Type of correlation coefficient, one of "pearson" (default), "kendall",
 or "spearman". For the latter two, only bootstrap CIs are supported.}

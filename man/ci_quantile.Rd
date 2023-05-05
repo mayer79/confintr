@@ -20,7 +20,7 @@ ci_quantile(
 
 \item{q}{A single probability value determining the quantile (0.5 for median).}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. One of "binomial" (default), or "bootstrap".}
 

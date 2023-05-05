@@ -21,7 +21,7 @@ of successes.}
 
 \item{n}{The sample size. Only needed if \code{x} is a vector of length 1.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. One of "Clopper-Pearson" (the default), "Agresti–Coull",
 "Wilson", "bootstrap".}

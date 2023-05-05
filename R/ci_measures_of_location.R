@@ -8,7 +8,7 @@
 #' (see Efron, p. 188).
 #'
 #' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @param probs Lower and upper probabilities, by default `c(0.025, 0.975)`.
 #' @param type Type of CI. One of "t" (default), "Wald", or "bootstrap".
 #' @param boot_type Type of bootstrap CI. Only used for `type = "bootstrap"`.
 #' @param R The number of bootstrap resamples. Only used for `type = "bootstrap"`.

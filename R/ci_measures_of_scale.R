@@ -64,7 +64,7 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' CI for the Population Std
 #'
 #' This function calculates CIs for the population standard deviation.
-#' They are derived from CIs for the variance by taking the square-root, see[ci_var()].
+#' They are derived from CIs for the variance by taking the square-root, see [ci_var()].
 #'
 #' @inheritParams ci_var
 #' @inheritParams ci_mean

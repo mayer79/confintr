@@ -1,21 +1,27 @@
 #' Cramer's V
 #'
-#' This function calculates Cramer's V, a measure of association between two categorical variables.
-#' It is a scaled version of the chi-squared test statistic and lies between 0 and 1.
-#' Cramer's V is calculated as sqrt(chi-squared / (n * (k - 1))), where n is the number
-#' of observations, and k is the smaller of the number of levels of the two variables.
+#' This function calculates Cramer's V, a measure of association between two categorical
+#' variables.
 #'
-#' Yates continuity correction is never applied. So in the 2x2 case,
-#' if \code{x} is the result of \code{stats::chisq.test()},
-#' make sure no continuity correction was applied. Otherwise, results can be inconsistent.
-#' @param x The result of \code{stats::chisq.test()}, a matrix/table of counts or
-#' a \code{data.frame} with exactly two columns representing the two variables.
-#' @return A numeric vector of length one.
+#' Cramer's V is a scaled version of the chi-squared test statistic \eqn{\chi^2} and
+#' takes values in \eqn{[0, 1]}. It is calculated as
+#' \eqn{\sqrt{\chi^2 / (n \cdot (k - 1))}}, where \eqn{n} is the number of observations,
+#' and \eqn{k} is the smaller of the number of levels of the two variables.
+#'
+#' Yates continuity correction is never applied. So in the 2x2 case, if `x` is the
+#' result of [stats::chisq.test()], make sure no continuity correction was applied.
+#' Otherwise, results can be inconsistent.
+#'
+#' @param x The result of [stats::chisq.test()], a matrix/table of counts, or
+#'   a `data.frame` with exactly two columns representing the two variables.
+#' @returns A numeric vector of length one.
 #' @export
 #' @examples
 #' cramersv(mtcars[c("am", "vs")])
 #' @references
-#' Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
+#'   Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton
+#'     University Press, page 282 (Chapter 21. The two-dimensional case).
+#' @seealso [ci_cramersv()]
 cramersv <- function(x) {
   x <- cramersv_align_input(x, correct = FALSE)
   stat <- as.numeric(x[["statistic"]])
@@ -28,44 +34,31 @@ cramersv <- function(x) {
 #'
 #' This function calculates CIs for the population Cramer's V.
 #' By default, a parametric approach based on the non-centrality parameter (NCP)
-#' of the chi-squared distribution is utilized.
-#' Alternatively, bootstrap CIs are available (by default "bca"),
-#' also by boostrapping CIs for the NCP and then mapping the result back to Cramer's V.
+#' of the chi-squared distribution is utilized. Alternatively, bootstrap CIs are
+#' available (default "bca"), also by boostrapping CIs for the NCP and then mapping
+#' the result back to Cramer's V.
 #'
-#' A positive lower (1-alpha)*100%-confidence limit for the NCP goes hand-in-hand with a
-#' significant association test at level alpha. In order to allow such test approach
-#' also with Cramer's V, if the lower bound for the NCP is 0,
+#' A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the NCP goes
+#' hand-in-hand with a significant association test at level \eqn{\alpha}. In order to
+#' allow such test approach also with Cramer's V, if the lower bound for the NCP is 0,
 #' we round down to 0 the lower bound for Cramer's V as well.
 #' Without this slightly conservative adjustment, the lower limit for V would always be
-#' positive since the CI for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
-#' number of levels in the two variables (see Smithson p40).
-#' Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is
+#' positive since the CI for V is found by
+#' \eqn{\sqrt{(\text{CI for NCP} + \text{df})/(n \cdot (k - 1))}}, where \eqn{k} is the
+#' smaller number of levels in the two variables (see Smithson, p.40).
+#' Use `test_adjustment = FALSE` to switch off this behaviour. Note that this is
 #' also a reason to bootstrap V via NCP instead of directly bootstrapping V.
 #'
 #' Further note that no continuity correction is applied for 2x2 tables,
 #' and that large chi-squared test statistics might provide unreliable results with
-#' method "chi-squared" (see \code{?pchisq}).
+#' method "chi-squared", see [stats::pchisq()].
 #'
-#' @param x The result of \code{stats::chisq.test()}, a matrix/table of counts,
-#' or a \code{data.frame} with exactly two columns representing the two variables.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @inheritParams cramersv
+#' @inheritParams ci_mean
 #' @param type Type of CI. One of "chi-squared" (default) or "bootstrap".
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
 #' @param test_adjustment Adjustment to allow for test of association, see Details.
-#' The default is \code{TRUE}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#'   The default is `TRUE`.
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' # Example from Smithson, M., page 41
@@ -78,8 +71,9 @@ cramersv <- function(x) {
 #' suppressWarnings(X2 <- stats::chisq.test(test_scores))
 #' ci_cramersv(X2)
 #' @references
-#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
-#' @seealso \code{\link{ci_chisq_ncp}}.
+#'   Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the
+#'     Social Sciences. New York, NY: Sage Publications.
+#' @seealso [cramersv()], [ci_chisq_ncp()]
 ci_cramersv <- function(x, probs = c(0.025, 0.975),
                         type = c("chi-squared", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
@@ -119,40 +113,28 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975),
 
 #' CI for the NCP of the Chi-Squared Distribution
 #'
-#' This function calculates CIs for the non-centrality parameter (NCP) of the chi-squared
-#' distribution. A positive lower (1-alpha)*100%-confidence limit for the NCP goes
-#' hand-in-hand with a significant association test at level alpha.
+#' This function calculates CIs for the non-centrality parameter (NCP) of the
+#' \eqn{\chi^2}-distribution. A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence
+#' limit for the NCP goes hand-in-hand with a significant association test at level
+#' \eqn{\alpha}.
+#'
 #' By default, CIs are computed by Chi-squared test inversion. This can be unreliable
 #' for very large test statistics. The default bootstrap type is "bca".
 #'
-#' @param x The result of \code{stats::chisq.test()}, a \code{table/matrix} of frequencies,
-#' or a \code{data.frame} with exactly two columns.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param correct Should Yates continuity correction be applied to the 2x2 case?
-#' The default is \code{TRUE} (also used in the bootstrap), which differs from
-#' \code{ci_cramersv()}.
-#' @param type Type of CI. One of "chi-squared" (default) or "bootstrap".
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @inheritParams ci_cramersv
+#' @inheritParams cramersv
+#' @inheritParams ci_mean
+#' @param correct Should Yates continuity correction be applied to the 2x2 case? The
+#'   default is `TRUE` (also used in the bootstrap), which differs from [ci_cramersv()].
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' ci_chisq_ncp(mtcars[c("am", "vs")])
 #' ci_chisq_ncp(mtcars[c("am", "vs")], type = "bootstrap", R = 999)  # Use larger R
 #' @references
-#' Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
-#' @seealso \code{\link{ci_cramersv}}.
+#'   Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the
+#'     Social Sciences. New York, NY: Sage Publications.
+#' @seealso [ci_cramersv()]
 ci_chisq_ncp <- function(x, probs = c(0.025, 0.975), correct = TRUE,
                          type = c("chi-squared", "bootstrap"),
                          boot_type = c("bca", "perc", "norm", "basic"),

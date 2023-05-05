@@ -7,26 +7,33 @@
 cramersv(x)
 }
 \arguments{
-\item{x}{The result of \code{stats::chisq.test()}, a matrix/table of counts or
+\item{x}{The result of \code{\link[stats:chisq.test]{stats::chisq.test()}}, a matrix/table of counts, or
 a \code{data.frame} with exactly two columns representing the two variables.}
 }
 \value{
 A numeric vector of length one.
 }
 \description{
-This function calculates Cramer's V, a measure of association between two categorical variables.
-It is a scaled version of the chi-squared test statistic and lies between 0 and 1.
-Cramer's V is calculated as sqrt(chi-squared / (n * (k - 1))), where n is the number
-of observations, and k is the smaller of the number of levels of the two variables.
+This function calculates Cramer's V, a measure of association between two categorical
+variables.
 }
 \details{
-Yates continuity correction is never applied. So in the 2x2 case,
-if \code{x} is the result of \code{stats::chisq.test()},
-make sure no continuity correction was applied. Otherwise, results can be inconsistent.
+Cramer's V is a scaled version of the chi-squared test statistic \eqn{\chi^2} and
+takes values in \eqn{[0, 1]}. It is calculated as
+\eqn{\sqrt{\chi^2 / (n \cdot (k - 1))}}, where \eqn{n} is the number of observations,
+and \eqn{k} is the smaller of the number of levels of the two variables.
+
+Yates continuity correction is never applied. So in the 2x2 case, if \code{x} is the
+result of \code{\link[stats:chisq.test]{stats::chisq.test()}}, make sure no continuity correction was applied.
+Otherwise, results can be inconsistent.
 }
 \examples{
 cramersv(mtcars[c("am", "vs")])
 }
 \references{
-Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton University Press, page 282 (Chapter 21. The two-dimensional case).
+Cramer, Harald. 1946. Mathematical Methods of Statistics. Princeton: Princeton
+University Press, page 282 (Chapter 21. The two-dimensional case).
+}
+\seealso{
+\code{\link[=ci_cramersv]{ci_cramersv()}}
 }

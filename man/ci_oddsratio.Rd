@@ -7,25 +7,17 @@
 ci_oddsratio(x, probs = c(0.025, 0.975))
 }
 \arguments{
-\item{x}{A 2x2 \code{table/matrix} of frequencies,
-or a \code{data.frame} with exactly two columns.}
+\item{x}{A 2x2 matrix/table of counts, or a \code{data.frame} with exactly two columns
+representing the two binary variables.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 This function calculates a CI for the odds ratio in a 2x2 table/matrix or a
-data frame with two columns. The CI is obtained through \code{stats::fisher.test()}.
+data frame with two columns. The CI is obtained through \code{\link[stats:fisher.test]{stats::fisher.test()}}.
 Bootstrap CIs are not available.
 }
 \examples{
@@ -33,5 +25,5 @@ x <- cbind(c(10, 5), c(4, 4))
 ci_oddsratio(x)
 }
 \seealso{
-\code{\link{oddsratio}}.
+\code{\link[=oddsratio]{oddsratio()}}.
 }

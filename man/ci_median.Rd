@@ -17,37 +17,27 @@ ci_median(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. One of "binomial" (default), or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").
-Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI. Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot()}.}
+\item{...}{Further arguments passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
-This function calculates CIs for the population median by calling
-\code{ci_quantile(..., q = 0.5)}. See \code{\link{ci_quantile}} for details.
+This function calculates CIs for the population median by calling \code{\link[=ci_quantile]{ci_quantile()}}.
 }
 \examples{
 ci_median(1:100)
 }
 \seealso{
-\code{\link{ci_quantile}}.
+\code{\link[=ci_quantile]{ci_quantile()}}
 }

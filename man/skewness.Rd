@@ -23,5 +23,5 @@ skewness(1:10)
 skewness(rexp(100))
 }
 \seealso{
-\code{\link{moment}}
+\code{\link[=moment]{moment()}}, \code{\link[=kurtosis]{kurtosis()}}
 }

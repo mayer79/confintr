@@ -7,36 +7,28 @@
 ci_rsquared(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 }
 \arguments{
-\item{x}{The result of \code{stats::lm()} or the F test statistic.}
+\item{x}{The result of \code{\link[stats:lm]{stats::lm()}} or the F test statistic.}
 
 \item{df1}{The numerator df. Only used if \code{x} is a test statistic.}
 
 \item{df2}{The denominator df. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
-This function calculates parametric CIs for the population R-squared.
-It is based on CIs for the non-centrality parameter Delta of the F distribution,
-found by test inversion. Delta values are mapped to R-squared by
-R-squared = Delta / (Delta + df1 + df2 + 1), where df1 and df2 are the degrees
-of freedom (df) of the F test statistic.
-A positive lower (1-alpha)*100\%-confidence limit for the R-squared goes
-hand-in-hand with a significant F test at level alpha.
+This function calculates parametric CIs for the population \eqn{R^2}.
+It is based on CIs for the non-centrality parameter \eqn{\Delta} of the F
+distribution found by test inversion. Values of \eqn{\Delta} are mapped to \eqn{R^2}
+by \eqn{R^2 = \Delta / (\Delta + \text{df}_1 + \text{df}_2 + 1)},
+where the \eqn{\text{df}_j} are the degrees of freedom of the F test statistic.
+A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the \eqn{R^2}
+goes hand-in-hand with a significant F test at level \eqn{\alpha}.
 }
 \details{
-According to \code{?stats::pf}, the results might be unreliable for very large F values.
+According to \code{\link[stats:Fdist]{stats::pf()}}, the results might be unreliable for very large F values.
 Note that we do not provide bootstrap CIs here to keep the input interface simple.
 }
 \examples{
@@ -46,8 +38,9 @@ ci_rsquared(fit)
 ci_rsquared(fit, probs = c(0.05, 1))
 }
 \references{
-Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in
+the Social Sciences. New York, NY: Sage Publications.
 }
 \seealso{
-\code{\link{ci_f_ncp}}.
+\code{\link[=ci_f_ncp]{ci_f_ncp()}}
 }

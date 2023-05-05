@@ -7,35 +7,26 @@
 ci_f_ncp(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975))
 }
 \arguments{
-\item{x}{The result of \code{stats::lm()} or the F test statistic.}
+\item{x}{The result of \code{\link[stats:lm]{stats::lm()}} or the F test statistic.}
 
-\item{df1}{The numerator degree of freedom (df), e.g. the number of parameters
-(including the intercept) of a linear regression.
-Only used if \code{x} is a test statistic.}
+\item{df1}{The numerator df. Only used if \code{x} is a test statistic.}
 
-\item{df2}{The denominator df, e.g. n - df1 - 1 in a linear regression.
-Only used if \code{x} is a test statistic.}
+\item{df2}{The denominator df. Only used if \code{x} is a test statistic.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 Based on the inversion principle, parametric CIs for the non-centrality parameter
 (NCP) Delta of the F distribution are calculated.
 To keep the input interface simple, we do not provide bootstrap CIs here.
-A positive lower (1-alpha)*100\%-confidence limit for the NCP goes hand-in-hand with
-a significant F test at level alpha.
-According to \code{?stats::pf}, the results might be unreliable for very large F values.
+}
+\details{
+A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the NCP goes
+hand-in-hand with a significant F test at level \eqn{\alpha}.
+According to \code{\link[stats:Fdist]{stats::pf()}}, the results might be unreliable for very large F values.
 }
 \examples{
 fit <- stats::lm(Sepal.Length ~ ., data = iris)
@@ -43,8 +34,9 @@ ci_f_ncp(fit)
 ci_f_ncp(fit, probs = c(0.05, 1))
 }
 \references{
-Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the
+Social Sciences. New York, NY: Sage Publications.
 }
 \seealso{
-\code{\link{ci_rsquared}}.
+\code{\link[=ci_rsquared]{ci_rsquared()}}
 }

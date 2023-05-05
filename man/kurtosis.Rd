@@ -25,5 +25,5 @@ kurtosis(1:10)
 kurtosis(rnorm(1000))
 }
 \seealso{
-\code{\link{moment}}
+\code{\link[=moment]{moment()}}, \code{\link[=skewness]{skewness()}}
 }

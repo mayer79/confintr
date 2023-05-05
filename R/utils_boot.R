@@ -1,11 +1,13 @@
 #' Bootstrap CI
 #'
-#' Internal wrapper to \code{boot::boot.ci()}.
+#' Internal wrapper to [boot::boot.ci()].
 #' Contains the logic for also calculating one-sided CIs, and for unequal-tailed CIs.
-#' @param S Result of \code{boot::boot()}.
-#' @param boot_type CI type passed to \code{boot::boot.ci()}.
+#'
+#' @noRd
+#' @param S Result of [boot::boot()].
+#' @param boot_type CI type passed to [boot::boot.ci()].
 #' @param probs Lower and upper probabilities.
-#' @return A numeric vector of length two.
+#' @returns A numeric vector of length two.
 ci_boot <- function(S, boot_type = c("norm", "basic", "stud", "perc", "bca"), probs) {
   a <-  1 - 2 * probs[1L]
   b <- -1 + 2 * probs[2L]

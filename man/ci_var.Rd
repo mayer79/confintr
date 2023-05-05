@@ -17,41 +17,31 @@ ci_var(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
-\item{type}{Type of CI. One of \code{"chi-squared"} (default) or
-\code{"bootstrap"}.}
+\item{type}{Type of CI. One of \code{"chi-squared"} (default) or \code{"bootstrap"}.}
 
-\item{boot_type}{Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
-Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI. Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot()}.}
+\item{...}{Further arguments passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 This function calculates CIs for the population variance.
-By default, classic CIs are calculated based on the chi-squared
-distribution, assuming normal distribution (see Smithson).
-Bootstrap CIs are also available (default: "bca").
-We recommend them for the non-normal case.
 }
 \details{
-The \code{stud} (bootstrap t) bootstrap uses the standard error
-of the sample variance given in Wilks.
+By default, classic CIs are calculated based on the chi-squared distribution,
+assuming normal distribution (see Smithson). Bootstrap CIs are also available
+(default: "bca"). We recommend them for the non-normal case.
+
+The \code{stud} (bootstrap t) bootstrap uses the standard error of the sample variance
+given in Wilks.
 }
 \examples{
 x <- 1:100
@@ -60,10 +50,11 @@ ci_var(x, type = "bootstrap", R = 999)  # Use larger R
 }
 \references{
 \enumerate{
-\item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+\item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in
+the Social Sciences. New York, NY: Sage Publications.
 \item S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons.
 }
 }
 \seealso{
-\code{\link{ci_sd}}.
+\code{\link[=ci_sd]{ci_sd()}}
 }

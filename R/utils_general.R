@@ -5,7 +5,7 @@
 #' @param x A on object of class "cint".
 #' @param digits Number of digits used to format numbers.
 #' @param ... Further arguments passed from other methods.
-#' @return Invisibly, the input is returned.
+#' @returns Invisibly, the input is returned.
 #' @export
 #' @examples
 #' ci_mean(1:100)
@@ -45,7 +45,7 @@ print.cint <- function(x, digits = getOption("digits"), ...) {
 #' Checks if an object inherits class "cint".
 #'
 #' @param x Any object.
-#' @return A logical vector of length one.
+#' @returns A logical vector of length one.
 #' @export
 #' @examples
 #' is.cint(ci_proportion(5, 20))

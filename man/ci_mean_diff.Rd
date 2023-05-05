@@ -21,7 +21,7 @@ ci_mean_diff(
 
 \item{y}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{var.equal}{Should the two variances be treated as being equal?
 The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate
@@ -30,34 +30,27 @@ This also applies to the "stud" bootstrap.}
 
 \item{type}{Type of CI. One of "t" (default), or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
-Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI. Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot()}.}
+\item{...}{Further arguments passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 This function calculates CIs for the population value of mean(x) - mean(y).
 The default is Student's method with Welch's correction for unequal variances,
-but also bootstrap CIs are available. The default bootstrap type is "stud"
-(bootstrap t) as it has a stable variance estimator (see Efron, p. 188).
-Resampling is done within sample. If \code{boot_type = "stud"},
-the standard error is estimated by Welch's method if \code{var.equal = FALSE}
-(the default), and by pooling otherwise.
+but also bootstrap CIs are available.
+}
+\details{
+The default bootstrap type is "stud" (bootstrap t) as it has a stable variance
+estimator (see Efron, p. 188). Resampling is done within sample.
+When \code{boot_type = "stud"}, the standard error is estimated by Welch's method
+if \code{var.equal = FALSE} (the default), and by pooling otherwise.
 Thus, \code{var.equal} not only has an effect for the classic Student approach
 (\code{type = "t"}) but also for \code{boot_type = "stud"}.
 }

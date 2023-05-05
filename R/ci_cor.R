@@ -1,31 +1,18 @@
 #' CI for Correlation Coefficients
 #'
 #' This function calculates CIs for a population correlation coefficient.
-#' For Pearson correlation, "normal" CIs are available (by \code{stats::cor.test()}).
-#' Also bootstrap CIs are supported (by default "bca", and the only option for rank correlations).
+#' For Pearson correlation, "normal" CIs are available (by [stats::cor.test()]).
+#' Also bootstrap CIs are supported (by default "bca", and the only option for
+#' rank correlations).
 #'
-#' @param x A numeric vector or a \code{matrix/data.frame} with exactly two numeric columns.
-#' @param y A numeric vector (only used if \code{x} is a vector).
+#' @inheritParams ci_mean
+#' @param x A numeric vector or a `matrix`/`data.frame` with exactly two numeric columns.
+#' @param y A numeric vector (only used if `x` is a vector).
 #' @param method Type of correlation coefficient, one of "pearson" (default), "kendall",
-#' or "spearman". For the latter two, only bootstrap CIs are supported.
-#' The names can be abbreviated.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#'   or "spearman". For the latter two, only bootstrap CIs are supported.
 #' @param type Type of CI. One of "normal" (the default) or "bootstrap"
-#' (the only option for rank-correlations).
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#'   (the only option for rank-correlations).
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' ci_cor(iris[1:2])

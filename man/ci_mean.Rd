@@ -17,18 +17,17 @@ ci_mean(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. One of "t" (default), "Wald", or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
-Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI. Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
 \item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot()}.}
+\item{...}{Further arguments passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
 An object of class "cint" containing these components:
@@ -42,12 +41,10 @@ An object of class "cint" containing these components:
 }
 }
 \description{
-This function calculates CIs for the population mean.
-By default, Student's t method is used.
-Alternatively, Wald and bootstrap CIs are available.
+This function calculates CIs for the population mean. By default, Student's t method
+is used. Alternatively, Wald and bootstrap CIs are available.
 }
 \details{
-Bootstrap CIs are calculated by the package "boot", see references.
 The default bootstrap type for the mean is "stud" (bootstrap t) as it enjoys the
 property of being second order accurate and has a stable variance estimator
 (see Efron, p. 188).
@@ -59,8 +56,8 @@ ci_mean(x, type = "bootstrap", R = 999, seed = 1)  # Use larger R
 }
 \references{
 \enumerate{
-\item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+\item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in
+the Social Sciences. New York, NY: Sage Publications.
 \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-\item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
 }
 }

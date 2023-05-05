@@ -16,15 +16,14 @@ ci_cramersv(
 )
 }
 \arguments{
-\item{x}{The result of \code{stats::chisq.test()}, a matrix/table of counts,
-or a \code{data.frame} with exactly two columns representing the two variables.}
+\item{x}{The result of \code{\link[stats:chisq.test]{stats::chisq.test()}}, a matrix/table of counts, or
+a \code{data.frame} with exactly two columns representing the two variables.}
 
-\item{probs}{Lower and upper probabilities, by default c(0.025, 0.975).}
+\item{probs}{Lower and upper probabilities, by default \code{c(0.025, 0.975)}.}
 
 \item{type}{Type of CI. One of "chi-squared" (default) or "bootstrap".}
 
-\item{boot_type}{Type of bootstrap CI ("bca", "perc", "norm", "basic").
-Only used for \code{type = "bootstrap"}.}
+\item{boot_type}{Type of bootstrap CI. Only used for \code{type = "bootstrap"}.}
 
 \item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
@@ -33,40 +32,33 @@ Only used for \code{type = "bootstrap"}.}
 \item{test_adjustment}{Adjustment to allow for test of association, see Details.
 The default is \code{TRUE}.}
 
-\item{...}{Further arguments passed to \code{boot::boot()}.}
+\item{...}{Further arguments passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
 This function calculates CIs for the population Cramer's V.
 By default, a parametric approach based on the non-centrality parameter (NCP)
-of the chi-squared distribution is utilized.
-Alternatively, bootstrap CIs are available (by default "bca"),
-also by boostrapping CIs for the NCP and then mapping the result back to Cramer's V.
+of the chi-squared distribution is utilized. Alternatively, bootstrap CIs are
+available (default "bca"), also by boostrapping CIs for the NCP and then mapping
+the result back to Cramer's V.
 }
 \details{
-A positive lower (1-alpha)*100\%-confidence limit for the NCP goes hand-in-hand with a
-significant association test at level alpha. In order to allow such test approach
-also with Cramer's V, if the lower bound for the NCP is 0,
+A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the NCP goes
+hand-in-hand with a significant association test at level \eqn{\alpha}. In order to
+allow such test approach also with Cramer's V, if the lower bound for the NCP is 0,
 we round down to 0 the lower bound for Cramer's V as well.
 Without this slightly conservative adjustment, the lower limit for V would always be
-positive since the CI for V = sqrt((ci for NCP + df)/(n (k - 1))), where k is the smaller
-number of levels in the two variables (see Smithson p40).
+positive since the CI for V is found by
+\eqn{\sqrt{(\text{CI for NCP} + \text{df})/(n \cdot (k - 1))}}, where \eqn{k} is the
+smaller number of levels in the two variables (see Smithson, p.40).
 Use \code{test_adjustment = FALSE} to switch off this behaviour. Note that this is
 also a reason to bootstrap V via NCP instead of directly bootstrapping V.
 
 Further note that no continuity correction is applied for 2x2 tables,
 and that large chi-squared test statistics might provide unreliable results with
-method "chi-squared" (see \code{?pchisq}).
+method "chi-squared", see \code{\link[stats:Chisquare]{stats::pchisq()}}.
 }
 \examples{
 # Example from Smithson, M., page 41
@@ -80,8 +72,9 @@ suppressWarnings(X2 <- stats::chisq.test(test_scores))
 ci_cramersv(X2)
 }
 \references{
-Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
+Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the
+Social Sciences. New York, NY: Sage Publications.
 }
 \seealso{
-\code{\link{ci_chisq_ncp}}.
+\code{\link[=cramersv]{cramersv()}}, \code{\link[=ci_chisq_ncp]{ci_chisq_ncp()}}
 }

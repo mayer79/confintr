@@ -8,14 +8,13 @@
 #' @param z Numeric vector.
 #' @param y Numeric vector.
 #' @param na.rm Should missing values be removed before calculation?
-#' The default is \code{TRUE} for convenience.
+#'   The default is `TRUE` for convenience.
 #' @param var.equal Should the two variances be treated as being equal?
-#' The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to
-#' estimate the variance of the mean difference.
-#' Otherweise, Welch's approach is used (see \code{stats::t.test()}).
-#' This also applies to the "stud" bootstrap.
+#'   The default is `FALSE`. If `TRUE`, the pooled variance is used to estimate the
+#'   variance of the mean difference. Otherweise, Welch's approach is used
+#'   (see [stats::t.test()]). This also applies to the "stud" bootstrap.
 #' @param ... Further arguments to be passed from other methods.
-#' @return A numeric vector of length one.
+#' @returns A numeric vector of length one.
 #' @examples
 #' se_mean(1:100)
 NULL

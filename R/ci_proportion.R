@@ -1,35 +1,22 @@
 #' CI for a Population Proportion
 #'
 #' This function calculates CIs for a population proportion. By default,
-#' "Clopper-Pearson" CIs are calculated (via \code{stats::binom.test()}).
+#' "Clopper-Pearson" CIs are calculated (via [stats::binom.test()]).
 #' Further possibilities are "Wilson" (without continuity correction),
 #' "Agresti-Coull" (using normal quantile instead of +2 correction),
 #' and "bootstrap" (by default "bca"). Note that the Agresti-Coull
 #'
 #' Note that we use the formulas for the Wilson and Agresti-Coull intervals in
 #' \url{https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval}.
-#' They agree with binom::binom.confint(x, n, method = "ac"/"wilson").
+#' They agree with `binom::binom.confint(x, n, method = "ac"/"wilson")`.
 #'
-#' @param x A numeric vector with one value (0/1) per observation,
-#' or the number of successes.
-#' @param n The sample size. Only needed if \code{x} is a vector of length 1.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @inheritParams ci_mean
+#' @param x A numeric vector with one value (0/1) per observation, or the number
+#'   of successes.
+#' @param n The sample size. Only needed if `x` is a vector of length 1.
 #' @param type Type of CI. One of "Clopper-Pearson" (the default), "Agresti–Coull",
-#' "Wilson", "bootstrap".
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#'   "Wilson", "bootstrap".
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- rep(0:1, times = c(50, 100))
@@ -37,11 +24,12 @@
 #' ci_proportion(x, type = "Wilson")
 #' ci_proportion(x, type = "Agresti-Coull")
 #' @references
-#' \enumerate{
-#'   \item Clopper, C. and Pearson, E. S. (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. Biometrika. 26 (4).
-#'   \item Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. Journal of the American Statistical Association, 22 (158).
-#'   \item Agresti, A. and Coull, B. A. (1998). Approximate is better than 'exact' for interval estimation of binomial proportions. The American Statistician, 52 (2).
-#' }
+#'   1. Clopper, C. and Pearson, E. S. (1934). The use of confidence or fiducial limits
+#'     illustrated in the case of the binomial. Biometrika. 26 (4).
+#'   2. Wilson, E. B. (1927). Probable inference, the law of succession, and statistical
+#'     inference. Journal of the American Statistical Association, 22 (158).
+#'   3. Agresti, A. and Coull, B. A. (1998). Approximate is better than 'exact' for
+#'     interval estimation of binomial proportions. The American Statistician, 52 (2).
 ci_proportion <- function(x, n = NULL, probs = c(0.025, 0.975),
                           type = c("Clopper-Pearson", "Agresti-Coull", "Wilson", "bootstrap"),
                           boot_type = c("bca", "perc", "stud", "norm", "basic"),

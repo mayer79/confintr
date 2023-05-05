@@ -1,41 +1,36 @@
 #' CI for the Population Mean
 #'
-#' This function calculates CIs for the population mean.
-#' By default, Student's t method is used.
-#' Alternatively, Wald and bootstrap CIs are available.
+#' This function calculates CIs for the population mean. By default, Student's t method
+#' is used. Alternatively, Wald and bootstrap CIs are available.
 #'
-#' Bootstrap CIs are calculated by the package "boot", see references.
 #' The default bootstrap type for the mean is "stud" (bootstrap t) as it enjoys the
 #' property of being second order accurate and has a stable variance estimator
 #' (see Efron, p. 188).
+#'
 #' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @param probs Lower and upper probabilities, by default `c(0.025, 0.975)`.
 #' @param type Type of CI. One of "t" (default), "Wald", or "bootstrap".
-#' @param boot_type Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @param boot_type Type of bootstrap CI. Only used for `type = "bootstrap"`.
+#' @param R The number of bootstrap resamples. Only used for `type = "bootstrap"`.
+#' @param seed An integer random seed. Only used for `type = "bootstrap"`.
+#' @param ... Further arguments passed to [boot::boot()].
+#' @returns
+#'   An object of class "cint" containing these components:
+#'   - `parameter`: Parameter specification.
+#'   - `interval`: CI for the parameter.
+#'   - `estimate`: Parameter estimate.
+#'   - `probs`: Lower and upper probabilities.
+#'   - `type`: Type of interval.
+#'   - `info`: Additional description.
 #' @export
 #' @examples
 #' x <- 1:100
 #' ci_mean(x)
 #' ci_mean(x, type = "bootstrap", R = 999, seed = 1)  # Use larger R
 #' @references
-#' \enumerate{
-#'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
-#'   \item Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
-#'   \item Canty, A and Ripley B. (2019). boot: Bootstrap R (S-Plus) Functions.
-#' }
+#'   1. Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in
+#'     the Social Sciences. New York, NY: Sage Publications.
+#'   2. Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
 ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap"),
                     boot_type = c("stud", "bca", "perc", "norm", "basic"),
                     R = 9999L, seed = NULL, ...) {
@@ -79,82 +74,23 @@ ci_mean <- function(x, probs = c(0.025, 0.975), type = c("t", "Wald", "bootstrap
   out
 }
 
-#' CI for the Population Median
-#'
-#' This function calculates CIs for the population median by calling
-#' \code{ci_quantile(..., q = 0.5)}. See \code{\link{ci_quantile}} for details.
-#'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. One of "binomial" (default), or "bootstrap".
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
-#' @export
-#' @examples
-#' ci_median(1:100)
-#' @seealso \code{\link{ci_quantile}}.
-ci_median <- function(x, probs = c(0.025, 0.975),
-                      type = c("binomial", "bootstrap"),
-                      boot_type = c("bca", "perc", "norm", "basic"),
-                      R = 9999L, seed = NULL, ...) {
-  out <- ci_quantile(
-    x,
-    q = 0.5,
-    probs = probs,
-    type = type,
-    boot_type = boot_type,
-    R = R,
-    seed = seed,
-    ...
-  )
-  out$parameter <- "population median"
-  out
-}
-
 #' CI for a Population Quantile
 #'
 #' This function calculates CIs for a population quantile. By default, distribution-free
 #' CIs based on the binomial distribution are calculated, see Hahn and Meeker.
-#' Alternatively, bootstrap CIs are available (by default "bca").
+#' Alternatively, bootstrap CIs are available (default "bca").
 #'
-#' @param x A numeric vector.
-#' @param q A single probability value determining the quantile.
-#' Set to 0.5 for the median (the default).
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @inheritParams ci_mean
+#' @param q A single probability value determining the quantile (0.5 for median).
 #' @param type Type of CI. One of "binomial" (default), or "bootstrap".
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 1:100
 #' ci_quantile(x, q = 0.25)
 #' @references
-#' Hahn, G. and Meeker, W. (1991). Statistical Intervals. Wiley 1991.
-#' @seealso \code{\link{ci_quantile}}.
+#'   Hahn, G. and Meeker, W. (1991). Statistical Intervals. Wiley 1991.
+#' @seealso [ci_median()]
 ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
                         type = c("binomial", "bootstrap"),
                         boot_type = c("bca", "perc", "norm", "basic"),
@@ -205,5 +141,34 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
     info = boot_info(type, boot_type = boot_type, R = R)
   )
   class(out) <- "cint"
+  out
+}
+
+#' CI for the Population Median
+#'
+#' This function calculates CIs for the population median by calling [ci_quantile()].
+#'
+#' @inheritParams ci_quantile
+#' @inheritParams ci_mean
+#' @returns An object of class "cint", see [ci_mean()] for details.
+#' @export
+#' @examples
+#' ci_median(1:100)
+#' @seealso [ci_quantile()]
+ci_median <- function(x, probs = c(0.025, 0.975),
+                      type = c("binomial", "bootstrap"),
+                      boot_type = c("bca", "perc", "norm", "basic"),
+                      R = 9999L, seed = NULL, ...) {
+  out <- ci_quantile(
+    x,
+    q = 0.5,
+    probs = probs,
+    type = type,
+    boot_type = boot_type,
+    R = R,
+    seed = seed,
+    ...
+  )
+  out$parameter <- "population median"
   out
 }

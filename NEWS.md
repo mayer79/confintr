@@ -1,3 +1,9 @@
+# confintr 1.0.1
+
+## Maintenance
+
+- Better help files
+
 # confintr 1.0.0
 
 This is a large maintenance update, bumping the package to stable version 1.0.0.

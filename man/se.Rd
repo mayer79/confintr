@@ -27,10 +27,9 @@ The default is \code{TRUE} for convenience.}
 \item{y}{Numeric vector.}
 
 \item{var.equal}{Should the two variances be treated as being equal?
-The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to
-estimate the variance of the mean difference.
-Otherweise, Welch's approach is used (see \code{stats::t.test()}).
-This also applies to the "stud" bootstrap.}
+The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the
+variance of the mean difference. Otherweise, Welch's approach is used
+(see \code{\link[stats:t.test]{stats::t.test()}}). This also applies to the "stud" bootstrap.}
 }
 \value{
 A numeric vector of length one.

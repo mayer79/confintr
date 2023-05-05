@@ -23,26 +23,18 @@ ci_IQR(
 
 \item{boot_type}{Type of bootstrap CI c("bca", "perc", "norm", "basic").}
 
-\item{R}{The number of bootstrap resamples.}
+\item{R}{The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.}
 
-\item{seed}{An integer random seed.}
+\item{seed}{An integer random seed. Only used for \code{type = "bootstrap"}.}
 
-\item{...}{Further arguments passed to \code{boot::boot()}.}
+\item{...}{Further arguments passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
-An object of class "cint" containing these components:
-\itemize{
-\item \code{parameter}: Parameter specification.
-\item \code{interval}: CI for the parameter.
-\item \code{estimate}: Parameter estimate.
-\item \code{probs}: Lower and upper probabilities.
-\item \code{type}: Type of interval.
-\item \code{info}: Additional description.
-}
+An object of class "cint", see \code{\link[=ci_mean]{ci_mean()}} for details.
 }
 \description{
-This function calculates bootstrap CIs (by default "bca") for the
-population interquartile range (IQR), i.e., the difference between first and third quartile.
+This function calculates bootstrap CIs (by default "bca") for the population
+interquartile range (IQR), i.e., the difference between first and third quartile.
 }
 \examples{
 x <- rnorm(100)

@@ -28,5 +28,5 @@ moment(1:10, p = 1, central = FALSE)
 moment(1:10, p = 2) / stats::var(1:10)
 }
 \seealso{
-\code{\link{skewness}}, \code{\link{kurtosis}}.
+\code{\link[=skewness]{skewness()}}, \code{\link[=kurtosis]{kurtosis()}}
 }

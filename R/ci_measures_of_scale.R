@@ -1,43 +1,27 @@
 #' CI for the Population Variance
 #'
 #' This function calculates CIs for the population variance.
-#' By default, classic CIs are calculated based on the chi-squared
-#' distribution, assuming normal distribution (see Smithson).
-#' Bootstrap CIs are also available (default: "bca").
-#' We recommend them for the non-normal case.
 #'
-#' The \code{stud} (bootstrap t) bootstrap uses the standard error
-#' of the sample variance given in Wilks.
+#' By default, classic CIs are calculated based on the chi-squared distribution,
+#' assuming normal distribution (see Smithson). Bootstrap CIs are also available
+#' (default: "bca"). We recommend them for the non-normal case.
 #'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. One of \code{"chi-squared"} (default) or
-#' \code{"bootstrap"}.
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' The `stud` (bootstrap t) bootstrap uses the standard error of the sample variance
+#' given in Wilks.
+#'
+#' @inheritParams ci_mean
+#' @param type Type of CI. One of `"chi-squared"` (default) or `"bootstrap"`.
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 1:100
 #' ci_var(x)
 #' ci_var(x, type = "bootstrap", R = 999)  # Use larger R
 #' @references
-#' \enumerate{
-#'   \item Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in the Social Sciences. New York, NY: Sage Publications.
-#'   \item S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons.
-#' }
-#' @seealso \code{\link{ci_sd}}.
+#'   1. Smithson, M. (2003). Confidence intervals. Series: Quantitative Applications in
+#'     the Social Sciences. New York, NY: Sage Publications.
+#'   2. S.S. Wilks (1962), Mathematical Statistics, Wiley & Sons.
+#' @seealso [ci_sd()]
 ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                    boot_type = c("bca", "perc", "stud", "norm", "basic"),
                    R = 9999L, seed = NULL, ...) {
@@ -80,33 +64,17 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' CI for the Population Std
 #'
 #' This function calculates CIs for the population standard deviation.
-#' They are derived from CIs for the variance by taking the square-root.
-#' For details, see \code{\link{ci_var}}.
+#' They are derived from CIs for the variance by taking the square-root, see[ci_var()].
 #'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. One of \code{"chi-squared"} (default)
-#' or \code{"bootstrap"}.
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @inheritParams ci_var
+#' @inheritParams ci_mean
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 1:100
 #' ci_sd(x)
 #' ci_sd(x, type = "bootstrap", R = 999)  # Use larger R
-#' @seealso \code{\link{ci_var}}.
+#' @seealso [ci_var()]
 ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap"),
                   boot_type = c("bca", "perc", "stud", "norm", "basic"),
                   R = 9999L, seed = NULL, ...) {
@@ -121,25 +89,13 @@ ci_sd <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstrap
 
 #' CI for the IQR
 #'
-#' This function calculates bootstrap CIs (by default "bca") for the
-#' population interquartile range (IQR), i.e., the difference between first and third quartile.
+#' This function calculates bootstrap CIs (by default "bca") for the population
+#' interquartile range (IQR), i.e., the difference between first and third quartile.
 #'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. Currently not used as the only type is \code{"bootstrap"}.
+#' @inheritParams ci_mean
+#' @param type Type of CI. Currently not used as the only type is `"bootstrap"`.
 #' @param boot_type Type of bootstrap CI c("bca", "perc", "norm", "basic").
-#' @param R The number of bootstrap resamples.
-#' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- rnorm(100)
@@ -176,26 +132,13 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' CI for the MAD
 #'
 #' This function calculates bootstrap CIs (default: "bca") for the population median
-#' absolute deviation (MAD), see \code{stats::mad()} for more information on this measure of scale.
+#' absolute deviation (MAD), see [stats::mad()] for more information.
 #'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @inheritParams ci_IQR
+#' @inheritParams ci_mean
 #' @param constant Scaling factor applied. The default (1.4826) ensures that the MAD
-#' equals the standard deviation for a theoretical normal distribution.
-#' @param type Type of CI. Currently not used as the only type is "bootstrap".
-#' @param boot_type Type of bootstrap CI c("bca", "perc", "norm", "basic").
-#' @param R The number of bootstrap resamples.
-#' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#'   equals the standard deviation for a theoretical normal distribution.
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- rnorm(100)

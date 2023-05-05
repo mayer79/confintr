@@ -4,16 +4,16 @@
 #'
 #' @param z A numeric vector.
 #' @param p Order of moment.
-#' @param central Should central moment be calculated? Default is \code{TRUE}.
+#' @param central Should central moment be calculated? Default is `TRUE`.
 #' @param na.rm Logical flag indicating whether to remove missing values or not.
-#' Default is \code{TRUE}.
-#' @return Numeric vector of length 1.
+#'   Default is `TRUE`.
+#' @returns Numeric vector of length 1.
 #' @export
 #' @examples
 #' moment(1:10, p = 1)
 #' moment(1:10, p = 1, central = FALSE)
 #' moment(1:10, p = 2) / stats::var(1:10)
-#' @seealso \code{\link{skewness}}, \code{\link{kurtosis}}.
+#' @seealso [skewness()], [kurtosis()]
 moment <- function(z, p = 1, central = TRUE, na.rm = TRUE) {
   if (na.rm) {
     z <- z[!is.na(z)]
@@ -28,15 +28,13 @@ moment <- function(z, p = 1, central = TRUE, na.rm = TRUE) {
 #'
 #' Calculates sample skewness. A value of 0 refers to a perfectly symmetric distribution.
 #'
-#' @param z A numeric vector.
-#' @param na.rm Logical flag indicating whether to remove missing values or not.
-#' Default is \code{TRUE}.
-#' @return Numeric vector of length 1.
+#' @inheritParams moment
+#' @returns Numeric vector of length 1.
 #' @export
 #' @examples
 #' skewness(1:10)
 #' skewness(rexp(100))
-#' @seealso \code{\link{moment}}
+#' @seealso [moment()], [kurtosis()]
 skewness <- function(z, na.rm = TRUE) {
   moment(z, p = 3, na.rm = na.rm) / moment(z, p = 2, na.rm = na.rm)^(3 / 2)
 }
@@ -47,15 +45,13 @@ skewness <- function(z, na.rm = TRUE) {
 #' second central moment. Under perfect normality, the kurtosis equals 3.
 #' Put differently, we do not show "excess kurtosis" but rather kurtosis.
 #'
-#' @param z A numeric vector.
-#' @param na.rm Logical flag indicating whether to remove missing values or not.
-#' Default is \code{TRUE}.
-#' @return Numeric vector of length 1.
+#' @inheritParams moment
+#' @returns Numeric vector of length 1.
 #' @export
 #' @examples
 #' kurtosis(1:10)
 #' kurtosis(rnorm(1000))
-#' @seealso \code{\link{moment}}
+#' @seealso [moment()], [skewness()]
 kurtosis <- function(z, na.rm = TRUE) {
   moment(z, p = 4, na.rm = na.rm) / moment(z, p = 2, na.rm = na.rm)^2
 }
@@ -65,27 +61,14 @@ kurtosis <- function(z, na.rm = TRUE) {
 #' This function calculates bootstrap CIs for the population skewness.
 #' By default, bootstrap type "bca" is used.
 #'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. Currently not used as the only type is \code{"bootstrap"}.
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' @param R The number of bootstrap resamples.
-#' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @inheritParams ci_mean
+#' @param type Type of CI. Currently not used as the only type is `"bootstrap"`.
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 1:20
 #' ci_skewness(x, R = 999)  # Use larger R
-#' @seealso \code{\link{kurtosis}}
+#' @seealso [skewness()], [ci_kurtosis()]
 ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),
                         R = 9999L, seed = NULL, ...) {
@@ -122,27 +105,14 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' normal distribution, i.e., we are not calculating the excess kurtosis.
 #' By default, bootstrap type "bca" is used.
 #'
-#' @param x A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. Currently not used as the only type is \code{"bootstrap"}.
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' @param R The number of bootstrap resamples.
-#' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @inheritParams ci_skewness
+#' @inheritParams ci_mean
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 1:20
 #' ci_kurtosis(x, R = 999)  # Use larger R
-#' @seealso \code{\link{skewness}}
+#' @seealso [kurtosis()], [ci_skewness()]
 ci_kurtosis <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
                         boot_type = c("bca", "perc", "norm", "basic"),
                         R = 9999L, seed = NULL, ...) {

@@ -2,36 +2,23 @@
 #'
 #' This function calculates CIs for the population value of mean(x) - mean(y).
 #' The default is Student's method with Welch's correction for unequal variances,
-#' but also bootstrap CIs are available. The default bootstrap type is "stud"
-#' (bootstrap t) as it has a stable variance estimator (see Efron, p. 188).
-#' Resampling is done within sample. If \code{boot_type = "stud"},
-#' the standard error is estimated by Welch's method if \code{var.equal = FALSE}
-#' (the default), and by pooling otherwise.
-#' Thus, \code{var.equal} not only has an effect for the classic Student approach
-#' (\code{type = "t"}) but also for \code{boot_type = "stud"}.
+#' but also bootstrap CIs are available.
 #'
-#' @param x A numeric vector.
+#' The default bootstrap type is "stud" (bootstrap t) as it has a stable variance
+#' estimator (see Efron, p. 188). Resampling is done within sample.
+#' When `boot_type = "stud"`, the standard error is estimated by Welch's method
+#' if `var.equal = FALSE` (the default), and by pooling otherwise.
+#' Thus, `var.equal` not only has an effect for the classic Student approach
+#' (`type = "t"`) but also for `boot_type = "stud"`.
+#'
+#' @inheritParams ci_mean
 #' @param y A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
 #' @param var.equal Should the two variances be treated as being equal?
-#' The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate
-#' the variance of the mean difference. Otherweise, Welch's approach is used.
-#' This also applies to the "stud" bootstrap.
+#'   The default is `FALSE`. If `TRUE`, the pooled variance is used to estimate
+#'   the variance of the mean difference. Otherweise, Welch's approach is used.
+#'   This also applies to the "stud" bootstrap.
 #' @param type Type of CI. One of "t" (default), or "bootstrap".
-#' @param boot_type Type of bootstrap CI ("stud", "bca", "perc", "norm", "basic").
-#' Only used for \code{type = "bootstrap"}.
-#' @param R The number of bootstrap resamples. Only used for \code{type = "bootstrap"}.
-#' @param seed An integer random seed. Only used for \code{type = "bootstrap"}.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 10:30
@@ -40,7 +27,7 @@
 #' t.test(x, y)$conf.int
 #' ci_mean_diff(x, y, type = "bootstrap", R = 999)  # Use larger R
 #' @references
-#' Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
+#'   Efron, B. and Tibshirani R. J. (1994). An Introduction to the Bootstrap. Chapman & Hall/CRC.
 ci_mean_diff <- function(x, y, probs = c(0.025, 0.975), var.equal = FALSE,
                          type = c("t", "bootstrap"),
                          boot_type = c("stud", "bca", "perc", "norm", "basic"),
@@ -98,84 +85,23 @@ ci_mean_diff <- function(x, y, probs = c(0.025, 0.975), var.equal = FALSE,
   out
 }
 
-#' CI for the Population Median Difference of two Samples
-#'
-#' This function calculates bootstrap CIs for the population value of
-#' median(x) - median(y) by calling ci_quantile_diff(, q = 0.5).
-#' See \code{\link{ci_quantile_diff}} for details.
-#'
-#' @param x A numeric vector.
-#' @param y A numeric vector.
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
-#' @param type Type of CI. Currently, "bootstrap" is the only option.
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' @param R The number of bootstrap resamples.
-#' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
-#' @export
-#' @examples
-#' x <- 10:30
-#' y <- 1:30
-#' ci_median_diff(x, y, R = 999)  # Use larger value for R
-#' @seealso \code{\link{ci_quantile_diff}}.
-ci_median_diff <- function(x, y, probs = c(0.025, 0.975), type = "bootstrap",
-                           boot_type = c("bca", "perc", "norm", "basic"),
-                           R = 9999L, seed = NULL, ...) {
-  out <- ci_quantile_diff(
-    x,
-    y,
-    q = 0.5,
-    probs = probs,
-    type = type,
-    boot_type = boot_type,
-    R = R,
-    seed = seed,
-    ...
-  )
-  out$parameter <- "population value of median(x)-median(y)"
-  out
-}
-
 #' CI for the Population Quantile Difference of two Samples
 #'
 #' This function calculates bootstrap CIs for the population value of
-#' q quantile(x) - q quantile(y), by default using "bca" bootstrap.
+#' q-quantile(x) - q-quantile(y), by default using "bca" bootstrap.
 #' Resampling is done within sample.
 #'
-#' @param x A numeric vector.
+#' @inheritParams ci_mean
 #' @param y A numeric vector.
-#' @param q A single probability value determining the quantile.
-#' Set to 0.5 for the median (default).
-#' @param probs Lower and upper probabilities, by default c(0.025, 0.975).
+#' @param q A single probability value determining the quantile (0.5 for median).
 #' @param type Type of CI. Currently, "bootstrap" is the only option.
-#' @param boot_type Type of bootstrap CI ("bca", "perc", "norm", "basic").
-#' @param R The number of bootstrap resamples.
-#' @param seed An integer random seed.
-#' @param ... Further arguments passed to \code{boot::boot()}.
-#' @return An object of class "cint" containing these components:
-#' \itemize{
-#'   \item \code{parameter}: Parameter specification.
-#'   \item \code{interval}: CI for the parameter.
-#'   \item \code{estimate}: Parameter estimate.
-#'   \item \code{probs}: Lower and upper probabilities.
-#'   \item \code{type}: Type of interval.
-#'   \item \code{info}: Additional description.
-#' }
+#' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
 #' x <- 10:30
 #' y <- 1:30
 #' ci_quantile_diff(x, y, R = 999)  # Use larger R
-#' @seealso \code{\link{ci_median_diff}}.
+#' @seealso [ci_median_diff()]
 ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "bootstrap",
                              boot_type = c("bca", "perc", "norm", "basic"),
                              R = 9999L, seed = NULL, ...) {
@@ -223,6 +149,38 @@ ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "boo
     info = boot_info(type, boot_type = boot_type, R = R)
   )
   class(out) <- "cint"
+  out
+}
+
+#' CI for the Population Median Difference of two Samples
+#'
+#' This function calculates bootstrap CIs for the population value of
+#' median(x) - median(y) by calling [ci_quantile_diff()].
+#'
+#' @inheritParams ci_quantile_diff
+#' @inheritParams ci_mean
+#' @returns An object of class "cint", see [ci_mean()] for details.
+#' @export
+#' @examples
+#' x <- 10:30
+#' y <- 1:30
+#' ci_median_diff(x, y, R = 999)  # Use larger value for R
+#' @seealso [ci_quantile_diff()]
+ci_median_diff <- function(x, y, probs = c(0.025, 0.975), type = "bootstrap",
+                           boot_type = c("bca", "perc", "norm", "basic"),
+                           R = 9999L, seed = NULL, ...) {
+  out <- ci_quantile_diff(
+    x,
+    y,
+    q = 0.5,
+    probs = probs,
+    type = type,
+    boot_type = boot_type,
+    R = R,
+    seed = seed,
+    ...
+  )
+  out$parameter <- "population value of median(x)-median(y)"
   out
 }
 

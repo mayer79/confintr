@@ -16,10 +16,12 @@ A numeric vector of length one.
 \description{
 This function calculates the odds ratio in a 2x2 table/matrix,
 or a data frame with two columns.
+}
+\details{
 The numerator equals the ratio of the top left entry and the bottom left entry of the
-2x2 table, while the denominator equals the ratio of the top right entry and the bottom right entry.
-The result is usually slightly different from the one of \code{stats::fisher.test()},
-which is based on the ML estimate of the odds ratio.
+2x2 table, while the denominator equals the ratio of the top right entry and
+the bottom right entry. The result is usually slightly different from the one of
+\code{\link[stats:fisher.test]{stats::fisher.test()}}, which is based on the ML estimate of the odds ratio.
 }
 \examples{
 tab <- cbind(c(10, 5), c(4, 4))

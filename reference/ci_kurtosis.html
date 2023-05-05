@@ -20,7 +20,7 @@ By default, bootstrap type "bca" is used.'><meta property="og:image" content="/l
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">confintr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@ By default, bootstrap type "bca" is used.</p>
 
 
 <dt>probs</dt>
-<dd><p>Lower and upper probabilities, by default c(0.025, 0.975).</p></dd>
+<dd><p>Lower and upper probabilities, by default <code>c(0.025, 0.975)</code>.</p></dd>
 
 
 <dt>type</dt>
@@ -88,15 +88,15 @@ By default, bootstrap type "bca" is used.</p>
 
 
 <dt>boot_type</dt>
-<dd><p>Type of bootstrap CI ("bca", "perc", "norm", "basic").</p></dd>
+<dd><p>Type of bootstrap CI. Only used for <code>type = "bootstrap"</code>.</p></dd>
 
 
 <dt>R</dt>
-<dd><p>The number of bootstrap resamples.</p></dd>
+<dd><p>The number of bootstrap resamples. Only used for <code>type = "bootstrap"</code>.</p></dd>
 
 
 <dt>seed</dt>
-<dd><p>An integer random seed.</p></dd>
+<dd><p>An integer random seed. Only used for <code>type = "bootstrap"</code>.</p></dd>
 
 
 <dt>...</dt>
@@ -107,16 +107,11 @@ By default, bootstrap type "bca" is used.</p>
     <h2>Value</h2>
     
 
-<p>An object of class "cint" containing these components:</p><ul><li><p><code>parameter</code>: Parameter specification.</p></li>
-<li><p><code>interval</code>: CI for the parameter.</p></li>
-<li><p><code>estimate</code>: Parameter estimate.</p></li>
-<li><p><code>probs</code>: Lower and upper probabilities.</p></li>
-<li><p><code>type</code>: Type of interval.</p></li>
-<li><p><code>info</code>: Additional description.</p></li>
-</ul></div>
+<p>An object of class "cint", see <code><a href="ci_mean.html">ci_mean()</a></code> for details.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="skewness.html">skewness</a></code></p></div>
+    <div class="dont-index"><p><code><a href="kurtosis.html">kurtosis()</a></code>, <code><a href="ci_skewness.html">ci_skewness()</a></code></p></div>
     </div>
 
     <div id="ref-examples">
@@ -130,7 +125,7 @@ By default, bootstrap type "bca" is used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sample estimate: 1.793985 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Confidence interval:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     2.5%    97.5% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.385218 2.570622 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.405463 2.595768 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

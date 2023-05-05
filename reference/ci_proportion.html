@@ -21,7 +21,7 @@ and "bootstrap" (by default "bca"). Note that the Agresti-Coull'><meta property=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">confintr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -79,8 +79,8 @@ and "bootstrap" (by default "bca"). Note that the Agresti-Coull</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>A numeric vector with one value (0/1) per observation,
-or the number of successes.</p></dd>
+<dd><p>A numeric vector with one value (0/1) per observation, or the number
+of successes.</p></dd>
 
 
 <dt>n</dt>
@@ -88,7 +88,7 @@ or the number of successes.</p></dd>
 
 
 <dt>probs</dt>
-<dd><p>Lower and upper probabilities, by default c(0.025, 0.975).</p></dd>
+<dd><p>Lower and upper probabilities, by default <code>c(0.025, 0.975)</code>.</p></dd>
 
 
 <dt>type</dt>
@@ -97,8 +97,7 @@ or the number of successes.</p></dd>
 
 
 <dt>boot_type</dt>
-<dd><p>Type of bootstrap CI ("bca", "perc", "stud", "norm", "basic").
-Only used for <code>type = "bootstrap"</code>.</p></dd>
+<dd><p>Type of bootstrap CI. Only used for <code>type = "bootstrap"</code>.</p></dd>
 
 
 <dt>R</dt>
@@ -117,25 +116,23 @@ Only used for <code>type = "bootstrap"</code>.</p></dd>
     <h2>Value</h2>
     
 
-<p>An object of class "cint" containing these components:</p><ul><li><p><code>parameter</code>: Parameter specification.</p></li>
-<li><p><code>interval</code>: CI for the parameter.</p></li>
-<li><p><code>estimate</code>: Parameter estimate.</p></li>
-<li><p><code>probs</code>: Lower and upper probabilities.</p></li>
-<li><p><code>type</code>: Type of interval.</p></li>
-<li><p><code>info</code>: Additional description.</p></li>
-</ul></div>
+<p>An object of class "cint", see <code><a href="ci_mean.html">ci_mean()</a></code> for details.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Note that we use the formulas for the Wilson and Agresti-Coull intervals in
 <a href="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval" class="external-link">https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval</a>.
-They agree with binom::binom.confint(x, n, method = "ac"/"wilson").</p>
+They agree with <code>binom::binom.confint(x, n, method = "ac"/"wilson")</code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
     
-<ol><li><p>Clopper, C. and Pearson, E. S. (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. Biometrika. 26 (4).</p></li>
-<li><p>Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. Journal of the American Statistical Association, 22 (158).</p></li>
-<li><p>Agresti, A. and Coull, B. A. (1998). Approximate is better than 'exact' for interval estimation of binomial proportions. The American Statistician, 52 (2).</p></li>
+<ol><li><p>Clopper, C. and Pearson, E. S. (1934). The use of confidence or fiducial limits
+illustrated in the case of the binomial. Biometrika. 26 (4).</p></li>
+<li><p>Wilson, E. B. (1927). Probable inference, the law of succession, and statistical
+inference. Journal of the American Statistical Association, 22 (158).</p></li>
+<li><p>Agresti, A. and Coull, B. A. (1998). Approximate is better than 'exact' for
+interval estimation of binomial proportions. The American Statistician, 52 (2).</p></li>
 </ol></div>
 
     <div id="ref-examples">

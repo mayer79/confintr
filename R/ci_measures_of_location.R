@@ -149,7 +149,6 @@ ci_quantile <- function(x, q = 0.5, probs = c(0.025, 0.975),
 #' This function calculates CIs for the population median by calling [ci_quantile()].
 #'
 #' @inheritParams ci_quantile
-#' @inheritParams ci_mean
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples

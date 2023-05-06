@@ -64,7 +64,6 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
 #' According to [stats::pf()], the results might be unreliable for very large F values.
 #'
 #' @inheritParams ci_rsquared
-#' @inheritParams ci_mean
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples

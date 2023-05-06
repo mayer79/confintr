@@ -158,7 +158,6 @@ ci_quantile_diff <- function(x, y, q = 0.5, probs = c(0.025, 0.975), type = "boo
 #' median(x) - median(y) by calling [ci_quantile_diff()].
 #'
 #' @inheritParams ci_quantile_diff
-#' @inheritParams ci_mean
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples

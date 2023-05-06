@@ -67,7 +67,6 @@ ci_var <- function(x, probs = c(0.025, 0.975), type = c("chi-squared", "bootstra
 #' They are derived from CIs for the variance by taking the square-root, see [ci_var()].
 #'
 #' @inheritParams ci_var
-#' @inheritParams ci_mean
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
@@ -135,7 +134,6 @@ ci_IQR <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' absolute deviation (MAD), see [stats::mad()] for more information.
 #'
 #' @inheritParams ci_IQR
-#' @inheritParams ci_mean
 #' @param constant Scaling factor applied. The default (1.4826) ensures that the MAD
 #'   equals the standard deviation for a theoretical normal distribution.
 #' @returns An object of class "cint", see [ci_mean()] for details.

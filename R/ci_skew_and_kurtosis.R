@@ -106,7 +106,6 @@ ci_skewness <- function(x, probs = c(0.025, 0.975), type = "bootstrap",
 #' By default, bootstrap type "bca" is used.
 #'
 #' @inheritParams ci_skewness
-#' @inheritParams ci_mean
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples

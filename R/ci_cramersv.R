@@ -122,8 +122,6 @@ ci_cramersv <- function(x, probs = c(0.025, 0.975),
 #' for very large test statistics. The default bootstrap type is "bca".
 #'
 #' @inheritParams ci_cramersv
-#' @inheritParams cramersv
-#' @inheritParams ci_mean
 #' @param correct Should Yates continuity correction be applied to the 2x2 case? The
 #'   default is `TRUE` (also used in the bootstrap), which differs from [ci_cramersv()].
 #' @returns An object of class "cint", see [ci_mean()] for details.

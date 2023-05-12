@@ -1,31 +1,33 @@
-# New release
+# confintr 1.0.1
 
-This is a large maintenance update, bumping the package to stable version 1.0.0.
+This is a maintenance update:
 
-- Reorganisation of code files
-- Better help files
-- Rewritten unit tests
-- Modern code formatting
-- Using `package::function()` notation instead of `importFrom package function`
-- Introduction of Github actions
-- New [Gitpage](https://mayer79.github.io/confintr/)
+- Using Latex in help files
+- Much less redundant help files
 
 ## Checks
 
-### Local check()
+### Local check(): Note
 
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+Skipping checking HTML validation: no command 'tidy' found
 
-### check_rhub()
+### RHub: Notes
 
-OK
+* checking HTML version of manual ... NOTE
+* checking for non-standard things in the check directory ... NOTE
+Skipping checking math rendering: package 'V8' unavailable
+Found the following files/directories:
+  ''NULL''
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
 
-### check_win_devel()
+
+### Winbuilder
 
 OK
 
 ### RevDep
 
-✔ ggpmisc 0.5.2                          ── E: 0     | W: 0     | N: 0                                                                             
-OK: 1                                                                                                                                            
+OK: 1
 BROKEN: 0

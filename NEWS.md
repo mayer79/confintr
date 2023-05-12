@@ -2,7 +2,8 @@
 
 ## Maintenance
 
-- Better help files
+- Less redundancies in help files
+- Using Latex formulas in help files
 
 # confintr 1.0.0
 

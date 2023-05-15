@@ -44,7 +44,7 @@ cramersv <- function(x) {
 #' we round down to 0 the lower bound for Cramer's V as well.
 #' Without this slightly conservative adjustment, the lower limit for V would always be
 #' positive since the CI for V is found by
-#' \eqn{\sqrt{(\text{CI for NCP} + \text{df})/(n \cdot (k - 1))}}, where \eqn{k} is the
+#' \eqn{\sqrt{(\textrm{CI for NCP} + \textrm{df})/(n \cdot (k - 1))}}, where \eqn{k} is the
 #' smaller number of levels in the two variables (see Smithson, p.40).
 #' Use `test_adjustment = FALSE` to switch off this behaviour. Note that this is
 #' also a reason to bootstrap V via NCP instead of directly bootstrapping V.

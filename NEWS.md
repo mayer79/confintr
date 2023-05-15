@@ -1,3 +1,9 @@
+# confintr 1.0.2
+
+## Maintenance
+
+- Fix Latex problem in MacOS help files.
+
 # confintr 1.0.1
 
 ## Maintenance

@@ -18,7 +18,7 @@
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
-#' fit <- stats::lm(Sepal.Length ~ ., data = iris)
+#' fit <- lm(Sepal.Length ~ ., data = iris)
 #' summary(fit)$r.squared
 #' ci_rsquared(fit)
 #' ci_rsquared(fit, probs = c(0.05, 1))
@@ -67,7 +67,7 @@ ci_rsquared <- function(x, df1 = NULL, df2 = NULL, probs = c(0.025, 0.975)) {
 #' @returns An object of class "cint", see [ci_mean()] for details.
 #' @export
 #' @examples
-#' fit <- stats::lm(Sepal.Length ~ ., data = iris)
+#' fit <- lm(Sepal.Length ~ ., data = iris)
 #' ci_f_ncp(fit)
 #' ci_f_ncp(fit, probs = c(0.05, 1))
 #' @references

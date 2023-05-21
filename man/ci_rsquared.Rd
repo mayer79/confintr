@@ -32,7 +32,7 @@ According to \code{\link[stats:Fdist]{stats::pf()}}, the results might be unreli
 Note that we do not provide bootstrap CIs here to keep the input interface simple.
 }
 \examples{
-fit <- stats::lm(Sepal.Length ~ ., data = iris)
+fit <- lm(Sepal.Length ~ ., data = iris)
 summary(fit)$r.squared
 ci_rsquared(fit)
 ci_rsquared(fit, probs = c(0.05, 1))

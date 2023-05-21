@@ -29,7 +29,7 @@ hand-in-hand with a significant F test at level \eqn{\alpha}.
 According to \code{\link[stats:Fdist]{stats::pf()}}, the results might be unreliable for very large F values.
 }
 \examples{
-fit <- stats::lm(Sepal.Length ~ ., data = iris)
+fit <- lm(Sepal.Length ~ ., data = iris)
 ci_f_ncp(fit)
 ci_f_ncp(fit, probs = c(0.05, 1))
 }

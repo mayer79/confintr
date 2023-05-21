@@ -1,4 +1,4 @@
-fit <- stats::lm(Sepal.Width ~ ., data = iris)
+fit <- lm(Sepal.Width ~ ., data = iris)
 fstat <- summary(fit)$fstat
 stat <- fstat[["value"]]
 df1 <- fstat[["numdf"]]

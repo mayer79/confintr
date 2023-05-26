@@ -3,6 +3,7 @@
 ## Maintenance
 
 - Fix Latex problem in MacOS help files.
+- Slight corrections in the documentation.
 
 # confintr 1.0.1
 

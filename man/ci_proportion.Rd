@@ -42,7 +42,7 @@ This function calculates CIs for a population proportion. By default,
 "Clopper-Pearson" CIs are calculated (via \code{\link[stats:binom.test]{stats::binom.test()}}).
 Further possibilities are "Wilson" (without continuity correction),
 "Agresti-Coull" (using normal quantile instead of +2 correction),
-and "bootstrap" (by default "bca"). Note that the Agresti-Coull
+and "bootstrap" (by default "bca").
 }
 \details{
 Note that we use the formulas for the Wilson and Agresti-Coull intervals in

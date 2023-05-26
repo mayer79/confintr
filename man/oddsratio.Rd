@@ -14,7 +14,7 @@ representing the two binary variables.}
 A numeric vector of length one.
 }
 \description{
-This function calculates the odds ratio in a 2x2 table/matrix,
+This function calculates the odds ratio of a 2x2 table/matrix,
 or a data frame with two columns.
 }
 \details{
@@ -26,4 +26,7 @@ the bottom right entry. The result is usually slightly different from the one of
 \examples{
 tab <- cbind(c(10, 5), c(4, 4))
 oddsratio(tab)
+}
+\seealso{
+\code{\link[=ci_oddsratio]{ci_oddsratio()}}
 }

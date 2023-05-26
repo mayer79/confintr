@@ -190,27 +190,27 @@ difference.</strong></p></li>
 <span><span class="co">#&gt; 2.745526 3.499928</span></span>
 <span></span>
 <span><span class="co"># IQR</span></span>
-<span><span class="fu"><a href="../reference/ci_IQR.html">ci_IQR</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span>  <span class="co"># In practice, use larger R</span></span>
+<span><span class="fu"><a href="../reference/ci_IQR.html">ci_IQR</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Two-sided 95% bootstrap confidence interval for the population IQR</span></span>
-<span><span class="co">#&gt;  based on 999 bootstrap replications and the bca method</span></span>
+<span><span class="co">#&gt;  based on 9999 bootstrap replications and the bca method</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sample estimate: 1.042259 </span></span>
 <span><span class="co">#&gt; Confidence interval:</span></span>
 <span><span class="co">#&gt;      2.5%     97.5% </span></span>
-<span><span class="co">#&gt; 0.8778725 1.3773426</span></span>
+<span><span class="co">#&gt; 0.8753326 1.3895169</span></span>
 <span></span>
 <span><span class="co"># Correlation</span></span>
-<span><span class="fu"><a href="../reference/ci_cor.html">ci_cor</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"spearman"</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span>  <span class="co"># In practice, use larger R</span></span>
+<span><span class="fu"><a href="../reference/ci_cor.html">ci_cor</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"spearman"</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Two-sided 95% bootstrap confidence interval for the true Spearman</span></span>
-<span><span class="co">#&gt;  correlation coefficient based on 999 bootstrap replications and the bca</span></span>
-<span><span class="co">#&gt;  method</span></span>
+<span><span class="co">#&gt;  correlation coefficient based on 9999 bootstrap replications and the</span></span>
+<span><span class="co">#&gt;  bca method</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sample estimate: -0.1667777 </span></span>
 <span><span class="co">#&gt; Confidence interval:</span></span>
 <span><span class="co">#&gt;         2.5%        97.5% </span></span>
-<span><span class="co">#&gt; -0.299445947 -0.005167341</span></span>
+<span><span class="co">#&gt; -0.305510208 -0.005814712</span></span>
 <span></span>
 <span><span class="co"># Proportions</span></span>
 <span><span class="fu"><a href="../reference/ci_proportion.html">ci_proportion</a></span><span class="op">(</span><span class="fl">10</span>, n <span class="op">=</span> <span class="fl">100</span>, type <span class="op">=</span> <span class="st">"Wilson"</span><span class="op">)</span></span>
@@ -252,7 +252,7 @@ difference.</strong></p></li>
 <span><span class="co">#&gt; Sample estimate: 1.79976 </span></span>
 <span><span class="co">#&gt; Confidence interval:</span></span>
 <span><span class="co">#&gt;     2.5%    97.5% </span></span>
-<span><span class="co">#&gt; 1.584104 2.050858</span></span>
+<span><span class="co">#&gt; 1.585133 2.050132</span></span>
 <span></span>
 <span><span class="co"># Mean difference</span></span>
 <span><span class="fu"><a href="../reference/ci_mean_diff.html">ci_mean_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span></span>
@@ -265,28 +265,28 @@ difference.</strong></p></li>
 <span><span class="co">#&gt;      2.5%     97.5% </span></span>
 <span><span class="co">#&gt;  8.383547 15.616453</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/ci_mean_diff.html">ci_mean_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span>  <span class="co"># In practice, use larger R</span></span>
+<span><span class="fu"><a href="../reference/ci_mean_diff.html">ci_mean_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Two-sided 95% bootstrap confidence interval for the population value of</span></span>
-<span><span class="co">#&gt;  mean(x)-mean(y) based on 999 bootstrap replications and the student</span></span>
+<span><span class="co">#&gt;  mean(x)-mean(y) based on 9999 bootstrap replications and the student</span></span>
 <span><span class="co">#&gt;  method</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sample estimate: 12 </span></span>
 <span><span class="co">#&gt; Confidence interval:</span></span>
-<span><span class="co">#&gt;      2.5%     97.5% </span></span>
-<span><span class="co">#&gt;  8.531103 15.863771</span></span>
+<span><span class="co">#&gt;     2.5%    97.5% </span></span>
+<span><span class="co">#&gt;  8.32796 15.66603</span></span>
 <span></span>
 <span><span class="co"># Median difference</span></span>
-<span><span class="fu"><a href="../reference/ci_median_diff.html">ci_median_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span>  <span class="co"># In practice, use larger R</span></span>
+<span><span class="fu"><a href="../reference/ci_median_diff.html">ci_median_diff</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Two-sided 95% bootstrap confidence interval for the population value of</span></span>
-<span><span class="co">#&gt;  median(x)-median(y) based on 999 bootstrap replications and the bca</span></span>
+<span><span class="co">#&gt;  median(x)-median(y) based on 9999 bootstrap replications and the bca</span></span>
 <span><span class="co">#&gt;  method</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sample estimate: 12 </span></span>
 <span><span class="co">#&gt; Confidence interval:</span></span>
-<span><span class="co">#&gt;      2.5%     97.5% </span></span>
-<span><span class="co">#&gt;  4.675892 16.000000</span></span></code></pre></div>
+<span><span class="co">#&gt;  2.5% 97.5% </span></span>
+<span><span class="co">#&gt;     5    17</span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

@@ -19,17 +19,13 @@ se_proportion(z, na.rm = TRUE, ...)
 \arguments{
 \item{z}{Numeric vector.}
 
-\item{na.rm}{Should missing values be removed before calculation?
-The default is \code{TRUE} for convenience.}
+\item{na.rm}{Should missing values be removed before calculation? Default is \code{TRUE}.}
 
 \item{...}{Further arguments to be passed from other methods.}
 
 \item{y}{Numeric vector.}
 
-\item{var.equal}{Should the two variances be treated as being equal?
-The default is \code{FALSE}. If \code{TRUE}, the pooled variance is used to estimate the
-variance of the mean difference. Otherweise, Welch's approach is used
-(see \code{\link[stats:t.test]{stats::t.test()}}). This also applies to the "stud" bootstrap.}
+\item{var.equal}{Should the variances be treated as being equal? Default is \code{FALSE}.}
 }
 \value{
 A numeric vector of length one.

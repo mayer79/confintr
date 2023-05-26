@@ -1,6 +1,6 @@
 #' Odds Ratio
 #'
-#' This function calculates the odds ratio in a 2x2 table/matrix,
+#' This function calculates the odds ratio of a 2x2 table/matrix,
 #' or a data frame with two columns.
 #'
 #' The numerator equals the ratio of the top left entry and the bottom left entry of the
@@ -15,6 +15,7 @@
 #' @examples
 #' tab <- cbind(c(10, 5), c(4, 4))
 #' oddsratio(tab)
+#' @seealso [ci_oddsratio()]
 oddsratio <- function(x) {
   x <- or_align_input(x)
   x[1L, 1L] / x[2L, 1L] / (x[1L, 2L] / x[2L, 2L])

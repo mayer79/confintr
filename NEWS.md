@@ -1,3 +1,9 @@
+# confintr 1.0.3
+
+## Maintenance
+
+- Fix typo in docu.
+
 # confintr 1.0.2
 
 ## Maintenance

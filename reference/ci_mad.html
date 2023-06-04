@@ -18,7 +18,7 @@ absolute deviation (MAD), see stats::mad() for more information.'><meta property
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">confintr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -116,15 +116,14 @@ equals the standard deviation for a theoretical normal distribution.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci_mad</span><span class="op">(</span><span class="va">x</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span>  <span class="co"># Use larger R</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>extreme order statistics used as endpoints</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Two-sided 95% bootstrap confidence interval for the population MAD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	based on 999 bootstrap replications and the bca method</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sample estimate: 1.209774 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sample estimate: 0.9625973 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Confidence interval:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2.5%    97.5% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.033519 1.551867 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      2.5%     97.5% </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7224429 1.1946448 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

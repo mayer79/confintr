@@ -10,7 +10,7 @@
 |collate  |German_Switzerland.utf8                              |
 |ctype    |German_Switzerland.utf8                              |
 |tz       |Europe/Zurich                                        |
-|date     |2023-05-11                                           |
+|date     |2023-06-04                                           |
 |rstudio  |2023.03.0+386 Cherry Blossom (desktop)               |
 |pandoc   |2.12 @ C:\Users\Michael\anaconda3\Scripts\pandoc.exe |
 
@@ -18,7 +18,7 @@
 
 |package  |old   |new   |Δ  |
 |:--------|:-----|:-----|:--|
-|confintr |1.0.0 |1.0.1 |*  |
+|confintr |1.0.1 |1.0.2 |*  |
 
 # Revdeps
 

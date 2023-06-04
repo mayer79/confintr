@@ -35,7 +35,7 @@ cramersv <- function(x) {
 #' This function calculates CIs for the population Cramer's V.
 #' By default, a parametric approach based on the non-centrality parameter (NCP)
 #' of the chi-squared distribution is utilized. Alternatively, bootstrap CIs are
-#' available (default "bca"), also by boostrapping CIs for the NCP and then mapping
+#' available (default "bca"), also by bootstrapping CIs for the NCP and then mapping
 #' the result back to Cramer's V.
 #'
 #' A positive lower \eqn{(1 - \alpha) \cdot 100\%}-confidence limit for the NCP goes

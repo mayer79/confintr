@@ -4,7 +4,7 @@
 
 [![CRAN status](http://www.r-pkg.org/badges/version/confintr)](https://cran.r-project.org/package=confintr)
 [![R-CMD-check](https://github.com/mayer79/confintr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mayer79/confintr/actions)
-[![Codecov test coverage](https://codecov.io/gh/mayer79/confintr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mayer79/confintr?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/mayer79/confintr/graph/badge.svg)](https://app.codecov.io/gh/mayer79/confintr?branch=main)
 
 [![](https://cranlogs.r-pkg.org/badges/confintr)](https://cran.r-project.org/package=confintr) 
 [![](https://cranlogs.r-pkg.org/badges/grand-total/confintr?color=orange)](https://cran.r-project.org/package=confintr)

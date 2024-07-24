@@ -2,8 +2,8 @@
 
 <!-- badges: start -->
 
-[![CRAN status](http://www.r-pkg.org/badges/version/confintr)](https://cran.r-project.org/package=confintr)
-[![R-CMD-check](https://github.com/mayer79/confintr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mayer79/confintr/actions)
+[![R-CMD-check](https://github.com/mayer79/confintr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mayer79/confintr/actions/actions/workflows/R-CMD-check.yaml)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/confintr)](https://cran.r-project.org/package=confintr)
 [![Codecov test coverage](https://codecov.io/gh/mayer79/confintr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mayer79/confintr?branch=main)
 
 [![](https://cranlogs.r-pkg.org/badges/confintr)](https://cran.r-project.org/package=confintr) 

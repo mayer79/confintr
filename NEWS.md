@@ -4,6 +4,8 @@
 
 - Fix typo in docu.
 
+- Update code coverage version [#24](https://github.com/mayer79/confintr/pull/24)
+
 # confintr 1.0.2
 
 ## Maintenance
